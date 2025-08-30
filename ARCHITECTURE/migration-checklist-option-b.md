@@ -10,10 +10,10 @@ Cette checklist décrit des étapes sans effet destructif par défaut.
 ## Migration code (locale)
 - [ ] Cloner les repos: CloudOrchestrator, CoLabController, AutonomousMissions.
 - [ ] Regrouper historiques:
-  - [x] Importer `cloud-orchestrator` → branche `import/cloud` dans ExecutionOrchestrator.
-  - [x] Importer `colab-controller` → branche `import/colab`.
+  - [x] Importer `cloud-orchestrator` → branche `import/cloud` dans ExecutionOrchestrator (PR ouverte).
+  - [x] Importer `colab-controller` → branche `import/colab` (PR ouverte).
   - [ ] Fusionner en `main` avec dossier `drivers/colab`, `drivers/cloud`.
-  - [x] Importer `autonomous-missions` → `missions/` (préserver historique si possible).
+  - [x] Importer `autonomous-missions` → `missions/` (PR ouverte, historique préservé si possible).
 - [ ] Rendre les chemins et imports relatifs compatibles.
 
 ## Mise à jour parent (PaniniFS)
@@ -22,7 +22,7 @@ Cette checklist décrit des étapes sans effet destructif par défaut.
 - [ ] Mettre à jour READMEs racine et modules.
 
 ## CI/Qualité
-- [x] Ajouter smoke tests pour orchestrateur et missions.
+- [x] Ajouter smoke tests pour orchestrateur et missions (pytest + GH Actions).
 - [ ] Lint/format minimal (ruff/black) ou équivalent.
 - [ ] Badges CI à jour.
 
