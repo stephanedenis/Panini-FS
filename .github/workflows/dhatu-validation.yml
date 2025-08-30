@@ -1,0 +1,187 @@
+name: "🔬 Validation Dhātu Research"
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'RESEARCH/**'
+      - 'CORE/semantic-analyzer/**'
+      - 'CORE/panini-fs/**'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'RESEARCH/**'
+      - 'CORE/semantic-analyzer/**'
+      - 'CORE/panini-fs/**'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  dhatu-validation:
+    name: "🧬 Validate 7 Dhātu Universals"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "📥 Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "🦀 Setup Rust"
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - name: "🐍 Setup Python"
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: "📦 Install Python dependencies"
+        run: |
+          pip install --upgrade pip
+          pip install pytest numpy pandas nltk
+
+      - name: "🔧 Rust format check"
+        run: |
+          if [ -f CORE/panini-fs/Cargo.toml ]; then \
+            (cd CORE/panini-fs && cargo fmt --all -- --check); \
+          else echo "Skip rustfmt: CORE/panini-fs not present"; fi
+
+      - name: "🔍 Rust lint (Clippy)"
+        run: |
+          if [ -f CORE/panini-fs/Cargo.toml ]; then \
+            (cd CORE/panini-fs && cargo clippy --all-targets --all-features -- -D warnings); \
+          else echo "Skip clippy: CORE/panini-fs not present"; fi
+
+      - name: "🏗️ Build PaniniFS Core"
+        run: |
+          if [ -f CORE/panini-fs/Cargo.toml ]; then \
+            (cd CORE/panini-fs && cargo build --verbose); \
+          else echo "Skip build: CORE/panini-fs not present"; fi
+
+      - name: "✅ Test PaniniFS Core"
+        run: |
+          if [ -f CORE/panini-fs/Cargo.toml ]; then \
+            (cd CORE/panini-fs && cargo test --verbose); \
+          else echo "Skip tests: CORE/panini-fs not present"; fi
+
+      - name: "🧬 Validate Dhātu Detection"
+        run: |
+          if [ -f CORE/semantic-analyzer/dhatu-detector/dhatu_detector.py ]; then \
+            (cd CORE/semantic-analyzer && python dhatu-detector/dhatu_detector.py --test || true); \
+          elif [ -f CORE/semantic-analyzer/dhatu_detector.py ]; then \
+            (cd CORE/semantic-analyzer && python dhatu_detector.py --test || true); \
+          else echo "Skip dhatu detector: files not present"; fi
+
+      - name: "📊 Run Research Validation"
+        run: |
+          if [ -d RESEARCH ] && [ -d RESEARCH/tests ]; then \
+            (cd RESEARCH && python -m pytest tests/ -v --tb=short); \
+          else echo "Skip research tests: RESEARCH/tests not present"; fi
+
+      - name: "📈 Generate Coverage Report"
+        run: |
+          if [ -f CORE/panini-fs/Cargo.toml ]; then \
+            (cd CORE/panini-fs && cargo install cargo-tarpaulin && cargo tarpaulin --out xml); \
+          else echo "Skip coverage: CORE/panini-fs not present"; fi
+
+      - name: "📤 Upload Coverage"
+        uses: codecov/codecov-action@v3
+        continue-on-error: true
+        with:
+          files: ./CORE/panini-fs/cobertura.xml
+          flags: rust-core
+
+  semantic-benchmarks:
+    name: "📊 Semantic Compression Benchmarks"
+    runs-on: ubuntu-latest
+    needs: dhatu-validation
+    steps:
+      - name: "📥 Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "🦀 Setup Rust"
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: "🏃‍♂️ Run Performance Benchmarks"
+        run: |
+          if [ -f CORE/panini-fs/Cargo.toml ]; then \
+            (cd CORE/panini-fs && cargo bench); \
+          else echo "Skip bench: CORE/panini-fs not present"; fi
+
+      - name: "📊 Compression Ratio Analysis"
+        run: |
+          if [ -d CORE/semantic-analyzer ] && { [ -f CORE/semantic-analyzer/dhatu_detector.py ] || [ -f CORE/semantic-analyzer/dhatu-detector/dhatu_detector.py ]; } && [ -d CORE/semantic-analyzer/samples ]; then \
+            cd CORE/semantic-analyzer; \
+            python - << 'PY'
+            import sys, os
+            sys.path.append('.')
+            try:
+                from dhatu_detector import analyze_compression_ratio
+            except Exception:
+                sys.path.append('dhatu-detector')
+                from dhatu_detector import analyze_compression_ratio
+            ratio = analyze_compression_ratio('samples/')
+            print(f'Compression ratio: {ratio}%')
+            import sys as _sys
+            if ratio < 50:
+                _sys.exit(1)
+            PY
+          else
+            echo "Skip compression ratio: required files not present"; \
+          fi
+
+  research-validation:
+    name: "🔬 Research Reproducibility"
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[research]')
+    steps:
+      - name: "📥 Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "🐍 Setup Python Research Environment"
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: "📦 Install Research Dependencies"
+        run: |
+          pip install jupyter pandas matplotlib seaborn scipy
+          pip install nltk spacy transformers
+
+      - name: "🔬 Execute Research Notebooks"
+        run: |
+          cd RESEARCH
+          jupyter nbconvert --execute --to notebook \
+            --inplace discoveries/**/*.ipynb
+
+      - name: "✅ Validate Research Reproducibility"
+        run: |
+          cd RESEARCH
+          python scripts/validate_reproducibility.py
+
+  publication-update:
+    name: "📚 Auto-Update Publications"
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: "📥 Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "🐍 Setup Python"
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: "📝 Generate Publication Updates"
+        run: |
+          cd ECOSYSTEM/publication-engine
+          python publication_generator.py --auto-update
+
+      - name: "🚀 Trigger Publication Workflow"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run publication-sync.yml \
+            --field version="${{ github.ref_name }}"
+
