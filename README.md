@@ -1,5 +1,7 @@
 # 🎌 PaniniFS - Écosystème de Compression Sémantique Universelle
 
+> Contribution et workflow: voir `Copilotage/CONTRIBUTING.md` et `Copilotage/COPILOTAGE_WORKFLOW.md`.
+
 **PaniniFS** est un écosystème révolutionnaire de systèmes de fichiers basé sur l'analyse linguistique et la compression sémantique des contenus. Inspiré des travaux de Pāṇini et de la découverte des **dhātu informationnels** - les atomes conceptuels universels de l'information.
 
 ## 🏗️ Architecture d'Entreprise Moderne
