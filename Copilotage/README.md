@@ -16,6 +16,17 @@ Quickstart
 3) Travaillez en petits commits référencés: "… (Refs #<num>)".
 4) Ouvrez une PR vers master avec checklists et journal associé.
 
+## Outils DevOps
+- scripts/devops/gh_task_init.sh — crée/retrouve l’issue et la branche
+- scripts/devops/gh_pr_open.sh — ouvre une PR avec titre auto-préfixé `[journal:HOST-pidPID]`
+
+### Exemple
+```bash
+Copilotage/scripts/devops/gh_task_init.sh "[docs] Consolidation Copilotage" docs copilotage-docs
+# travail...
+Copilotage/scripts/devops/gh_pr_open.sh "Consolidation Copilotage"
+```
+
 Journalisation
 - Script: Copilotage/scripts/devops/journal_session.sh session
 - Ajoutez Contexte, Actions, Liens, Tests, Next.
