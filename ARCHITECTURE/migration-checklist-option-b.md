@@ -17,9 +17,9 @@ Cette checklist décrit des étapes sans effet destructif par défaut.
 - [ ] Rendre les chemins et imports relatifs compatibles.
 
 ## Mise à jour parent (PaniniFS)
-- [ ] Mettre à jour `.gitmodules` (supprimer 2 anciens, ajouter `modules/execution-orchestrator`).
-- [ ] Synchroniser submodules (`git submodule sync && git submodule update --init --recursive`).
-- [ ] Mettre à jour READMEs racine et modules.
+- [x] Mettre à jour `.gitmodules` (supprimer 2 anciens, ajouter `modules/execution-orchestrator`).
+- [x] Synchroniser submodules (`git submodule sync && git submodule update --init --recursive`).
+- [x] Mettre à jour READMEs racine et modules.
 
 ## CI/Qualité
 - [x] Ajouter smoke tests pour orchestrateur et missions (pytest + GH Actions).
