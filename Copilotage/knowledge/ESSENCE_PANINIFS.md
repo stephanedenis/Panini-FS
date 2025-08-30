@@ -13,6 +13,11 @@ Piliers
 - Sous-modules pour missions: autonomous-missions, semantic-core, publication-engine, cloud-orchestrator, ultra-reactive, colab-controller.
 - Processus: chaque travail ouvre une issue, crée une branche, PR qui ferme l’issue; journalisation de session host+pid.
 - Qualité: tests (pytest), CI minimal, licences MIT partout.
+ - Fiches détaillées:
+	 - `SEMANTIC_UNIVERSALS_DHATU.md`
+	 - `HYPERNODAL_DB_AND_LATTICE.md`
+	 - `PATTERN_FINGERPRINTS_AND_RECURSION_TRAPS.md`
+	 - `MODULES_OVERVIEW_AND_PARENT_PROJECT.md`
 
 Sources consultées
 - GOVERNANCE/Copilotage/INDEX_MEMOIRE_INTERNE.md
@@ -29,3 +34,4 @@ Prochaines étapes
 - Synchroniser contenus Medium/Leanpub dans les fichiers dédiés.
 - Esquisser READMEs standardisés par sous-module.
 - Mettre en place lint/format dans CI parent et modules.
+ - Créer le repo parent "Panini" et fédérer la vision globale.

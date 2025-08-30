@@ -10,15 +10,19 @@
 	path = modules/publication-engine
 	url = git@github.com:stephanedenis/PaniniFS-PublicationEngine.git
 	branch = main
-[submodule "modules/cloud-orchestrator"]
-	path = modules/cloud-orchestrator
-	url = git@github.com:stephanedenis/PaniniFS-CloudOrchestrator.git
-	branch = main
 [submodule "modules/ultra-reactive"]
 	path = modules/ultra-reactive
 	url = git@github.com:stephanedenis/PaniniFS-UltraReactive.git
 	branch = main
-[submodule "modules/colab-controller"]
-	path = modules/colab-controller
-	url = git@github.com:stephanedenis/PaniniFS-CoLabController.git
+[submodule "modules/execution-orchestrator"]
+	path = modules/execution-orchestrator
+	url = git@github.com:stephanedenis/PaniniFS-ExecutionOrchestrator.git
+	branch = main
+[submodule "modules/datasets-ingestion"]
+	path = modules/datasets-ingestion
+	url = git@github.com:stephanedenis/PaniniFS-DatasetsIngestion.git
+	branch = main
+[submodule "modules/attribution-registry"]
+	path = modules/attribution-registry
+	url = git@github.com:stephanedenis/PaniniFS-AttributionRegistry.git
 	branch = main

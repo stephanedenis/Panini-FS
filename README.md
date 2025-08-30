@@ -27,8 +27,7 @@ L'écosystème PaniniFS est organisé en modules spécialisés pour une architec
 ### 🌐 **ECOSYSTEM/** - Modules Spécialisés
 - **`semantic-core/`** : Core de traitement sémantique
 - **`publication-engine/`** : Générateur de publications
-- **`colab-controller/`** : Contrôleur Google Colab
-- **`cloud-orchestrator/`** : Orchestration cloud
+- **`execution-orchestrator/`** : Orchestrateur unique avec drivers (local/colab/cloud) et catalogue `missions/`
 - **`integrations/`** : GitHub, Firebase, Azure...
 
 ### 📚 **RESEARCH/** - Découvertes Scientifiques

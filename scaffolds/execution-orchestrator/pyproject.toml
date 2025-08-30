@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "execution-orchestrator"
+version = "0.1.0"
+description = "Execution orchestrator (drivers: local, colab, cloud)"
+authors = [{name="Stéphane Denis"}]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "typer>=0.12",
+]
+
+[project.scripts]
+exec-orch = "execution_orchestrator.cli:app"
