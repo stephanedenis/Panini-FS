@@ -13,6 +13,9 @@ Vérifications
 - [ ] Docs/dashboard impactés mis à jour si nécessaire
 - [ ] Journal de session ajouté dans `Copilotage/journal/`
 - [ ] Labels auto présents: `agent:<id>` et/ou `journal:<host>-pid<pid>`
+- [ ] Merge par un agent différent (cross-check)
 
 Clôture
 - Closes #<num> (remplacer si pertinent)
+
+Astuce: utilisez `Copilotage/scripts/devops/gh_pr_open.sh` pour générer le titre conforme.

@@ -1,6 +1,7 @@
 # Copilotage — Guide de contribution et d’orchestration
 
 [![CI Minimal](https://github.com/stephanedenis/PaniniFS/actions/workflows/paniniFS-ci.yml/badge.svg)](https://github.com/stephanedenis/PaniniFS/actions/workflows/paniniFS-ci.yml)
+[![CodeQL](https://github.com/stephanedenis/PaniniFS/actions/workflows/codeql.yml/badge.svg)](https://github.com/stephanedenis/PaniniFS/actions/workflows/codeql.yml)
 [![Label PRs by Agent](https://github.com/stephanedenis/PaniniFS/actions/workflows/label-agent.yml/badge.svg)](https://github.com/stephanedenis/PaniniFS/actions/workflows/label-agent.yml)
 [![Validate Agent Session Tag](https://github.com/stephanedenis/PaniniFS/actions/workflows/validate-agent-session.yml/badge.svg)](https://github.com/stephanedenis/PaniniFS/actions/workflows/validate-agent-session.yml)
 
