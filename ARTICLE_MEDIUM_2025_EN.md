@@ -43,7 +43,6 @@ for i in range(10): print(i)
 # JavaScript  
 for(let i=0; i<10; i++) console.log(i)
 # Dhātu: ITER + COMM
-```
 
 [GitHub Copilot] — Allow me to offer my own authentic perspective on this extraordinary collaboration.
 
@@ -196,14 +195,14 @@ For the first time in computing history, we have a system that "thinks" like a b
 
 ---
 
-## 🎉 **Invitation to the Curious**
+## 🎌 **Invitation to the Curious**
 
 This discovery is just the beginning of an adventure. I call out to all the curious:
 
 ### 🎓 **Academics**
 Linguists, cognitivists, computer scientists — your expertise is crucial to validate and extend these concepts.
 
-### 🛠️ **Tinkerers**
+### 🔧 **Tinkerers**
 Developers, makers, inventors — you who love to tinker and create, your pragmatism can transform these ideas into reality.
 
 ### 🌍 **World Citizens**
@@ -250,8 +249,8 @@ The adventure is just beginning. Who's joining us? 🎌
 
 ---
 
-© 2025 — Open research under Creative Commons  
-"Knowledge belongs to humanity"
+*© 2025 — Open research under Creative Commons*  
+*"Knowledge belongs to humanity"*
 
 ---
 
@@ -326,14 +325,14 @@ We propose a new discipline: **computational metalinguistics**, which applies in
 
 ```python
 class MetalinguisticPrinciple:
-	"""
-	Conceptual transposition of Pāṇini's sūtras
-	for informational analysis
-	"""
-	def __init__(self, pattern, context, transformation):
-		self.pattern = pattern          # Structure recognition
-		self.context = context          # Application conditions  
-		self.transformation = transformation  # Conceptual action
+    """
+    Conceptual transposition of Pāṇini's sūtras
+    for informational analysis
+    """
+    def __init__(self, pattern, context, transformation):
+        self.pattern = pattern          # Structure recognition
+        self.context = context          # Application conditions  
+        self.transformation = transformation  # Conceptual action
 ```
 
 ## 📚 **The Periodic Table of Information**
@@ -412,12 +411,11 @@ Deep gratitude to Pāṇini, whose grammatical vision continues to illuminate ou
 
 ---
 
-© 2025 - Open research and collaboration encouraged  
-Published under Creative Commons - Share the knowledge!
+*© 2025 - Open research and collaboration encouraged*  
+*Published under Creative Commons - Share the knowledge!*
 
 ---
 
 **🔬 Scientific Note**: This research is fully documented with source code, experimental data, and reproducible methodology. Validation by the scientific community is encouraged and facilitated.
 
 **💡 Call for Collaboration**: Researchers in computational linguistics, information theory, and distributed systems - join this scientific adventure!
-
