@@ -20,11 +20,10 @@ Sous-modules actuels (rappel, historique)
 - autonomous-missions — orchestration d’actions
 - semantic-core — noyau sémantique (dhātu, indexation)
 - publication-engine — pipelines éditoriaux (Medium/Leanpub)
-- cloud-orchestrator — déploiements/infra
-- ultra-reactive — monitoring/doctor
-- colab-controller — automatisation Colab
+- attribution-registry — registre de provenance/licences (nouveau)
+- datasets-ingestion — ingestion/normalisation corpus (nouveau)
 
 À faire
 - Voir `ARCHITECTURE/ADR-2025-08-30-modular-restructuring-option-b.md` et `ARCHITECTURE/module-contracts.md`.
-- Créer le repo ExecutionOrchestrator et migrer cloud-orchestrator/colab-controller + autonomous-missions (missions/).
+- Repo ExecutionOrchestrator créé; migrer cloud-orchestrator/colab-controller + autonomous-missions (missions/).
 - Créer les repos attribution-registry et datasets-ingestion (MVP + contrats).
