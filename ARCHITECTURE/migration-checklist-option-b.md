@@ -4,16 +4,16 @@ Cette checklist décrit des étapes sans effet destructif par défaut.
 
 ## Préparation
 - [ ] Ouvrir une issue "Restructure modules (Option B)" et lier ADR.
-- [ ] Créer le repo `PaniniFS-ExecutionOrchestrator` (vide, README, MIT, CI minimal).
+- [x] Créer le repo `PaniniFS-ExecutionOrchestrator` (vide, README, MIT, CI minimal).
 - [ ] Désactiver les protections temporaires si nécessaire (push branches).
 
 ## Migration code (locale)
 - [ ] Cloner les repos: CloudOrchestrator, CoLabController, AutonomousMissions.
 - [ ] Regrouper historiques:
-  - [ ] Importer `cloud-orchestrator` → branche `import/cloud` dans ExecutionOrchestrator.
-  - [ ] Importer `colab-controller` → branche `import/colab`.
+  - [x] Importer `cloud-orchestrator` → branche `import/cloud` dans ExecutionOrchestrator.
+  - [x] Importer `colab-controller` → branche `import/colab`.
   - [ ] Fusionner en `main` avec dossier `drivers/colab`, `drivers/cloud`.
-  - [ ] Importer `autonomous-missions` → `missions/` (préserver historique si possible).
+  - [x] Importer `autonomous-missions` → `missions/` (préserver historique si possible).
 - [ ] Rendre les chemins et imports relatifs compatibles.
 
 ## Mise à jour parent (PaniniFS)
@@ -22,7 +22,7 @@ Cette checklist décrit des étapes sans effet destructif par défaut.
 - [ ] Mettre à jour READMEs racine et modules.
 
 ## CI/Qualité
-- [ ] Ajouter smoke tests pour orchestrateur et missions.
+- [x] Ajouter smoke tests pour orchestrateur et missions.
 - [ ] Lint/format minimal (ruff/black) ou équivalent.
 - [ ] Badges CI à jour.
 
