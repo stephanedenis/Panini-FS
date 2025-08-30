@@ -12,7 +12,7 @@ jobs:
   label-by-agent:
     runs-on: ubuntu-latest
     steps:
-      - name: Derive agent from PR and add label
+      - name: Derive agent/session from PR and add labels
         uses: actions/github-script@v7
         with:
           script: |
@@ -24,11 +24,21 @@ jobs:
             const title = pr.title || '';
             const headRef = pr.head && pr.head.ref ? pr.head.ref : '';
 
-            // Try [agent:ID] in title first
+            // Extract identifiers from title: [journal:HOST-pidPID] and/or [agent:HOST]
             let agent = null;
-            const titleMatch = title.match(/\[agent:([A-Za-z0-9._-]+)\]/i);
-            if (titleMatch) {
-              agent = titleMatch[1];
+            let journalHost = null;
+            let journalPid = null;
+
+            const journalMatch = title.match(/\[journal:([A-Za-z0-9._-]+)-pid(\d+)\]/i);
+            if (journalMatch) {
+              journalHost = journalMatch[1];
+              journalPid = journalMatch[2];
+              agent = journalHost; // Derive agent from journal host
+            }
+
+            const agentMatch = title.match(/\[agent:([A-Za-z0-9._-]+)\]/i);
+            if (!agent && agentMatch) {
+              agent = agentMatch[1];
             }
 
             // Fallbacks: branch patterns like agents/ID/... or agent-ID/...
@@ -38,12 +48,21 @@ jobs:
               if (m) agent = m[1];
             }
 
-            if (!agent) {
-              core.info('No agent identifier found; skipping label.');
+            // Nothing detected? Skip gracefully
+            if (!agent && !journalHost) {
+              core.info('No agent or journal identifier found; skipping labels.');
               return;
             }
 
-            const labelName = `agent:${agent.toLowerCase()}`;
+            // Compute labels to apply
+            const labelsToApply = [];
+            if (agent) labelsToApply.push(`agent:${agent.toLowerCase()}`);
+            if (journalHost && journalPid) labelsToApply.push(`journal:${journalHost.toLowerCase()}-pid${journalPid}`);
+
+            if (!labelsToApply.length) {
+              core.info('Nothing to label.');
+              return;
+            }
 
             // Ensure label exists
             async function ensureLabel(name) {
@@ -60,6 +79,8 @@ jobs:
               }
             }
 
-            await ensureLabel(labelName);
-            await github.rest.issues.addLabels({ owner, repo, issue_number: number, labels: [labelName] });
-            core.info(`Applied label ${labelName} to PR #${number}`);
+            for (const lbl of labelsToApply) {
+              await ensureLabel(lbl);
+            }
+            await github.rest.issues.addLabels({ owner, repo, issue_number: number, labels: labelsToApply });
+            core.info(`Applied labels ${labelsToApply.join(', ')} to PR #${number}`);
