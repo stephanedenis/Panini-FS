@@ -6,7 +6,10 @@ body:
   - type: markdown
     attributes:
       value: |
-        Merci de suivre Copilotage: l’issue pilote la branche et le PR.
+        Merci de suivre Copilotage: l’issue pilote la branche et la PR.
+        
+        - Branche: `<type>/issue-<num>-<slug>`
+        - Titre de PR: doit inclure `[journal:HOST-pidPID]` (ex: `[journal:totoro-pid12345]`)
   - type: input
     id: goal
     attributes:

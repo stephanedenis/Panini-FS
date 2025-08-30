@@ -6,7 +6,10 @@ body:
   - type: markdown
     attributes:
       value: |
-        Merci de suivre le workflow Copilotage: l’issue crée la branche feature/fix et sera liée au PR.
+        Merci de suivre le workflow Copilotage: l’issue crée la branche fix et sera liée au PR.
+        
+        - Branche: `fix/issue-<num>-<slug>`
+        - Titre de PR: doit inclure `[journal:HOST-pidPID]` (ex: `[journal:totoro-pid12345]`)
   - type: input
     id: summary
     attributes:

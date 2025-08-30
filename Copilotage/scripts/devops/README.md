@@ -1,5 +1,8 @@
 # DevOps utilitaires (Copilotage)
 
+- devops/gh_task_init.sh — ouvre (ou réutilise) une issue et crée la branche `<type>/issue-<num>-<slug>`
+- devops/gh_pr_open.sh — ouvre une PR avec titre auto-préfixé `[journal:HOST-pidPID]`
+- devops/journal_session.sh — génère un squelette de journal dans Copilotage/journal
 - fix_remotes.sh: bascule/normalise l'URL du remote (HTTPS <-> SSH)
 - git_audit.sh: audit rapide (remotes, status, fetch, submodules, dernier commit)
 - bootstrap_submodules.sh: ajoute/initialise les submodules de l'écosystème (modules/*)
@@ -10,13 +13,11 @@ Racine propre: aucun utilitaire ne doit rester à la racine. Placez tout ici.
 ## Usage rapide
 
 ```
-# Normaliser les remotes et auditer
-./fix_remotes.sh https
-./git_audit.sh
+# Créer l’issue + branche
+Copilotage/scripts/devops/gh_task_init.sh "[docs] Consolidation Copilotage" docs copilotage-docs
 
-# Initialiser les submodules (si réseau/accès OK)
-./bootstrap_submodules.sh
-
-# Setup global (optionnel)
-./setup_dev_environment.sh
+# Travailler… puis ouvrir la PR
+Copilotage/scripts/devops/gh_pr_open.sh "Consolidation Copilotage"
 ```
+
+Règle de titre PR imposée par CI: `[journal:HOST-pidPID]` (ex: `[journal:totoro-pid12345]`).
