@@ -29,6 +29,7 @@ jobs:
             let agent = null;
             let journalHost = null;
             let journalPid = null;
+            let model = null;
 
             const journalMatch = title.match(/\[journal:([A-Za-z0-9._-]+)-pid(\d+)\]/i);
             if (journalMatch) {
@@ -42,6 +43,11 @@ jobs:
               agent = agentMatch[1];
             }
 
+            const modelMatch = title.match(/\[model:([A-Za-z0-9._-]+)\]/i);
+            if (modelMatch) {
+              model = modelMatch[1];
+            }
+
             // Fallbacks: branch patterns like agents/ID/... or agent-ID/...
             if (!agent && headRef) {
               let m = headRef.match(/^agents?\/([^\/]+)/i);
@@ -50,7 +56,7 @@ jobs:
             }
 
             // Nothing detected? Skip gracefully
-            if (!agent && !journalHost) {
+            if (!agent && !journalHost && !model) {
               core.info('No agent or journal identifier found; skipping labels.');
               return;
             }
@@ -59,6 +65,7 @@ jobs:
             const labelsToApply = [];
             if (agent) labelsToApply.push(`agent:${agent.toLowerCase()}`);
             if (journalHost && journalPid) labelsToApply.push(`journal:${journalHost.toLowerCase()}-pid${journalPid}`);
+            if (model) labelsToApply.push(`model:${model.toLowerCase()}`);
 
             if (!labelsToApply.length) {
               core.info('Nothing to label.');
