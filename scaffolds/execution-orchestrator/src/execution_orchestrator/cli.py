@@ -1,5 +1,13 @@
 from __future__ import annotations
+import sys
 import typer
+
+try:
+    from .drivers import get as get_driver
+except Exception:
+    # allow CLI in scaffold without drivers present
+    def get_driver(name: str):  # type: ignore
+        return None
 
 app = typer.Typer(help="Execution Orchestrator CLI")
 
@@ -11,7 +19,12 @@ def version():
 @app.command()
 def run(mission: str, backend: str = typer.Option("local", help="local|colab|cloud")):
     """Run a mission on a backend (stub)."""
-    print(f"RUN: mission={mission} backend={backend}")
+    drv = get_driver(backend)
+    if not drv:
+        print(f"Unknown backend: {backend}", file=sys.stderr)
+        raise typer.Exit(code=2)
+    code = drv.run(mission)
+    raise typer.Exit(code=code)
 
 if __name__ == "__main__":
     app()
