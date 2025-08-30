@@ -4,6 +4,7 @@
 [![CodeQL](https://github.com/stephanedenis/PaniniFS/actions/workflows/codeql.yml/badge.svg)](https://github.com/stephanedenis/PaniniFS/actions/workflows/codeql.yml)
 [![Label PRs by Agent](https://github.com/stephanedenis/PaniniFS/actions/workflows/label-agent.yml/badge.svg)](https://github.com/stephanedenis/PaniniFS/actions/workflows/label-agent.yml)
 [![Validate Agent Session Tag](https://github.com/stephanedenis/PaniniFS/actions/workflows/validate-agent-session.yml/badge.svg)](https://github.com/stephanedenis/PaniniFS/actions/workflows/validate-agent-session.yml)
+[![Cross-check visibility](https://github.com/stephanedenis/PaniniFS/actions/workflows/cross-check-visibility.yml/badge.svg)](https://github.com/stephanedenis/PaniniFS/actions/workflows/cross-check-visibility.yml)
 
 Ce dossier regroupe les normes, scripts et artefacts pour structurer le travail assisté par agents IA.
 
