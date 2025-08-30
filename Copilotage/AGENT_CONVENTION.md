@@ -3,13 +3,14 @@
 Objectif: distinguer les PRs par agent pour permettre des validations croisées.
 
 ## Comment marquer une PR
-- Ajoutez dans le titre: `[agent:ID]` (ex: `[agent:steph-laptop]`).
-- À défaut, utilisez un nom de branche: `agents/ID/ma-feature`.
+- Ajoutez dans le titre: `[journal:HOST-pidPID]` (ex: `[journal:totoro-pid12345]`).
+- À défaut, utilisez un nom de branche: `agents/HOST/ma-feature` (moins précis; ne remplace pas le PID).
 
 ## Automatisation
-- Le workflow `.github/workflows/label-agent.yml` ajoute automatiquement un label `agent:<id>` aux PRs.
-- Si aucun ID n’est détecté, aucune action; pensez à éditer le titre de la PR.
+- Le workflow `.github/workflows/label-agent.yml` ajoute automatiquement des labels `agent:<host>` et `journal:<host>-pid<pid>`.
+- Le workflow `.github/workflows/validate-agent-session.yml` échoue si le titre ne contient pas `[journal:HOST-pidPID]`.
+- Exception: ajoutez le label `copilotage-exempt` pour bypass (cas rares).
 
 ## Bonnes pratiques
-- ID court et stable par machine/process (ex: `steph-laptop`, `workstation-1`).
+- HOST = hostname court (ex: `totoro`). PID = PID du process VS Code (ex: `17771`).
 - Garder le même ID sur toute la durée d’une session.
