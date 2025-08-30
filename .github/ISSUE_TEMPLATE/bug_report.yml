@@ -1,0 +1,42 @@
+name: "Bug Report"
+description: "Signaler un bug"
+labels: [bug]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de suivre le workflow Copilotage: l’issue crée la branche feature/fix et sera liée au PR.
+  - type: input
+    id: summary
+    attributes:
+      label: Résumé
+      description: Description courte du bug
+      placeholder: Comportement attendu vs observé
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Étapes pour reproduire
+      description: Détaillez les étapes et contextes
+      placeholder: 1. … 2. … 3. …
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Environnement
+      placeholder: OS, Python, Navigateur, etc.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs/erreurs
+      render: shell
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Vérifications
+      options:
+        - label: J’ai recherché des issues similaires
+        - label: J’ai fourni des étapes de reproduction claires

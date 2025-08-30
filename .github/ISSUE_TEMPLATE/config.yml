@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Discussions générales
+    url: https://github.com/stephanedenis/PaniniFS/discussions
+    about: Questions, idées, échanges informels

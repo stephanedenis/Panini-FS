@@ -1,0 +1,33 @@
+name: "Feature Request"
+description: "Proposer une fonctionnalité"
+labels: [enhancement]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de suivre Copilotage: l’issue pilote la branche et le PR.
+  - type: input
+    id: goal
+    attributes:
+      label: Objectif
+      placeholder: Quel problème résout-on ?
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Portée minimale
+      description: Décrivez le MVP et les non-objectifs
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critères d’acceptation
+      description: Liste de vérification concise
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Vérifications
+      options:
+        - label: Compatible avec la stratégie Camping (léger)
+        - label: Journal de session prévu
