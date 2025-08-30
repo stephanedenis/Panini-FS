@@ -30,3 +30,7 @@
 	path = modules/execution-orchestrator
 	url = git@github.com:stephanedenis/PaniniFS-ExecutionOrchestrator.git
 	branch = main
+[submodule "modules/datasets-ingestion"]
+	path = modules/datasets-ingestion
+	url = git@github.com:stephanedenis/PaniniFS-DatasetsIngestion.git
+	branch = main
