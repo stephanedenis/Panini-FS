@@ -1,0 +1,65 @@
+name: Label PRs by Agent
+
+on:
+  pull_request_target:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  label-by-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Derive agent from PR and add label
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const number = pr.number;
+
+            const title = pr.title || '';
+            const headRef = pr.head && pr.head.ref ? pr.head.ref : '';
+
+            // Try [agent:ID] in title first
+            let agent = null;
+            const titleMatch = title.match(/\[agent:([A-Za-z0-9._-]+)\]/i);
+            if (titleMatch) {
+              agent = titleMatch[1];
+            }
+
+            // Fallbacks: branch patterns like agents/ID/... or agent-ID/...
+            if (!agent && headRef) {
+              let m = headRef.match(/^agents?\/([^\/]+)/i);
+              if (!m) m = headRef.match(/^agent-([^\/]+)/i);
+              if (m) agent = m[1];
+            }
+
+            if (!agent) {
+              core.info('No agent identifier found; skipping label.');
+              return;
+            }
+
+            const labelName = `agent:${agent.toLowerCase()}`;
+
+            // Ensure label exists
+            async function ensureLabel(name) {
+              try {
+                await github.rest.issues.getLabel({ owner, repo, name });
+                return;
+              } catch (e) {
+                // Create label with a default color; ignore if already exists due to race
+                try {
+                  await github.rest.issues.createLabel({ owner, repo, name, color: 'BFD4F2', description: 'PRs ouvertes par un agent spécifique' });
+                } catch (e2) {
+                  core.info(`Label create ignored: ${e2.message}`);
+                }
+              }
+            }
+
+            await ensureLabel(labelName);
+            await github.rest.issues.addLabels({ owner, repo, issue_number: number, labels: [labelName] });
+            core.info(`Applied label ${labelName} to PR #${number}`);
