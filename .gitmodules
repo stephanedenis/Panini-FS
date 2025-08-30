@@ -34,3 +34,7 @@
 	path = modules/datasets-ingestion
 	url = git@github.com:stephanedenis/PaniniFS-DatasetsIngestion.git
 	branch = main
+[submodule "modules/attribution-registry"]
+	path = modules/attribution-registry
+	url = git@github.com:stephanedenis/PaniniFS-AttributionRegistry.git
+	branch = main
