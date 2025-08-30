@@ -1,0 +1,19 @@
+name: "🧹 Repository Maintenance"
+
+on:
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+jobs:
+  noop:
+    name: Health Ping
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print repo health info
+        run: |
+          echo "Repo: $GITHUB_REPOSITORY"
+          echo "Branch: $GITHUB_REF_NAME"
+          echo "Time: $(date -u)"
+          echo "Status: OK"
+

@@ -1,0 +1,16 @@
+name: "🤖 PaniniFS CI Minimal"
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: CI ping
+        run: echo "CI OK on $GITHUB_REF_NAME at $(date -u)"
