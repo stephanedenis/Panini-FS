@@ -18,8 +18,16 @@ if ! command -v gh >/dev/null 2>&1; then
   exit 3
 fi
 
-# Cherche une issue ouverte de même titre
-ISSUE_NUM=$(gh issue list --search "$TITLE" --state open --json number,title 2>/dev/null | jq -r '.[] | select(.title=="'$TITLE'") | .number' || true)
+# Outils facultatifs
+HAS_JQ=1
+if ! command -v jq >/dev/null 2>&1; then HAS_JQ=0; fi
+
+# Cherche une issue ouverte de même titre (si jq disponible)
+ISSUE_NUM=""
+if [[ "$HAS_JQ" -eq 1 ]]; then
+  ISSUE_NUM=$(gh issue list --search "$TITLE" --state open --json number,title 2>/dev/null \
+    | jq -r --arg T "$TITLE" '.[] | select(.title==$T) | .number' || true)
+fi
 if [[ -z "$ISSUE_NUM" ]]; then
   ISSUE_URL=$(gh issue create --title "$TITLE" --body "Créée via gh_task_init.sh" || true)
   ISSUE_NUM=${ISSUE_URL##*/}
