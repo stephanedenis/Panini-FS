@@ -137,7 +137,7 @@ gh api user/packages
 ### **Variables Environnement Sécurisées**
 ```bash
 # Local (jamais commit)
-export GITHUB_TOKEN="ghp_xxxxxxxxxxxxxxxxxxxx"
+export GITHUB_TOKEN="<VOTRE_TOKEN_PAT>"
 
 # GitHub Actions (secrets)
 # Via GitHub web interface: Settings → Secrets → Actions
