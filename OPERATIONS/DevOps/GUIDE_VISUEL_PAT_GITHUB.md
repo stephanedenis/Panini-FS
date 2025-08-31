@@ -58,7 +58,7 @@
 ```
 🔍 VÉRIFIEZ: "read:org" est bien coché
 🟢 CLIQUEZ: "Generate token" (bouton vert en bas)
-📋 COPIEZ: Le token généré (commence par ghp_)
+📋 COPIEZ: Le token généré (PAT GitHub)
 ```
 
 ## 🎯 **NAVIGATION ALTERNATIVE**
