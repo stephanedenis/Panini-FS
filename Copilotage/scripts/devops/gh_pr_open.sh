@@ -47,18 +47,7 @@ if [[ "$CURR_BRANCH" =~ ^([^/]+)/issue-([0-9]+)-(.+)$ ]]; then
   ISSUE_NUM="${BASH_REMATCH[2]}"
 fi
 
-HOST_SHORT=${HOSTNAME:-$(hostname -s 2>/dev/null || hostname 2>/dev/null || echo "host")}
-PID_HINT=$$
-<<<<<<< HEAD
-SANITIZE() { printf '%s' "$1" | sed 's/[\[\]\n\r]/_/g; s/[[:space:]]\+/_/g'; }
-AGENT_SAFE=$(SANITIZE "${AGENT_TAG:-copilot}")
-MODEL_SAFE=$(SANITIZE "${MODEL_TAG:-unknown}")
-PREFIX="[${HOST_SHORT}-${PID_HINT}-${AGENT_SAFE}-${MODEL_SAFE}]"
-
-TITLE="${PREFIX} ${TYPE}: ${SUMMARY}"
-=======
 TITLE="${TYPE}: ${SUMMARY}"
->>>>>>> ffd6a72 (CI/Governance: migrate PR metadata from journal: to provenance:, update workflows, scripts, and templates)
 if [[ -n "$ISSUE_NUM" ]]; then
   TITLE+=" (Refs #${ISSUE_NUM})"
 fi
@@ -68,19 +57,23 @@ BODY="PR ouverte via gh_pr_open.sh.\n\n- Branche: ${CURR_BRANCH}\n- Modèle: ${M
 # Crée la PR
 gh pr create --title "$TITLE" --body "$BODY" --base "$BASE_BRANCH" --head "$CURR_BRANCH"
 
-# Ajoute les labels de provenance courts
-HOST_SHORT=${HOSTNAME:-$(hostname -s 2>/dev/null || hostname 2>/dev/null || echo "host")}
+# Ajoute des labels provenance courts (<=50 chars chacun)
+HOST_RAW=${HOSTNAME:-$(hostname -s 2>/dev/null || hostname 2>/dev/null || echo "host")}
+# Normalise: minuscules, retire espaces, garde alnum.-_
+HOST_NORM=$(echo "$HOST_RAW" | tr '[:upper:]' '[:lower:]' | tr -cd 'a-z0-9._-' | cut -c1-24)
+[ -z "$HOST_NORM" ] && HOST_NORM="host"
 PID_HINT=$$
+
+LBL_HOST="prov:host=${HOST_NORM}"
+LBL_PID="prov:pid=${PID_HINT}"
+LBL_AGENT="agent:${AGENT_TAG}"
+LBL_MODEL="model:${MODEL_TAG:-unspecified}"
+LBL_OWNER="owner:${OWNER_TAG}"
+
+# S'assure que les labels existent (couleur par défaut)
+for L in "$LBL_HOST" "$LBL_PID" "$LBL_AGENT" "$LBL_MODEL" "$LBL_OWNER"; do
+  gh label create "$L" --color BFD4F2 --description "Provenance/agent metadata" || true
+done
+
 PR_NUMBER=$(gh pr view --json number --jq .number)
-
-add_label() {
-  local label="$1"; local desc="$2"; local color="${3:-FFFFFF}"
-  gh label list --limit 200 | grep -Fq "$label" || gh label create "$label" --color "$color" --description "$desc" || true
-  gh pr edit "$PR_NUMBER" --add-label "$label" || true
-}
-
-add_label "prov:host=${HOST_SHORT}" "Host provenance" "EEEEEE"
-add_label "prov:pid=${PID_HINT}" "PID provenance" "DDDDDD"
-add_label "agent:${AGENT_TAG}" "Agent name" "CCCCCC"
-add_label "model:${MODEL_TAG:-unspecified}" "Model name" "BBBBBB"
-add_label "owner:${OWNER_TAG}" "Work owner" "AAAAAA"
+exec gh pr edit "$PR_NUMBER" --add-label "$LBL_HOST" --add-label "$LBL_PID" --add-label "$LBL_AGENT" --add-label "$LBL_MODEL" --add-label "$LBL_OWNER"

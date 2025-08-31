@@ -20,11 +20,11 @@ Quickstart
 2) Créez la branche liée:
    - Script: Copilotage/scripts/devops/gh_task_init.sh "[type] Titre" type slug
 3) Travaillez en petits commits référencés: "… (Refs #<num>)".
-4) Ouvrez une PR vers master avec checklists, journal associé et label `provenance:`.
+4) Ouvrez une PR vers master avec checklists, journal associé et labels `prov:host`, `prov:pid`, `agent:*`, `model:*`, `owner:*`.
 
 ## Outils DevOps
 - scripts/devops/gh_task_init.sh — crée/retrouve l’issue et la branche
-- scripts/devops/gh_pr_open.sh — ouvre une PR et ajoute le label `provenance:host=…,pid=…,agent=GitHubCopilot,model=…,owner=…`
+- scripts/devops/gh_pr_open.sh — ouvre une PR et ajoute les labels `prov:host=…`, `prov:pid=…`, `agent:GitHubCopilot`, `model=…`, `owner=…`
 
 ### Exemple
 ```bash
