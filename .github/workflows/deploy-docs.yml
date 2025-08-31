@@ -1,4 +1,6 @@
 name: Deploy MkDocs Site
+permissions:
+  contents: write
 
 on:
   push:
