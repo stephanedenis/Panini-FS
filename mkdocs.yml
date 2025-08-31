@@ -64,10 +64,12 @@ plugins:
       # Force SVG output for link support
       output_format: svg
   - i18n:
-      default_language: fr
       languages:
-        fr: Français
-        en: English
+        - locale: fr
+          name: Français
+          default: true
+        - locale: en
+          name: English
       nav_translations:
         fr:
           Home: Accueil
