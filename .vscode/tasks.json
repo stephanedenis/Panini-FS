@@ -1,5 +1,6 @@
 {
-  "version": "2.0.0",
+      // Tasks pour la documentation (réduisent les risques de blocage/pager)
+      "version": "2.0.0",
   "tasks": [
     {
       "label": "Docs: Generate modules index",

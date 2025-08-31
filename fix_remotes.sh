@@ -82,6 +82,7 @@ normalize_github_slug() {
 	local url="$1"
 	local owner name
 	if [[ "$url" =~ ^https://github.com/([^/]+)/([^/]+?)(\.git)?$ ]]; then
+<<<<<<< HEAD
 		owner="${BASH_REMATCH[1]}"; name="${BASH_REMATCH[2]}"
 	elif [[ "$url" =~ ^git@github.com:([^/]+)/([^/]+?)(\.git)?$ ]]; then
 		owner="${BASH_REMATCH[1]}"; name="${BASH_REMATCH[2]}"
@@ -101,18 +102,46 @@ to_ssh() {
 	slug=$(normalize_github_slug "$url")
 	if [[ -n "$slug" ]]; then
 		echo "git@github.com:${slug}.git"
+=======
+		local owner="${BASH_REMATCH[1]}"
+		local name="${BASH_REMATCH[2]}"
+		# Retire un éventuel suffixe .git puis le rajoute proprement
+		name="${name%.git}"
+		echo "git@github.com:${owner}/${name}.git"
+	elif [[ "$url" =~ ^ssh://git@github.com/([^/]+)/([^/]+?)(\.git)?$ ]]; then
+		# Déjà SSH style; normaliser en git@github.com:owner/repo.git
+		local owner="${BASH_REMATCH[1]}"
+		local name="${BASH_REMATCH[2]}"
+		name="${name%.git}"
+		echo "git@github.com:${owner}/${name}.git"
+>>>>>>> d278107 (docs(copilotage): directives d’autonomie + PR template)
 	else
 		echo "$url"
 	fi
 }
 
 to_https() {
+<<<<<<< HEAD
 	# git@github.com:owner/repo(.git) | ssh://git@github.com/owner/repo(.git) -> https://github.com/owner/repo.git
 	local url="$1"
 	local slug
 	slug=$(normalize_github_slug "$url")
 	if [[ -n "$slug" ]]; then
 		echo "https://github.com/${slug}.git"
+=======
+	# git@github.com:owner/repo(.git) or ssh://git@github.com/owner/repo(.git) -> https://github.com/owner/repo.git
+	local url="$1"
+	if [[ "$url" =~ ^git@github.com:([^/]+)/([^/]+?)(\.git)?$ ]]; then
+		local owner="${BASH_REMATCH[1]}"
+		local name="${BASH_REMATCH[2]}"
+		name="${name%.git}"
+		echo "https://github.com/${owner}/${name}.git"
+	elif [[ "$url" =~ ^ssh://git@github.com/([^/]+)/([^/]+?)(\.git)?$ ]]; then
+		local owner="${BASH_REMATCH[1]}"
+		local name="${BASH_REMATCH[2]}"
+		name="${name%.git}"
+		echo "https://github.com/${owner}/${name}.git"
+>>>>>>> d278107 (docs(copilotage): directives d’autonomie + PR template)
 	else
 		echo "$url"
 	fi
@@ -129,9 +158,33 @@ apply_repo() {
 	fi
 	case "$mode_" in
 		ssh)
+<<<<<<< HEAD
 			new_url=$(to_ssh "$current_url_") ;;
 		https)
 			new_url=$(to_https "$current_url_") ;;
+=======
+			new_url=$(to_ssh "$current_url_")
+			if [[ "$new_url" == "$current_url_" ]]; then
+				echo "Déjà en SSH (ou format non reconnu): $current_url_"
+			else
+				echo "Mise à jour: '$remote_' -> $new_url"
+				git remote set-url "$remote_" "$new_url"
+			fi
+			;;
+		https)
+			new_url=$(to_https "$current_url_")
+			if [[ "$new_url" == "$current_url_" ]]; then
+				echo "Déjà en HTTPS (ou format non reconnu): $current_url_"
+			else
+				echo "Mise à jour: '$remote_' -> $new_url"
+				git remote set-url "$remote_" "$new_url"
+				# Nettoyage de réécritures éventuelles
+				git config --global --unset url.ssh://git@github.com/.insteadof 2>/dev/null || true
+				git config --global --unset "url.ssh://git@github.com/".insteadof 2>/dev/null || true
+				git config --global --unset url.git@github.com:.insteadof 2>/dev/null || true
+			fi
+			;;
+>>>>>>> d278107 (docs(copilotage): directives d’autonomie + PR template)
 		"")
 			echo "Remote actuel ($remote_): $current_url_"; new_url="$current_url_" ;;
 		*)
@@ -154,6 +207,7 @@ apply_repo() {
 list_submodules_paths() {
 	# Liste les chemins des sous-modules depuis .gitmodules
 	if [[ -f .gitmodules ]]; then
+<<<<<<< HEAD
 		git config --file .gitmodules --name-only --get-regexp path \
 			| awk -F'.path$' '{print $1}' \
 			| while read -r section; do
@@ -196,6 +250,40 @@ fi
 
 if [[ "$apply_submodules" == true ]]; then
 	apply_submodules_recursively
+=======
+		# shellcheck disable=SC2016
+		awk -F'=' '/path[[:space:]]*=/{gsub(/[[:space:]]*/,"",$2); print $2}' .gitmodules | while read -r sm_path; do
+			if [[ -d "$sm_path" ]]; then
+				echo
+				echo "== Sous-module: $sm_path =="
+				(
+					cd "$sm_path"
+					if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+						apply_repo "$mode" "$remote" || true
+						# Recursion sur sous-sous-modules
+						if [[ -f .gitmodules ]]; then
+							apply_submodules_recursively || true
+						fi
+					else
+						echo "Avertissement: $sm_path n'est pas un dépôt Git initialisé."
+					fi
+				)
+			fi
+		done
+	else
+		# Fallback: git submodule foreach
+		git submodule foreach --recursive "echo; echo '== Sous-module: $name =='; \"$toplevel/fix_remotes.sh\" ${mode:+$mode} ${remote:+$remote} || true"
+	fi
+}
+
+# Exécution
+if [[ "$apply_current_repo" == true ]]; then
+	apply_repo "$mode" "$remote" || true
+fi
+
+if [[ "$apply_submodules" == true ]]; then
+	apply_submodules_recursively || true
+>>>>>>> d278107 (docs(copilotage): directives d’autonomie + PR template)
 fi
 
 exit 0
