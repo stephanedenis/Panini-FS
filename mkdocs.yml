@@ -51,13 +51,46 @@ theme:
 # Plugins
 plugins:
   - search:
-      lang: 
+      lang:
         - fr
         - en
   - git-revision-date-localized:
       enable_creation_date: true
       type: timeago
       locale: fr
+  - kroki:
+      # Use external kroki server; allows SVG with hyperlinks
+      server_url: https://kroki.io
+      # Force SVG output for link support
+      output_format: svg
+  - i18n:
+      default_language: fr
+      languages:
+        fr: Français
+        en: English
+      nav_translations:
+        fr:
+          Home: Accueil
+          Vision: Vision
+          Architecture: Architecture
+          Linguistic Foundations: Fondations linguistiques
+          Dhātu Framework: Cadre Dhātu
+          Specifications: Spécifications
+          Execution Orchestrator: Orchestrateur d'exécution
+          Documentation Process: Processus documentation
+          Style Guide: Guide de style
+          External References: Références externes
+        en:
+          Accueil: Home
+          Vision: Vision
+          Architecture: Architecture
+          Fondations linguistiques: Linguistic Foundations
+          Cadre Dhātu: Dhātu Framework
+          Spécifications: Specifications
+          Orchestrateur d'exécution: Execution Orchestrator
+          Processus documentation: Documentation Process
+          Guide de style: Style Guide
+          Références externes: External References
 
 # Markdown extensions
 markdown_extensions:
@@ -76,8 +109,8 @@ markdown_extensions:
   - pymdownx.caret
   - pymdownx.details
   - pymdownx.emoji:
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: material.extensions.emoji.to_svg
+      emoji_index: material.extensions.emoji.twemoji
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
@@ -94,7 +127,7 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
+          format: pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.tasklist:
@@ -104,14 +137,35 @@ markdown_extensions:
 # Navigation
 nav:
   - Accueil: index.md
+  - Vision: vision.md
+  - Fondations linguistiques: linguistic-foundations.md
+  - Cadre Dhātu: dhatu-framework.md
+  - Architecture: architecture.md
+  - Schémas (PlantUML): diagrams.md
+  - Spécifications:
+    - Orchestrateur d'exécution: specs/execution-orchestrator.md
+  - Processus documentation: doc-process.md
+  - Guide de style: style-guide.md
+  - Références externes: references.md
   - 🏕️ Dashboard: dashboard.md
   - 📊 Guide Monitoring: monitoring-guide.md
   - Infrastructure: infrastructure.md
   - Surveillance: monitoring.md
   - English:
     - Home: en/index.md
+    - Vision: en/vision.md
+    - Linguistic Foundations: en/linguistic-foundations.md
+    - Dhātu Framework: en/dhatu-framework.md
+    - Architecture: en/architecture.md
+    - Diagrams (PlantUML): en/diagrams.md
+    - Specifications:
+      - Execution Orchestrator: en/specs/execution-orchestrator.md
+    - Documentation Process: en/doc-process.md
+    - Style Guide: en/style-guide.md
+    - External References: en/references.md
     - Infrastructure: en/infrastructure.md
     - Monitoring: en/monitoring.md
+  - Modules docs: modules/index.md
 
 # Extra
 extra:

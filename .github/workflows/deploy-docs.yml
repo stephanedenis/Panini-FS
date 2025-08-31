@@ -1,45 +1,55 @@
-name: 🏕️ Deploy MkDocs Site (Camping Strategy)
+name: Deploy MkDocs Site
+permissions:
+  contents: write
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, main ]
     paths:
       - 'docs_new/**'
+      - 'modules/**/docs/**'
       - 'mkdocs.yml'
       - '.github/workflows/deploy-docs.yml'
   workflow_dispatch:
 
 jobs:
-  deploy:
+  build-deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: 📥 Checkout
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        
-    - name: 🐍 Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-        
-    - name: 📦 Install dependencies
-      run: |
-        pip install mkdocs-material
-        pip install mkdocs-git-revision-date-localized-plugin
-        
-    - name: 🏗️ Build site
-      run: mkdocs build --config-file mkdocs.yml
-      
-    - name: 🚀 Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./site
-        cname: paninifs.org
-        
-    - name: ✅ Success notification
-      run: |
-        echo "🎉 Site MkDocs déployé avec succès!"
-        echo "🌐 Disponible sur: https://paninifs.org"
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install MkDocs deps
+        run: |
+          pip install -r docs_new/requirements.txt
+          pip install jq
+
+      - name: Generate modules docs index
+        run: |
+          python3 scripts/generate_modules_docs_index.py
+
+      - name: Build site
+        env:
+          KROKI_URL: https://kroki.io
+        run: |
+          mkdocs build --strict --config-file mkdocs.yml
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          cname: paninifs.org
+
+      - name: Success
+        run: |
+          echo "Site built and deployed to https://paninifs.org"
