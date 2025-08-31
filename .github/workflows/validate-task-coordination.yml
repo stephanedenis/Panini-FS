@@ -1,0 +1,55 @@
+name: Validate Task Coordination Labels
+
+on:
+  issues:
+    types: [opened, edited, labeled, unlabeled]
+  pull_request:
+    types: [opened, edited, labeled, unlabeled]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  validate-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enforce single queue:* label and normalize
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const payload = context.payload.pull_request || context.payload.issue;
+            const number = payload.number;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            // Fetch labels
+            const { data: labels } = await github.rest.issues.listLabelsOnIssue({ owner, repo, issue_number: number });
+            const names = labels.map(l => l.name);
+
+            // Queue labels
+            const queues = names.filter(n => /^queue:/.test(n));
+            if (queues.length > 1) {
+              core.setFailed(`Plus d'un label queue:* détecté: ${queues.join(', ')}`);
+            }
+
+            // Priority labels normalize set
+            const priorities = names.filter(n => /^priority:/.test(n));
+            const allowedPriorities = new Set(['priority:low','priority:normal','priority:high','priority:urgent']);
+            for (const p of priorities) {
+              if (!allowedPriorities.has(p)) {
+                core.setFailed(`Label priorité non reconnu: ${p}`);
+              }
+            }
+
+            // Size labels normalize set
+            const sizes = names.filter(n => /^size:/.test(n));
+            const allowedSizes = new Set(['size:XS','size:S','size:M','size:L','size:XL']);
+            for (const s of sizes) {
+              if (!allowedSizes.has(s)) {
+                core.setFailed(`Label taille non reconnu: ${s}`);
+              }
+            }
+
+            core.info('Coordination labels validés.');
