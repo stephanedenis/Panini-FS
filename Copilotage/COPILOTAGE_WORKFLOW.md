@@ -38,3 +38,9 @@ Mainteneur: consigner tout écart dans l’issue.
 - Éviter les questions non essentielles; n’en poser qu’en cas de blocage réel ou décision irréversible.
 - Commits atomiques et message concis; référencer l’issue; ouvrir/mettre à jour la PR en fin de lot.
 - Qualité en continu: build/lint/tests rapides après changements substantiels; ne pas laisser un build cassé.
+
+### Note sur “Conserver” (modifications Copilot)
+
+- Par design, l’éditeur demande une confirmation manuelle pour appliquer les modifications proposées par Copilot (bouton « Conserver » par fichier, ou « Conserver tout » depuis la vue des changements).
+- Il n’existe pas d’option officielle pour tout accepter automatiquement sans confirmation.
+- Astuce: utilisez « Conserver tout » avant de lancer l’étape de commit/push, et activez l’auto‑save VS Code pour éviter des fichiers non enregistrés.
