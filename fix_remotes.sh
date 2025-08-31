@@ -84,15 +84,26 @@ to_ssh() {
 		# Retire un éventuel suffixe .git puis le rajoute proprement
 		name="${name%.git}"
 		echo "git@github.com:${owner}/${name}.git"
+	elif [[ "$url" =~ ^ssh://git@github.com/([^/]+)/([^/]+?)(\.git)?$ ]]; then
+		# Déjà SSH style; normaliser en git@github.com:owner/repo.git
+		local owner="${BASH_REMATCH[1]}"
+		local name="${BASH_REMATCH[2]}"
+		name="${name%.git}"
+		echo "git@github.com:${owner}/${name}.git"
 	else
 		echo "$url"
 	fi
 }
 
 to_https() {
-	# git@github.com:owner/repo(.git) -> https://github.com/owner/repo.git
+	# git@github.com:owner/repo(.git) or ssh://git@github.com/owner/repo(.git) -> https://github.com/owner/repo.git
 	local url="$1"
 	if [[ "$url" =~ ^git@github.com:([^/]+)/([^/]+?)(\.git)?$ ]]; then
+		local owner="${BASH_REMATCH[1]}"
+		local name="${BASH_REMATCH[2]}"
+		name="${name%.git}"
+		echo "https://github.com/${owner}/${name}.git"
+	elif [[ "$url" =~ ^ssh://git@github.com/([^/]+)/([^/]+?)(\.git)?$ ]]; then
 		local owner="${BASH_REMATCH[1]}"
 		local name="${BASH_REMATCH[2]}"
 		name="${name%.git}"
@@ -119,7 +130,6 @@ apply_repo() {
 			else
 				echo "Mise à jour: '$remote_' -> $new_url"
 				git remote set-url "$remote_" "$new_url"
-				git config url."ssh://git@github.com/".insteadOf https://github.com/ || true
 			fi
 			;;
 		https)
@@ -129,7 +139,10 @@ apply_repo() {
 			else
 				echo "Mise à jour: '$remote_' -> $new_url"
 				git remote set-url "$remote_" "$new_url"
-				git config --unset url.ssh://git@github.com/.insteadof || true
+				# Nettoyage de réécritures éventuelles
+				git config --global --unset url.ssh://git@github.com/.insteadof 2>/dev/null || true
+				git config --global --unset "url.ssh://git@github.com/".insteadof 2>/dev/null || true
+				git config --global --unset url.git@github.com:.insteadof 2>/dev/null || true
 			fi
 			;;
 		"")
@@ -169,5 +182,18 @@ apply_submodules_recursively() {
 		done
 	else
 		# Fallback: git submodule foreach
-		git submodule foreach --recursive 'echo
+		git submodule foreach --recursive "echo; echo '== Sous-module: $name =='; \"$toplevel/fix_remotes.sh\" ${mode:+$mode} ${remote:+$remote} || true"
+	fi
+}
+
+# Exécution
+if [[ "$apply_current_repo" == true ]]; then
+	apply_repo "$mode" "$remote" || true
+fi
+
+if [[ "$apply_submodules" == true ]]; then
+	apply_submodules_recursively || true
+fi
+
+exit 0
 

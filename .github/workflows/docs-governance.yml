@@ -19,6 +19,15 @@ jobs:
           fetch-depth: 0
           submodules: true
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install MkDocs deps
+        run: |
+          pip install -r docs_new/requirements.txt
+
       - name: Validate FR/EN sync
         id: sync
         run: |
@@ -94,6 +103,12 @@ jobs:
               gh issue comment --repo "$REPO" "$existing" --body "$body" || true
             fi
           done
+
+      - name: Build docs (strict)
+        env:
+          KROKI_URL: https://kroki.io
+        run: |
+          mkdocs build --strict --config-file mkdocs.yml
 
       - name: Summary
         run: |

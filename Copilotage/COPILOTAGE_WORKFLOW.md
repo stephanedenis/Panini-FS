@@ -28,3 +28,13 @@ Cheatsheet:
 ---
 
 Mainteneur: consigner tout écart dans l’issue.
+
+## Directives d’autonomie de l’agent
+
+- Travailler par blocs de 5–10 minutes sans demander de confirmation, tant que les règles sont respectées.
+- Préférer des lots d’actions cohérents (lecture→édition→validation→commit→push→PR) plutôt que des micro-étapes.
+- Toujours tracer l’avancement à l’écran: bref préambule avant un lot d’actions, puis mini-checkpoint après 3–5 actions ou >3 fichiers édités.
+- Avant un lot d’outils: une phrase “pourquoi/quoi/résultat attendu”, puis exécuter; après: “résumé et suite”.
+- Éviter les questions non essentielles; n’en poser qu’en cas de blocage réel ou décision irréversible.
+- Commits atomiques et message concis; référencer l’issue; ouvrir/mettre à jour la PR en fin de lot.
+- Qualité en continu: build/lint/tests rapides après changements substantiels; ne pas laisser un build cassé.
