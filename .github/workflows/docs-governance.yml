@@ -1,0 +1,100 @@
+name: Docs Governance
+
+on:
+  pull_request:
+    branches: [ master, main ]
+    paths:
+      - 'docs_new/**'
+      - 'modules/**/docs/**'
+      - 'mkdocs.yml'
+  workflow_dispatch:
+
+jobs:
+  validate-sync-and-issues:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Validate FR/EN sync
+        id: sync
+        run: |
+          set -euo pipefail
+          changed=$(git --no-pager diff --name-only origin/${{ github.base_ref }}...HEAD | grep '^docs_new/' || true)
+          missing=0
+          while IFS= read -r f; do
+            [ -z "${f}" ] && continue
+            if [[ "$f" == docs_new/en/* ]]; then
+              peer="${f/docs_new\/en\//docs_new/}"
+            else
+              base=${f#docs_new/}
+              peer="docs_new/en/${base}"
+            fi
+            # only check for markdown files
+            if [[ "$f" == *.md ]]; then
+              if [ ! -f "$peer" ]; then
+                echo "Missing translation peer for $f -> $peer" >&2
+                missing=1
+              fi
+            fi
+          done <<< "$changed"
+          if [ $missing -ne 0 ]; then
+            echo "::error::FR/EN sync failed: missing counterpart files."
+            exit 1
+          fi
+
+      - name: Check submodule docs presence
+        run: |
+          set -euo pipefail
+          missing=0
+          for m in modules/*; do
+            [ -d "$m" ] || continue
+            [ -d "$m/.git" ] || continue
+            if [ ! -d "$m/docs" ]; then
+              echo "::warning::Submodule $(basename "$m") has no docs/ directory" 
+            fi
+          done
+
+      - name: Extract TODOs from docs and sync issues
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          # Find fenced blocks starting with ```task or lines starting with TODO:
+          tmpjson=$(mktemp)
+          echo '[' > "$tmpjson"
+          first=1
+          while IFS= read -r file; do
+            while IFS= read -r line; do
+              title=$(echo "$line" | sed 's/^\s*TODO:\s*//')
+              [ -z "$title" ] && continue
+              body="Auto-generated from $file\n\n$title"
+              # escape quotes
+              title_esc=$(printf '%s' "$title" | sed 's/"/\\"/g')
+              body_esc=$(printf '%s' "$body" | sed 's/"/\\"/g')
+              if [ $first -eq 0 ]; then echo ',' >> "$tmpjson"; fi
+              first=0
+              echo "{\"title\": \"$title_esc\", \"body\": \"$body_esc\"}" >> "$tmpjson"
+            done < <(grep -nE '^\s*TODO:\s+' "$file" | sed 's/^[0-9]*://')
+          done < <(git ls-files 'docs_new/**/*.md')
+          echo ']' >> "$tmpjson"
+
+          # Create or update issues labeled docs
+          for row in $(jq -c '.[]' "$tmpjson"); do
+            title=$(echo "$row" | jq -r '.title')
+            body=$(echo "$row" | jq -r '.body')
+            existing=$(gh issue list --repo "$REPO" --search "$title in:title" --label docs --state open --limit 1 --json number --jq '.[0].number' || true)
+            if [ -z "$existing" ]; then
+              gh issue create --repo "$REPO" --title "$title" --body "$body" --label docs || true
+            else
+              gh issue comment --repo "$REPO" "$existing" --body "$body" || true
+            fi
+          done
+
+      - name: Summary
+        run: |
+          echo "Docs governance checks completed."
