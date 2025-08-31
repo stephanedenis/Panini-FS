@@ -8,11 +8,11 @@ Cette page liste les modules et pointe vers leurs documents sur GitHub tant que 
 ## Modules détectés
 
 
-- [Attribution Registry](modules/attribution-registry/docs/index.md) — Documentation du module attribution-registry (index).
-- [Autonomous Missions](modules/autonomous-missions/docs/index.md) — Documentation du module autonomous-missions (index).
-- [Datasets Ingestion](modules/datasets-ingestion/docs/index.md) — Documentation du module datasets-ingestion (index).
-- [Execution Orchestrator](modules/execution-orchestrator/docs/index.md) — Documentation du module execution-orchestrator (index).
-- [Publication Engine](modules/publication-engine/docs/index.md) — Documentation du module publication-engine (index).
-- [Semantic Core](modules/semantic-core/docs/index.md) — Documentation du module semantic-core (index).
-- [Ultra Reactive](modules/ultra-reactive/docs/index.md) — Documentation du module ultra-reactive (index).
+- [Attribution Registry](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/attribution-registry/docs) — Documentation du module attribution-registry (dossier docs/).
+- [Autonomous Missions](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/autonomous-missions/docs) — Documentation du module autonomous-missions (dossier docs/).
+- [Datasets Ingestion](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/datasets-ingestion/docs) — Documentation du module datasets-ingestion (dossier docs/).
+- [Execution Orchestrator](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/execution-orchestrator/docs) — Documentation du module execution-orchestrator (dossier docs/).
+- [Publication Engine](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/publication-engine/docs) — Documentation du module publication-engine (dossier docs/).
+- [Semantic Core](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/semantic-core/docs) — Documentation du module semantic-core (dossier docs/).
+- [Ultra Reactive](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/ultra-reactive/docs) — Documentation du module ultra-reactive (dossier docs/).
 
