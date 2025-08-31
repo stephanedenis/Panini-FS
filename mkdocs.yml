@@ -58,6 +58,11 @@ plugins:
       enable_creation_date: true
       type: timeago
       locale: fr
+  - kroki:
+      # Use external kroki server; allows SVG with hyperlinks
+      server_url: https://kroki.io
+      # Force SVG output for link support
+      output_format: svg
   - i18n:
       default_language: fr
       languages:
@@ -136,6 +141,7 @@ nav:
   - Fondations linguistiques: linguistic-foundations.md
   - Cadre Dhātu: dhatu-framework.md
   - Architecture: architecture.md
+  - Schémas (PlantUML): diagrams.md
   - Spécifications:
     - Orchestrateur d'exécution: specs/execution-orchestrator.md
   - Processus documentation: doc-process.md
@@ -151,6 +157,7 @@ nav:
     - Linguistic Foundations: en/linguistic-foundations.md
     - Dhātu Framework: en/dhatu-framework.md
     - Architecture: en/architecture.md
+    - Diagrams (PlantUML): en/diagrams.md
     - Specifications:
       - Execution Orchestrator: en/specs/execution-orchestrator.md
     - Documentation Process: en/doc-process.md
@@ -158,6 +165,7 @@ nav:
     - External References: en/references.md
     - Infrastructure: en/infrastructure.md
     - Monitoring: en/monitoring.md
+  - Modules docs: modules/index.md
 
 # Extra
 extra:
