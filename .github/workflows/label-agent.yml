@@ -40,6 +40,14 @@ jobs:
               if (obj.model) model = obj.model;
               if (obj.owner) ownerType = obj.owner;
             }
+            // New: if agent label missing but prov:host exists, mirror host as agent
+            if (!agent) {
+              const provHost = labels.find(n => /^prov:host=/i.test(n));
+              if (provHost) {
+                const hostVal = provHost.split('=')[1] || '';
+                if (hostVal) agent = hostVal;
+              }
+            }
 
             const agentMatch = title.match(/\[agent:([A-Za-z0-9._-]+)\]/i);
             if (!agent && agentMatch) {
