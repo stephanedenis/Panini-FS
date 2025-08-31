@@ -54,12 +54,6 @@ plugins:
       lang:
         - fr
         - en
-  - git-revision-date-localized:
-      enable_creation_date: true
-      type: timeago
-      locale: fr
-  - kroki:
-  # Options par défaut; l'URL est fournie via la variable d'environnement KROKI_URL dans CI
   - i18n:
       languages:
         - locale: fr
@@ -67,6 +61,12 @@ plugins:
           default: true
         - locale: en
           name: English
+  - git-revision-date-localized:
+      enable_creation_date: true
+      type: timeago
+      locale: fr
+  - kroki:
+  # Options par défaut; l'URL est fournie via la variable d'environnement KROKI_URL dans CI
 
 
 # Markdown extensions
