@@ -6,8 +6,8 @@ title: Recherche
 
 Cette section rassemble les éléments de recherche: stratégies cloud, méthodologie de publication, et découvertes Dhātu.
 
-## Sections
+## Axes de recherche
 
-- Stratégie calcul gratuit
-- Méthodologie de publication
-- Découvertes Dhātu
+- Universaux sémantiques (Dhātu)
+- Langage humain et développement (de la petite enfance à l’adulte)
+- Compression sémantique informatique (stockage, communication, traitement, apprentissage, éducation)

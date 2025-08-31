@@ -131,6 +131,11 @@ nav:
   - Infrastructure: infrastructure.md
   - Surveillance: monitoring.md
   - Modules docs: modules/index.md
+  - Recherche:
+    - research/index.md
+    - Universaux sémantiques: research/universaux-semantique.md
+    - Langage humain et développement: research/langage-humain-developpement.md
+    - Compression sémantique: research/compression-semantique.md
 
 # Extra
 extra:
