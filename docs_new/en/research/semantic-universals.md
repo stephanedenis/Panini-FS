@@ -16,8 +16,29 @@ Draft synthesis of assumptions, validation paths, and references.
 - A small, stable set of semantic primitives can encode broad conceptual coverage.
 - Human language acquisition stages inform the emergence order of these universals.
 
-## Validation paths
-- Minimal test protocol: coverage, ambiguity, reversibility of encoding.
+## Minimal validation protocol (v0)
+
+- Coverage: map a 100-item frequent concept set (nouns, verbs, relations) to a minimal Dhātu inventory; measure % covered without adding primitives.
+- Ambiguity: for each encoding, count plausible decodings; v0 target ≤ 1.5 interpretations on average (with short context).
+- Reversibility: decode Dhātu reps to EN/FR paraphrases and judge semantic equivalence by humans or a robust LLM (agreement ≥ 0.8).
+- Parsimony: penalize primitive count per concept (median ≤ 4 primitives/concept at v0).
+
+## Micro-cases (sanity checks)
+
+1) Agent-Action-Object (AAO)
+	- Input: "The cat hunts the mouse."
+	- Expected Dhātu: [AGENT:cat] [ACTION:hunt] [PATIENT:mouse] [ASPECT:habitual?]
+	- Tests: tense, negation, modality.
+
+2) Possession and location
+	- Input: "The book is on Mary's table."
+	- Expected Dhātu: [OBJ:book] [REL:on] [REF:table] [REL:of] [REF:Mary]
+	- Tests: attachment ambiguity and relation stacking.
+
+3) Simple quantification
+	- Input: "Three children run."
+	- Expected Dhātu: [QUANT:3] [AGENT:child] [ACTION:run]
+	- Tests: plural, indefinites.
 
 ## Sources (FR journals)
 - See Copilotage journals dated 2025‑08‑30 for context and decisions.

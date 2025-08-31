@@ -12,7 +12,7 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Ensure [journal:HOST-pidPID] present or exempted
+      - name: Ensure [hostname-pid-agent-model] present or exempted
         uses: actions/github-script@v7
         with:
           script: |
@@ -20,17 +20,18 @@ jobs:
             const title = pr.title || '';
             const labels = (pr.labels || []).map(l => l.name);
             const exempt = labels.includes('copilotage-exempt');
-            const hasJournal = /\[journal:[A-Za-z0-9._-]+-pid\d+\]/.test(title);
+            // New required prefix: [hostname-pid-agent-model]
+            const hasPrefix = /\[[A-Za-z0-9._-]+-\d+-[A-Za-z0-9._-]+-[^\]]+\]/.test(title);
             const hasOwner = /\[owner:(human|agent)\]/i.test(title);
             if (exempt) {
               core.notice('Bypass enabled via label copilotage-exempt.');
               return;
             }
-            if (!hasJournal || !hasOwner) {
-              let miss = [];
-              if (!hasJournal) miss.push('[journal:HOST-pidPID]');
+            if (!hasPrefix || !hasOwner) {
+              const miss = [];
+              if (!hasPrefix) miss.push('[hostname-pid-agent-model]');
               if (!hasOwner) miss.push('[owner:human|agent]');
               core.setFailed(`Titre de PR invalide: ajoutez ${miss.join(' et ')} ou ajoutez le label copilotage-exempt pour bypass.`);
             } else {
-              core.info('Validation OK: PID détecté dans le titre.');
+              core.info('Validation OK: préfixe et owner détectés dans le titre.');
             }
