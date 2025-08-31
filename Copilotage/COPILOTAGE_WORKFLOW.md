@@ -7,7 +7,7 @@ Règles obligatoires:
 - Une branche dédiée est créée: `<type>/issue-<num>-<slug>` (ex: `feat/issue-42-vision-agent`).
 - Tous les commits référencent l’issue: `... (#<num>)` ou `Refs #<num>`.
 - Une Pull Request relie la branche à `master/main` et ferme l’issue (`Closes #<num>`).
-- Titre de PR: concis et descriptif (sans préfixe « journal »). Renseigner la provenance via labels.
+- Titre de PR: concis et descriptif (sans préfixe « journal »). Renseigner la provenance via labels courts.
 - Quality gates dans la PR: build/lint/tests, checklist "Done".
 
 Pratiques recommandées:
@@ -16,7 +16,7 @@ Pratiques recommandées:
 
 Automatisation:
 - Utiliser `Copilotage/scripts/devops/gh_task_init.sh` pour ouvrir une issue et créer la branche.
-- Utiliser `Copilotage/scripts/devops/gh_pr_open.sh` pour ouvrir une PR avec ajout automatique des labels de provenance (options `--model`, `--owner`).
+- Utiliser `Copilotage/scripts/devops/gh_pr_open.sh` pour ouvrir une PR avec ajout automatique des labels de provenance courts (options `--model`, `--owner`).
 
 Provenance (labels obligatoires sauf exemption):
 - prov:host=..., prov:pid=...

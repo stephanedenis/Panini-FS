@@ -25,17 +25,20 @@ jobs:
             const title = pr.title || '';
             const headRef = pr.head && pr.head.ref ? pr.head.ref : '';
 
-            // Extract identifiers from title: [journal:HOST-pidPID] and/or [agent:HOST]
+            // Lire les métadonnées depuis le label "provenance:..." si présent
+            const labels = (context.payload.pull_request.labels || []).map(l => l.name);
+            const provenanceLabel = labels.find(n => /^provenance:/i.test(n));
+            // Extract identifiers from title: [agent:HOST] et [model:NOM] (compat)
             let agent = null;
-            let journalHost = null;
-            let journalPid = null;
             let model = null;
-
-            const journalMatch = title.match(/\[journal:([A-Za-z0-9._-]+)-pid(\d+)\]/i);
-            if (journalMatch) {
-              journalHost = journalMatch[1];
-              journalPid = journalMatch[2];
-              agent = journalHost; // Derive agent from journal host
+            let ownerType = null;
+            if (provenanceLabel) {
+              const kv = provenanceLabel.replace(/^provenance:/i,'').split(/[\,\s]+/);
+              const obj = {};
+              kv.forEach(pair => { const [k,v] = pair.split('='); if (k && v) obj[k.trim()]=v.trim(); });
+              if (obj.agent) agent = obj.agent;
+              if (obj.model) model = obj.model;
+              if (obj.owner) ownerType = obj.owner;
             }
 
             const agentMatch = title.match(/\[agent:([A-Za-z0-9._-]+)\]/i);
@@ -56,16 +59,16 @@ jobs:
             }
 
             // Nothing detected? Skip gracefully
-            if (!agent && !journalHost && !model) {
-              core.info('No agent or journal identifier found; skipping labels.');
+            if (!agent && !model && !ownerType) {
+              core.info('No agent/model/owner identifier found; skipping labels.');
               return;
             }
 
             // Compute labels to apply
             const labelsToApply = [];
             if (agent) labelsToApply.push(`agent:${agent.toLowerCase()}`);
-            if (journalHost && journalPid) labelsToApply.push(`journal:${journalHost.toLowerCase()}-pid${journalPid}`);
             if (model) labelsToApply.push(`model:${model.toLowerCase()}`);
+            if (ownerType) labelsToApply.push(`owner:${ownerType.toLowerCase()}`);
 
             if (!labelsToApply.length) {
               core.info('Nothing to label.');
@@ -80,7 +83,7 @@ jobs:
               } catch (e) {
                 // Create label with a default color; ignore if already exists due to race
                 try {
-                  await github.rest.issues.createLabel({ owner, repo, name, color: 'BFD4F2', description: 'PRs ouvertes par un agent spécifique' });
+                  await github.rest.issues.createLabel({ owner, repo, name, color: 'BFD4F2', description: 'Labels dérivés du label provenance' });
                 } catch (e2) {
                   core.info(`Label create ignored: ${e2.message}`);
                 }

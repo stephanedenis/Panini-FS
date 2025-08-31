@@ -42,11 +42,8 @@ fi
 
 git push -u origin HEAD || true
 
-# Afficher le préfixe PR recommandé
-HOST_SHORT=${HOSTNAME:-$(hostname -s 2>/dev/null || hostname 2>/dev/null || echo "host")}
-PID_HINT=$$
-RECOMMENDED_PREFIX="[journal:${HOST_SHORT}-pid${PID_HINT}]"
-echo "Astuce PR: Préfixe recommandé: ${RECOMMENDED_PREFIX} <type>: <résumé> (Refs #${ISSUE_NUM})" >&2
+# Astuce PR: utilisez Copilotage/scripts/devops/gh_pr_open.sh pour ajouter automatiquement le label provenance
+echo "Astuce PR: utilisez Copilotage/scripts/devops/gh_pr_open.sh \"<résumé>\" [--model <nom>] [--owner human|agent]" >&2
 
 echo "Issue #$ISSUE_NUM" >&2
 echo "Branche: $BRANCH" >&2

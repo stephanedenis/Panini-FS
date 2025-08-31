@@ -1,22 +1,31 @@
+<<<<<<< HEAD
 name: Validate Agent Provenance Labels
+=======
+name: Validate PR Agent Provenance Metadata
+>>>>>>> ffd6a72 (CI/Governance: migrate PR metadata from journal: to provenance:, update workflows, scripts, and templates)
 
 on:
   pull_request:
     types: [opened, edited, synchronize, reopened, labeled]
 
-permissions:
+  - name: Ensure PR has required provenance labels or is exempted
   contents: read
   pull-requests: read
 
+<<<<<<< HEAD
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
       - name: Ensure PR has required provenance labels or is exempted
+=======
+      - name: Ensure PR has parsable provenance metadata or is exempted
+>>>>>>> ffd6a72 (CI/Governance: migrate PR metadata from journal: to provenance:, update workflows, scripts, and templates)
         uses: actions/github-script@v7
         with:
           script: |
             const pr = context.payload.pull_request;
+<<<<<<< HEAD
             const labels = (pr.labels || []).map(l => String(l.name));
 
             const REQUIRED_PREFIXES = [
@@ -27,6 +36,10 @@ jobs:
               'owner:'
             ];
             const MAX_LABEL_LEN = 50; // longueur max recommandée
+=======
+            const labels = (pr.labels || []).map(l => l.name);
+            const REQUIRED_KEYS = ['host','pid','agent','model','owner'];
+>>>>>>> ffd6a72 (CI/Governance: migrate PR metadata from journal: to provenance:, update workflows, scripts, and templates)
 
             function ok(msg) { core.info(msg); }
             function fail(msg) { core.setFailed(msg); }
@@ -36,6 +49,7 @@ jobs:
               return ok('Bypass enabled via label copilotage-exempt.');
             }
 
+<<<<<<< HEAD
             // Interdire tout label "journal" (legacy)
             const forbidden = labels.filter(n => /^journal(?::|$)/i.test(n));
             if (forbidden.length > 0) {
@@ -63,6 +77,55 @@ jobs:
 
             if (problems.length > 0) {
               return fail('Provenance invalide:\n- ' + problems.join('\n- '));
+=======
+            function fail(msg) {
+              core.setFailed(msg + '\n\nFormat requis:\n' +
+                '- Label unique: "provenance:host=totoro,pid=163849,agent=GitHubCopilot,model=GPT-5,owner=agent"\n' +
+                '\nAstuce: ajoutez le label "copilotage-exempt" pour bypass ponctuel.');
+            }
+
+            function hasAllKeys(obj) {
+              return REQUIRED_KEYS.every(k => Object.prototype.hasOwnProperty.call(obj, k) && String(obj[k]).length > 0);
+            }
+
+            function parseKVP(labelName) {
+              // Expect: provenance:host=totoro,pid=163849,agent=GitHubCopilot,model=GPT-5,owner=agent
+              const m = labelName.match(/^provenance:(.*)$/);
+              if (!m) return null;
+              const kvp = m[1];
+              const obj = {};
+              kvp.split(/[\,\s]+/).forEach(pair => {
+                if (!pair) return;
+                const idx = pair.indexOf('=');
+                if (idx === -1) return;
+                const k = pair.slice(0, idx).trim();
+                const v = pair.slice(idx + 1).trim();
+                if (k) obj[k] = v;
+              });
+              // Normalize pid as number if possible
+              if (obj.pid && /^\d+$/.test(String(obj.pid))) obj.pid = Number(obj.pid);
+              return obj;
+            }
+
+            const exempt = labels.includes('copilotage-exempt');
+            if (exempt) {
+              ok('Bypass enabled via label copilotage-exempt.');
+              return;
+            }
+
+            // Expect a single parsable label starting with "provenance:"
+            const provLike = labels.find(n => n.toLowerCase().startsWith('provenance:'));
+            if (provLike) {
+              const parsed = parseKVP(provLike);
+              if (parsed && hasAllKeys(parsed)) {
+                ok('Validation OK: métadonnées parsées depuis le label unique "' + provLike + '".');
+                return;
+              }
+            }
+
+            fail('Métadonnées de session manquantes ou incomplètes.');
+              }
+>>>>>>> ffd6a72 (CI/Governance: migrate PR metadata from journal: to provenance:, update workflows, scripts, and templates)
             }
 
             ok('Validation OK: labels de provenance présents et valides.');
