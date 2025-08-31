@@ -81,9 +81,22 @@ Résumé, hypothèses, protocoles de validation, résultats et références.
 - Camping final: https://github.com/stephanedenis/PaniniFS/blob/master/Copilotage/journal/2025-08-30-totoro-pid17771-camping-final.md
 - Assimilation archives: https://github.com/stephanedenis/PaniniFS/blob/master/Copilotage/journal/2025-08-30-linux-pid0-assimilation-archives.md
 
+## Références externes (sélection)
+
+- Haspelmath, M. (2007). Pre-established categories don't exist: Consequences for language description and typology. Linguistic Typology, 11(1). DOI: 10.1515/LINGTY.2007.011
+- WALS — World Atlas of Language Structures. https://wals.info/
+- Universal Dependencies (UD). https://universaldependencies.org/
+- Page « Références de recherche »: ../research/references.md
+
 ---
 
 Notes pratiques
 - L’inventaire de travail: voir « Inventaire Dhātu v0.1 ».
 - Convention de nommage: MAJUSCULE pour rôles/opérateurs; minuscules pour lexèmes; REL peut être spécialisé (SUR/DANS/DE) selon le domaine.
 - Pour les alias anglais: maintenir un fichier EN miroir afin de satisfaire la gouvernance FR/EN tout en centralisant le contenu canonique.
+
+## Essayer (mini-banc d’essai)
+
+- Dossier: `experiments/dhatu/`
+- Lister le corpus jouet: `python experiments/dhatu/validator.py --list`
+- Calculer des métriques brutes: `python experiments/dhatu/validator.py --metrics`

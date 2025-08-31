@@ -37,3 +37,16 @@ Minimiser la perte de sens à débit (bitrate) fixé en représentant connaissan
 - Définir un petit inventaire Dhātu versionné (v0.1) dans un fichier YAML pour itérer.
 - Écrire un validateur d’encodage/décodage (tests unitaires) avec jeux de phrases jouets.
 - Incrémenter la couverture par domaines (objets domestiques, mouvements, interactions sociales de base).
+
+## Essayer (mini-banc d’essai)
+
+- Dossier: `experiments/dhatu/`
+- Lister: `python experiments/dhatu/validator.py --list`
+- Métriques: `python experiments/dhatu/validator.py --metrics`
+
+## Références
+
+- Shannon, C. E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal, 27(3), 379–423; 27(4), 623–656. DOI: 10.1002/j.1538-7305.1948.tb01338.x
+- Tishby, N., Pereira, F. C., & Bialek, W. (2000). The Information Bottleneck Method. arXiv:physics/0004057. DOI: 10.48550/arXiv.physics/0004057
+- Hinton, G. E., & Salakhutdinov, R. R. (2006). Reducing the Dimensionality of Data with Neural Networks. Science, 313(5786), 504–507. DOI: 10.1126/science.1127647
+- Page « Références de recherche »: ../research/references.md

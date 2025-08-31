@@ -42,3 +42,16 @@ Draft synthesis of assumptions, validation paths, and references.
 
 ## Sources (FR journals)
 - See Copilotage journals dated 2025‑08‑30 for context and decisions.
+
+## References (selected)
+
+- Haspelmath, M. (2007). Pre-established categories don't exist: Consequences for language description and typology. Linguistic Typology, 11(1). DOI: 10.1515/LINGTY.2007.011
+- WALS — World Atlas of Language Structures. https://wals.info/
+- Universal Dependencies (UD). https://universaldependencies.org/
+- See also: ../research/references.md
+
+## Try it (mini harness)
+
+- Folder: `experiments/dhatu/`
+- List toy corpus: `python experiments/dhatu/validator.py --list`
+- Compute basic metrics: `python experiments/dhatu/validator.py --metrics`

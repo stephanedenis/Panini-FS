@@ -49,3 +49,22 @@ From infancy to adulthood: stages, observations, and implications for PaniniFS.
 - Milestone→primitive alignment rate per age band.
 - Success rate decoding telegraphic speech into full propositions.
 - Complexity reduction: active primitives vs. achieved expressivity.
+
+## Baby sign → Dhātu (micro-cases)
+
+- "more" (gesture) → [QUANT:>0] [ACTION:repeat]  
+	Object-oriented variant: [QUANT:>0] [ACTION:give] [OBJ:food/toy]
+- "milk" (hand squeeze) → [ACTION:drink] [OBJ:milk] [AGENT:addressee]
+- "all done" / "finished" → [NEGATION] [ACTION:continue]  
+	State variant: [STATE:finished]
+
+Notes:
+- Reuse existing primitives (NEGATION, QUANT, ACTION, STATE) to avoid inflating the operator set.
+- Lexical choices (repeat, give, milk, continue, finished) are vocabulary; Dhātu inventory stays operator-focused.
+
+## References
+
+- MacWhinney, B. (2000–). CHILDES — Child Language Data Exchange System (TalkBank). https://childes.talkbank.org/
+- Goldin-Meadow, S. (2003). The Resilience of Language. Psychology Press. ISBN: 978-1-84872-004-1
+- Universal Dependencies (UD). https://universaldependencies.org/
+- See also: ../research/references.md
