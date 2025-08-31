@@ -1,6 +1,6 @@
 
 <!doctype html>
-<html lang="fr" class="no-js">
+<html lang="en" class="no-js">
   <head>
     
       <meta charset="utf-8">
@@ -12,26 +12,28 @@
         <meta name="author" content="Stéphane Denis">
       
       
-        <link rel="canonical" href="https://paninifs.org/">
+        <link rel="canonical" href="https://paninifs.org/en/dashboard/">
       
       
+        <link rel="prev" href="../references/">
       
-        <link rel="next" href="vision/">
+      
+        <link rel="next" href="../monitoring-guide/">
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
     
     
       
-        <title>Pāṇini File System</title>
+        <title>🏕️ Dashboard - Pāṇini File System</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.7e37652d.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -50,9 +52,11 @@
       
     
     
-      <link rel="stylesheet" href="css/timeago.css">
+      <link rel="stylesheet" href="../../css/timeago.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+      <link rel="stylesheet" href="../../css/timeago.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -78,8 +82,8 @@
     <div data-md-component="skip">
       
         
-        <a href="#panini-file-system" class="md-skip">
-          Aller au contenu
+        <a href="#dashboard-camping-strategy" class="md-skip">
+          Skip to content
         </a>
       
     </div>
@@ -91,8 +95,8 @@
       
 
 <header class="md-header" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="En-tête">
-    <a href="." title="Pāṇini File System" class="md-header__button md-logo" aria-label="Pāṇini File System" data-md-component="logo">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../" title="Pāṇini File System" class="md-header__button md-logo" aria-label="Pāṇini File System" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3zm12 7h6v4h-6zm0 7h6v4h-6zm-2-4H7v5h6v2H5V9h2v2h6z"/></svg>
@@ -112,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Accueil
+              🏕️ Dashboard
             
           </span>
         </div>
@@ -152,20 +156,20 @@
       <div class="md-header__option">
   <div class="md-select">
     
-    <button class="md-header__button md-icon" aria-label="Sélectionner la langue">
+    <button class="md-header__button md-icon" aria-label="Select language">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
     </button>
     <div class="md-select__inner">
       <ul class="md-select__list">
         
           <li class="md-select__item">
-            <a href="/" hreflang="fr" class="md-select__link">
+            <a href="../../dashboard/" hreflang="fr" class="md-select__link">
               Français
             </a>
           </li>
         
           <li class="md-select__item">
-            <a href="/en/" hreflang="en" class="md-select__link">
+            <a href="./" hreflang="en" class="md-select__link">
               English
             </a>
           </li>
@@ -186,21 +190,21 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
         
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
-      <nav class="md-search__options" aria-label="Recherche">
+      <nav class="md-search__options" aria-label="Search">
         
-          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Partager" aria-label="Partager" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
             
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
           </a>
         
-        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
@@ -211,7 +215,7 @@
       <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            Initialisation de la recherche
+            Initializing search
           </div>
           <ol class="md-search-result__list" role="presentation"></ol>
         </div>
@@ -223,7 +227,7 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/stephanedenis/PaniniFS" title="Aller au dépôt" class="md-source" data-md-component="source">
+        <a href="https://github.com/stephanedenis/PaniniFS" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
@@ -244,7 +248,7 @@
         
           
             
-<nav class="md-tabs" aria-label="Onglets" data-md-component="tabs">
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
   <div class="md-grid">
     <ul class="md-tabs__list">
       
@@ -252,11 +256,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="." class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
         
   
   
@@ -275,7 +277,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="vision/" class="md-tabs__link">
+      <a href="../vision/" class="md-tabs__link">
         
   
   
@@ -294,7 +296,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="linguistic-foundations/" class="md-tabs__link">
+      <a href="../linguistic-foundations/" class="md-tabs__link">
         
   
   
@@ -313,7 +315,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="dhatu-framework/" class="md-tabs__link">
+      <a href="../dhatu-framework/" class="md-tabs__link">
         
   
   
@@ -332,7 +334,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="architecture/" class="md-tabs__link">
+      <a href="../architecture/" class="md-tabs__link">
         
   
   
@@ -351,7 +353,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="diagrams/" class="md-tabs__link">
+      <a href="../diagrams/" class="md-tabs__link">
         
   
   
@@ -372,7 +374,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="specs/execution-orchestrator/" class="md-tabs__link">
+        <a href="../specs/execution-orchestrator/" class="md-tabs__link">
           
   
   
@@ -392,7 +394,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="doc-process/" class="md-tabs__link">
+      <a href="../doc-process/" class="md-tabs__link">
         
   
   
@@ -411,7 +413,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="style-guide/" class="md-tabs__link">
+      <a href="../style-guide/" class="md-tabs__link">
         
   
   
@@ -430,7 +432,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="references/" class="md-tabs__link">
+      <a href="../references/" class="md-tabs__link">
         
   
   
@@ -447,9 +449,11 @@
   
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="dashboard/" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
         
   
   
@@ -468,7 +472,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="monitoring-guide/" class="md-tabs__link">
+      <a href="../monitoring-guide/" class="md-tabs__link">
         
   
   
@@ -487,7 +491,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="infrastructure/" class="md-tabs__link">
+      <a href="../infrastructure/" class="md-tabs__link">
         
   
   
@@ -506,7 +510,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="monitoring/" class="md-tabs__link">
+      <a href="../monitoring/" class="md-tabs__link">
         
   
   
@@ -527,7 +531,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="en/" class="md-tabs__link">
+        <a href="../en/" class="md-tabs__link">
           
   
   
@@ -547,7 +551,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="modules/" class="md-tabs__link">
+      <a href="../modules/" class="md-tabs__link">
         
   
   
@@ -582,7 +586,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Pāṇini File System" class="md-nav__button md-logo" aria-label="Pāṇini File System" data-md-component="logo">
+    <a href="../" title="Pāṇini File System" class="md-nav__button md-logo" aria-label="Pāṇini File System" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3zm12 7h6v4h-6zm0 7h6v4h-6zm-2-4H7v5h6v2H5V9h2v2h6z"/></svg>
@@ -592,7 +596,7 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/stephanedenis/PaniniFS" title="Aller au dépôt" class="md-source" data-md-component="source">
+      <a href="https://github.com/stephanedenis/PaniniFS" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
@@ -609,19 +613,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -632,7 +627,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -644,7 +638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="vision/" class="md-nav__link">
+      <a href="../vision/" class="md-nav__link">
         
   
   
@@ -666,7 +660,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linguistic-foundations/" class="md-nav__link">
+      <a href="../linguistic-foundations/" class="md-nav__link">
         
   
   
@@ -688,7 +682,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dhatu-framework/" class="md-nav__link">
+      <a href="../dhatu-framework/" class="md-nav__link">
         
   
   
@@ -710,7 +704,7 @@
   
   
     <li class="md-nav__item">
-      <a href="architecture/" class="md-nav__link">
+      <a href="../architecture/" class="md-nav__link">
         
   
   
@@ -732,7 +726,7 @@
   
   
     <li class="md-nav__item">
-      <a href="diagrams/" class="md-nav__link">
+      <a href="../diagrams/" class="md-nav__link">
         
   
   
@@ -803,7 +797,7 @@
   
   
     <li class="md-nav__item">
-      <a href="specs/execution-orchestrator/" class="md-nav__link">
+      <a href="../specs/execution-orchestrator/" class="md-nav__link">
         
   
   
@@ -833,7 +827,7 @@
   
   
     <li class="md-nav__item">
-      <a href="doc-process/" class="md-nav__link">
+      <a href="../doc-process/" class="md-nav__link">
         
   
   
@@ -855,7 +849,7 @@
   
   
     <li class="md-nav__item">
-      <a href="style-guide/" class="md-nav__link">
+      <a href="../style-guide/" class="md-nav__link">
         
   
   
@@ -877,7 +871,7 @@
   
   
     <li class="md-nav__item">
-      <a href="references/" class="md-nav__link">
+      <a href="../references/" class="md-nav__link">
         
   
   
@@ -896,10 +890,32 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="dashboard/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    🏕️ Dashboard
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -910,6 +926,71 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#etat-systeme-en-temps-reel" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 État Système en Temps Réel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agents-autonomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤖 Agents Autonomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#domaines-multi-sites" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌐 Domaines Multi-Sites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔧 Workflows GitHub
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#liens-rapides" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔗 Liens Rapides
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -921,7 +1002,7 @@
   
   
     <li class="md-nav__item">
-      <a href="monitoring-guide/" class="md-nav__link">
+      <a href="../monitoring-guide/" class="md-nav__link">
         
   
   
@@ -943,7 +1024,7 @@
   
   
     <li class="md-nav__item">
-      <a href="infrastructure/" class="md-nav__link">
+      <a href="../infrastructure/" class="md-nav__link">
         
   
   
@@ -965,7 +1046,7 @@
   
   
     <li class="md-nav__item">
-      <a href="monitoring/" class="md-nav__link">
+      <a href="../monitoring/" class="md-nav__link">
         
   
   
@@ -1034,7 +1115,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="en/" class="md-nav__link ">
+            <a href="../en/" class="md-nav__link ">
               
   
   
@@ -1069,7 +1150,7 @@
   
   
     <li class="md-nav__item">
-      <a href="en/vision/" class="md-nav__link">
+      <a href="../en/vision/" class="md-nav__link">
         
   
   
@@ -1092,7 +1173,7 @@
   
   
     <li class="md-nav__item">
-      <a href="en/linguistic-foundations/" class="md-nav__link">
+      <a href="../en/linguistic-foundations/" class="md-nav__link">
         
   
   
@@ -1115,7 +1196,7 @@
   
   
     <li class="md-nav__item">
-      <a href="en/dhatu-framework/" class="md-nav__link">
+      <a href="../en/dhatu-framework/" class="md-nav__link">
         
   
   
@@ -1138,7 +1219,7 @@
   
   
     <li class="md-nav__item">
-      <a href="en/architecture/" class="md-nav__link">
+      <a href="../en/architecture/" class="md-nav__link">
         
   
   
@@ -1161,7 +1242,7 @@
   
   
     <li class="md-nav__item">
-      <a href="en/diagrams/" class="md-nav__link">
+      <a href="../en/diagrams/" class="md-nav__link">
         
   
   
@@ -1233,7 +1314,7 @@
   
   
     <li class="md-nav__item">
-      <a href="en/specs/execution-orchestrator/" class="md-nav__link">
+      <a href="../en/specs/execution-orchestrator/" class="md-nav__link">
         
   
   
@@ -1264,7 +1345,7 @@
   
   
     <li class="md-nav__item">
-      <a href="en/doc-process/" class="md-nav__link">
+      <a href="../en/doc-process/" class="md-nav__link">
         
   
   
@@ -1287,7 +1368,7 @@
   
   
     <li class="md-nav__item">
-      <a href="en/style-guide/" class="md-nav__link">
+      <a href="../en/style-guide/" class="md-nav__link">
         
   
   
@@ -1310,7 +1391,7 @@
   
   
     <li class="md-nav__item">
-      <a href="en/references/" class="md-nav__link">
+      <a href="../en/references/" class="md-nav__link">
         
   
   
@@ -1333,7 +1414,7 @@
   
   
     <li class="md-nav__item">
-      <a href="en/infrastructure/" class="md-nav__link">
+      <a href="../en/infrastructure/" class="md-nav__link">
         
   
   
@@ -1356,7 +1437,7 @@
   
   
     <li class="md-nav__item">
-      <a href="en/monitoring/" class="md-nav__link">
+      <a href="../en/monitoring/" class="md-nav__link">
         
   
   
@@ -1386,7 +1467,7 @@
   
   
     <li class="md-nav__item">
-      <a href="modules/" class="md-nav__link">
+      <a href="../modules/" class="md-nav__link">
         
   
   
@@ -1414,12 +1495,65 @@
                   <div class="md-sidebar__inner">
                     
 
-<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
   
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#etat-systeme-en-temps-reel" class="md-nav__link">
+    <span class="md-ellipsis">
+      📊 État Système en Temps Réel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agents-autonomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤖 Agents Autonomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#domaines-multi-sites" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌐 Domaines Multi-Sites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔧 Workflows GitHub
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#liens-rapides" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔗 Liens Rapides
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1438,18 +1572,207 @@
   
 
 
-<h1 id="panini-file-system">Pāṇini File System<a class="headerlink" href="#panini-file-system" title="Permanent link">&para;</a></h1>
-<p>Plateforme modulaire pour traitement et stockage d’information métalinguistique.</p>
+<h1 id="dashboard-camping-strategy">🏕️ Dashboard Camping Strategy<a class="headerlink" href="#dashboard-camping-strategy" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">Mode Camping Actif</p>
+<p><strong>Totoro:</strong> Terminal minimal + VS Code + GitHub Copilot<br />
+<strong>Cloud:</strong> Colab Master + GitHub Actions + Vercel<br />
+<strong>Monitoring:</strong> Temps réel via JSON + MkDocs</p>
+</div>
+<h2 id="etat-systeme-en-temps-reel">📊 État Système en Temps Réel<a class="headerlink" href="#etat-systeme-en-temps-reel" title="Permanent link">&para;</a></h2>
+<div id="system-status-loading">
+    <p>⏳ Chargement de l'état du système...</p>
+</div>
+
+<div id="system-status" style="display: none;">
+    <!-- Contenu dynamique injecté par JavaScript -->
+</div>
+
+<h2 id="agents-autonomes">🤖 Agents Autonomes<a class="headerlink" href="#agents-autonomes" title="Permanent link">&para;</a></h2>
+<div id="agents-status">
+    <!-- Agents chargés dynamiquement -->
+</div>
+
+<h2 id="domaines-multi-sites">🌐 Domaines Multi-Sites<a class="headerlink" href="#domaines-multi-sites" title="Permanent link">&para;</a></h2>
+<div id="domains-status">
+    <!-- Domaines chargés dynamiquement -->
+</div>
+
+<h2 id="workflows-github">🔧 Workflows GitHub<a class="headerlink" href="#workflows-github" title="Permanent link">&para;</a></h2>
+<div id="workflows-status">
+    <!-- Workflows chargés dynamiquement -->
+</div>
+
+<h2 id="liens-rapides">🔗 Liens Rapides<a class="headerlink" href="#liens-rapides" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Vision: <a href="linguistic-foundations/">Fondations linguistiques</a>, <a href="dhatu-framework/">Cadre Dhātu</a></li>
-<li>Architecture: <a href="architecture/">Architecture globale</a>, <a href="specs/execution-orchestrator/">Orchestrateur d’exécution</a></li>
-<li>Documentation: <a href="doc-process/">Processus</a>, <a href="style-guide/">Style</a>, <a href="references/">Références</a></li>
-<li>Schémas: <a href="diagrams/">Diagrams (PlantUML)</a></li>
-<li>Modules: <a href="modules/">Index docs modules</a></li>
+<li><a href="https://colab.research.google.com/github/stephanedenis/PaniniFS/blob/master/ECOSYSTEM/colab-notebooks/PaniniFS-Master-Orchestrator.ipynb">☁️ Colab Master Orchestrator</a></li>
+<li><a href="https://github.com/stephanedenis/PaniniFS/actions">🔧 GitHub Actions</a></li>
+<li><a href="https://github.com/stephanedenis/PaniniFS">📱 Repository GitHub</a></li>
+<li><a href="https://github.com/stephanedenis/PaniniFS/settings/pages">⚙️ GitHub Pages Settings</a></li>
 </ul>
-<p>Actualités:
-- La documentation est désormais la source prioritaire; les tâches GitHub sont extraites automatiquement des TODO: de cette doc.
-- Le site est bilingue FR/EN (menu English).</p>
+<script>
+// Chargement dynamique de l'état système
+async function loadSystemStatus() {
+    try {
+        const response = await fetch('./data/system_status.json');
+        const data = await response.json();
+
+        document.getElementById('system-status-loading').style.display = 'none';
+        document.getElementById('system-status').style.display = 'block';
+
+        // Injection du contenu dynamique
+        renderSystemStatus(data);
+        renderAgentsStatus(data.agents);
+        renderDomainsStatus(data.domains);
+        renderWorkflowsStatus(data.workflows);
+
+    } catch (error) {
+        console.error('Erreur chargement état système:', error);
+        document.getElementById('system-status-loading').innerHTML = 
+            '<p>❌ Erreur chargement données. Vérifiez la connexion.</p>';
+    }
+}
+
+function renderSystemStatus(data) {
+    const campingStatus = data.camping_strategy.active ? '🏕️ ACTIF' : '❌ INACTIF';
+    const overallHealth = data.system_health.overall_status === 'healthy' ? '🟢 SAIN' : '🟡 ATTENTION';
+
+    const html = `
+        <div class="md-typeset">
+            <div class="admonition success">
+                <p class="admonition-title">État Général: ${overallHealth}</p>
+                <ul>
+                    <li><strong>Camping Strategy:</strong> ${campingStatus}</li>
+                    <li><strong>Agents Opérationnels:</strong> ${data.system_health.agents_operational}/13+</li>
+                    <li><strong>Dernière Mise à Jour:</strong> ${new Date(data.timestamp).toLocaleString('fr-FR')}</li>
+                    <li><strong>Externalisation:</strong> ${data.system_health.externalization_complete ? '✅ Complète' : '🔄 En cours'}</li>
+                </ul>
+            </div>
+        </div>
+    `;
+
+    document.getElementById('system-status').innerHTML = html;
+}
+
+function renderAgentsStatus(agents) {
+    let html = '<div class="md-typeset">';
+
+    Object.entries(agents.categories).forEach(([category, data]) => {
+        const categoryIcons = {
+            research: '📚',
+            critique: '🔥', 
+            orchestrators: '🎯',
+            monitoring: '📡',
+            devops: '🏗️'
+        };
+
+        html += `
+            <details class="details">
+                <summary><strong>${categoryIcons[category]} ${category.toUpperCase()} (${data.count})</strong></summary>
+                <ul>
+        `;
+
+        data.agents.forEach(agent => {
+            const statusIcon = agent.status === 'active' ? '🟢' : 
+                             agent.status === 'backup' ? '🟡' : '⚪';
+            const lastExec = agent.last_execution ? 
+                `<br><small>Dernière exéc: ${new Date(agent.last_execution).toLocaleString('fr-FR')}</small>` : '';
+
+            html += `
+                <li>
+                    ${statusIcon} <strong>${agent.name}</strong> (${agent.status})
+                    <br><code>${agent.path}</code>
+                    ${lastExec}
+                    <br><small>Features: ${agent.features.join(', ')}</small>
+                </li>
+            `;
+        });
+
+        html += '</ul></details>';
+    });
+
+    html += '</div>';
+    document.getElementById('agents-status').innerHTML = html;
+}
+
+function renderDomainsStatus(domains) {
+    let html = `
+        <div class="md-typeset">
+            <p><strong>Total:</strong> ${domains.total} domaines configurés</p>
+            <ul>
+    `;
+
+    domains.configured.forEach(domain => {
+        const statusIcon = domain.status === 'online' ? '🟢' : '🔴';
+        const sslIcon = domain.ssl === 'active' ? '🔒' : '🔓';
+
+        html += `
+            <li>
+                ${statusIcon} <strong>${domain.domain}</strong> ${sslIcon}
+                <br><small>CNAME: ${domain.cname}</small>
+            </li>
+        `;
+    });
+
+    html += '</ul></div>';
+    document.getElementById('domains-status').innerHTML = html;
+}
+
+function renderWorkflowsStatus(workflows) {
+    const status = workflows.github_actions.status === 'repaired' ? '✅ RÉPARÉS' : '🔄 EN COURS';
+    const lastRun = new Date(workflows.github_actions.last_successful_run).toLocaleString('fr-FR');
+
+    const html = `
+        <div class="md-typeset">
+            <div class="admonition tip">
+                <p class="admonition-title">GitHub Actions: ${status}</p>
+                <ul>
+                    <li><strong>Dernière Exécution Réussie:</strong> ${lastRun}</li>
+                    <li><strong>Corrections Récentes:</strong></li>
+                    <ul>
+                        ${workflows.github_actions.recent_fixes.map(fix => 
+                            `<li>${fix.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</li>`
+                        ).join('')}
+                    </ul>
+                </ul>
+            </div>
+        </div>
+    `;
+
+    document.getElementById('workflows-status').innerHTML = html;
+}
+
+// Auto-refresh toutes les 30 secondes
+setInterval(loadSystemStatus, 30000);
+
+// Chargement initial
+document.addEventListener('DOMContentLoaded', loadSystemStatus);
+</script>
+
+<style>
+.details summary {
+    cursor: pointer;
+    padding: 10px;
+    background: rgba(0, 100, 200, 0.1);
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+.details[open] summary {
+    margin-bottom: 10px;
+}
+
+.details ul {
+    margin-left: 20px;
+}
+
+.details li {
+    margin: 10px 0;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+}
+</style>
 
 
 
@@ -1469,20 +1792,20 @@
     
       
   <span class="md-source-file__fact">
-    <span class="md-icon" title="Dernière mise à jour">
+    <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="31 août 2025 12:41:00 UTC"><span class="timeago" datetime="2025-08-31T12:41:00+00:00" locale="fr"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="31 août 2025 12:41:00 UTC">2025-08-31</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="22 août 2025 15:55:55 UTC"><span class="timeago" datetime="2025-08-22T15:55:55+00:00" locale="fr"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="22 août 2025 15:55:55 UTC">2025-08-22</span>
   </span>
 
     
     
       
   <span class="md-source-file__fact">
-    <span class="md-icon" title="Créé">
+    <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="13 juin 2020 05:10:00 UTC"><span class="timeago" datetime="2020-06-13T05:10:00+00:00" locale="fr"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="13 juin 2020 05:10:00 UTC">2020-06-13</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="22 août 2025 15:55:55 UTC"><span class="timeago" datetime="2025-08-22T15:55:55+00:00" locale="fr"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="22 août 2025 15:55:55 UTC">2025-08-22</span>
   </span>
 
     
@@ -1507,7 +1830,7 @@
           <button type="button" class="md-top md-icon" data-md-component="top" hidden>
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
-  Retour en haut de la page
+  Back to top
 </button>
         
       </main>
@@ -1570,14 +1893,18 @@
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.92b07e13.min.js"></script>
+      <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
       
-        <script src="js/timeago.min.js"></script>
+        <script src="../../js/timeago.min.js"></script>
       
-        <script src="js/timeago_mkdocs_material.js"></script>
+        <script src="../../js/timeago_mkdocs_material.js"></script>
+      
+        <script src="../../js/timeago.min.js"></script>
+      
+        <script src="../../js/timeago_mkdocs_material.js"></script>
       
     
   </body>
