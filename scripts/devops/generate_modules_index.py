@@ -28,10 +28,13 @@ def find_modules():
         docs_index = p / "docs" / "index.md"
         docs_dir = p / "docs"
         readme = p / "README.md"
-        # Toujours pointer vers GitHub (branche HEAD) pour éviter les liens cassés dans MkDocs
-        if docs_index.exists() or docs_dir.exists():
-            link = f"{base}/tree/HEAD/modules/{name}/docs"
-            desc = f"Documentation du module {name} (dossier docs/)"
+        # Préférer les docs locales (routées par MkDocs) si présentes, sinon fallback GitHub
+        if docs_index.exists():
+            link = f"modules/{name}/docs/index.md"
+            desc = f"Documentation du module {name} (index)"
+        elif docs_dir.exists():
+            link = f"modules/{name}/docs/"
+            desc = f"Documentation du module {name} (dossier)"
         elif readme.exists():
             link = f"{base}/blob/HEAD/modules/{name}/README.md"
             desc = f"README du module {name}"

@@ -8,11 +8,11 @@ Cette page liste les modules et pointe vers leurs documents sur GitHub tant que 
 ## Modules détectés
 
 
-- [Attribution Registry](https://github.com/stephanedenis/PaniniFS/blob/HEAD/modules/attribution-registry/README.md) — README du module attribution-registry.
-- [Autonomous Missions](https://github.com/stephanedenis/PaniniFS/blob/HEAD/modules/autonomous-missions/README.md) — README du module autonomous-missions.
-- [Datasets Ingestion](https://github.com/stephanedenis/PaniniFS/blob/HEAD/modules/datasets-ingestion/README.md) — README du module datasets-ingestion.
-- [Execution Orchestrator](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/execution-orchestrator/docs) — Documentation du module execution-orchestrator (dossier docs/).
-- [Publication Engine](https://github.com/stephanedenis/PaniniFS/blob/HEAD/modules/publication-engine/README.md) — README du module publication-engine.
-- [Semantic Core](https://github.com/stephanedenis/PaniniFS/blob/HEAD/modules/semantic-core/README.md) — README du module semantic-core.
-- [Ultra Reactive](https://github.com/stephanedenis/PaniniFS/blob/HEAD/modules/ultra-reactive/README.md) — README du module ultra-reactive.
+- [Attribution Registry](modules/attribution-registry/docs/index.md) — Documentation du module attribution-registry (index).
+- [Autonomous Missions](modules/autonomous-missions/docs/index.md) — Documentation du module autonomous-missions (index).
+- [Datasets Ingestion](modules/datasets-ingestion/docs/index.md) — Documentation du module datasets-ingestion (index).
+- [Execution Orchestrator](modules/execution-orchestrator/docs/index.md) — Documentation du module execution-orchestrator (index).
+- [Publication Engine](modules/publication-engine/docs/index.md) — Documentation du module publication-engine (index).
+- [Semantic Core](modules/semantic-core/docs/index.md) — Documentation du module semantic-core (index).
+- [Ultra Reactive](modules/ultra-reactive/docs/index.md) — Documentation du module ultra-reactive (index).
 
