@@ -1,0 +1,39 @@
+name: Bootstrap Provenance for PR #37
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  pull-requests: write
+  issues: write
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure opt-in labels and apply to PR #37
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const prNumber = 37;
+
+            async function ensureLabel(name, description) {
+              try { await github.rest.issues.getLabel({ owner, repo, name }); }
+              catch {
+                try { await github.rest.issues.createLabel({ owner, repo, name, color: 'BFD4F2', description }); }
+                catch {}
+              }
+            }
+
+            await ensureLabel('autofill-provenance', 'Autorise l’autoremplissage des labels de provenance par le guardian');
+            await ensureLabel('automerge-provenance', 'Autorise l’auto-merge quand la provenance est conforme');
+
+            try {
+              await github.rest.issues.addLabels({ owner, repo, issue_number: prNumber, labels: ['autofill-provenance', 'automerge-provenance'] });
+            } catch (e) {
+              core.info(`Labels may already be present or PR not found: ${e.message}`);
+            }
