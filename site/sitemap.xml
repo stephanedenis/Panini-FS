@@ -176,6 +176,13 @@
         <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/research/"/>
     </url>
     <url>
+        <loc>https://paninifs.org/en/research/compression-semantique/</loc>
+        <lastmod>2025-08-31</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/research/compression-semantique/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/research/compression-semantique/"/>
+    </url>
+    <url>
         <loc>https://paninifs.org/en/research/dhatu-inventory-v0-1/</loc>
         <lastmod>2025-08-31</lastmod>
         <changefreq>daily</changefreq>
@@ -190,6 +197,20 @@
         <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/research/human-language-development/"/>
     </url>
     <url>
+        <loc>https://paninifs.org/en/research/inventaire-dhatu-v0-1/</loc>
+        <lastmod>2025-08-31</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/research/inventaire-dhatu-v0-1/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/research/inventaire-dhatu-v0-1/"/>
+    </url>
+    <url>
+        <loc>https://paninifs.org/en/research/langage-humain-developpement/</loc>
+        <lastmod>2025-08-31</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/research/langage-humain-developpement/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/research/langage-humain-developpement/"/>
+    </url>
+    <url>
         <loc>https://paninifs.org/en/research/semantic-compression/</loc>
         <lastmod>2025-08-31</lastmod>
         <changefreq>daily</changefreq>
@@ -202,6 +223,13 @@
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/research/semantic-universals/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/research/semantic-universals/"/>
+    </url>
+    <url>
+        <loc>https://paninifs.org/en/research/universaux-semantique/</loc>
+        <lastmod>2025-08-31</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/research/universaux-semantique/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/research/universaux-semantique/"/>
     </url>
     <url>
         <loc>https://paninifs.org/en/specs/execution-orchestrator/</loc>
@@ -442,6 +470,13 @@
         <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/research/"/>
     </url>
     <url>
+        <loc>https://paninifs.org/en/en/research/compression-semantique/</loc>
+        <lastmod>2025-08-31</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/research/compression-semantique/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/research/compression-semantique/"/>
+    </url>
+    <url>
         <loc>https://paninifs.org/en/en/research/dhatu-inventory-v0-1/</loc>
         <lastmod>2025-08-31</lastmod>
         <changefreq>daily</changefreq>
@@ -456,6 +491,20 @@
         <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/research/human-language-development/"/>
     </url>
     <url>
+        <loc>https://paninifs.org/en/en/research/inventaire-dhatu-v0-1/</loc>
+        <lastmod>2025-08-31</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/research/inventaire-dhatu-v0-1/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/research/inventaire-dhatu-v0-1/"/>
+    </url>
+    <url>
+        <loc>https://paninifs.org/en/en/research/langage-humain-developpement/</loc>
+        <lastmod>2025-08-31</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/research/langage-humain-developpement/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/research/langage-humain-developpement/"/>
+    </url>
+    <url>
         <loc>https://paninifs.org/en/en/research/semantic-compression/</loc>
         <lastmod>2025-08-31</lastmod>
         <changefreq>daily</changefreq>
@@ -468,6 +517,13 @@
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/research/semantic-universals/"/>
         <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/research/semantic-universals/"/>
+    </url>
+    <url>
+        <loc>https://paninifs.org/en/en/research/universaux-semantique/</loc>
+        <lastmod>2025-08-31</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/research/universaux-semantique/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/research/universaux-semantique/"/>
     </url>
     <url>
         <loc>https://paninifs.org/en/en/specs/execution-orchestrator/</loc>

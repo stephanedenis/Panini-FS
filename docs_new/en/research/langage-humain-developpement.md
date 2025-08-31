@@ -4,4 +4,4 @@ status: draft
 ---
 
 <!-- EN alias page to match FR basename for governance sync. -->
-{% include-markdown "human-language-development.md" %}
+{% include-markdown "./human-language-development.md" %}
