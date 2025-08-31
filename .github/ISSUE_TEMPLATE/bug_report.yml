@@ -43,3 +43,38 @@ body:
       options:
         - label: J’ai recherché des issues similaires
         - label: J’ai fourni des étapes de reproduction claires
+  - type: dropdown
+    id: queue
+    attributes:
+      label: File (queue)
+      options:
+        - queue:backlog
+        - queue:ready
+        - queue:doing
+        - queue:blocked
+        - queue:done
+    validations:
+      required: false
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priorité
+      options:
+        - priority:low
+        - priority:normal
+        - priority:high
+        - priority:urgent
+    validations:
+      required: false
+  - type: dropdown
+    id: size
+    attributes:
+      label: Taille estimée
+      options:
+        - size:XS
+        - size:S
+        - size:M
+        - size:L
+        - size:XL
+    validations:
+      required: false

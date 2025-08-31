@@ -34,3 +34,38 @@ body:
       options:
         - label: Compatible avec la stratégie Camping (léger)
         - label: Journal de session prévu
+  - type: dropdown
+    id: queue
+    attributes:
+      label: File (queue)
+      options:
+        - queue:backlog
+        - queue:ready
+        - queue:doing
+        - queue:blocked
+        - queue:done
+    validations:
+      required: false
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priorité
+      options:
+        - priority:low
+        - priority:normal
+        - priority:high
+        - priority:urgent
+    validations:
+      required: false
+  - type: dropdown
+    id: size
+    attributes:
+      label: Taille estimée
+      options:
+        - size:XS
+        - size:S
+        - size:M
+        - size:L
+        - size:XL
+    validations:
+      required: false
