@@ -1,4 +1,4 @@
-name: Validate PR Agent Session Tag
+name: Validate Agent Provenance Labels
 
 on:
   pull_request:
@@ -12,25 +12,57 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Ensure [journal:HOST-pidPID] present or exempted
+      - name: Ensure PR has required provenance labels or is exempted
         uses: actions/github-script@v7
         with:
           script: |
             const pr = context.payload.pull_request;
-            const title = pr.title || '';
-            const labels = (pr.labels || []).map(l => l.name);
-            const exempt = labels.includes('copilotage-exempt');
-            const hasJournal = /\[journal:[A-Za-z0-9._-]+-pid\d+\]/.test(title);
-            const hasOwner = /\[owner:(human|agent)\]/i.test(title);
-            if (exempt) {
-              core.notice('Bypass enabled via label copilotage-exempt.');
-              return;
+            const labels = (pr.labels || []).map(l => String(l.name));
+
+            const REQUIRED_PREFIXES = [
+              'prov:host=',
+              'prov:pid=',
+              'agent:',
+              'model:',
+              'owner:'
+            ];
+            const MAX_LABEL_LEN = 50; // longueur max recommandée
+
+            function ok(msg) { core.info(msg); }
+            function fail(msg) { core.setFailed(msg); }
+
+            // Bypass
+            if (labels.includes('copilotage-exempt')) {
+              return ok('Bypass enabled via label copilotage-exempt.');
             }
-            if (!hasJournal || !hasOwner) {
-              let miss = [];
-              if (!hasJournal) miss.push('[journal:HOST-pidPID]');
-              if (!hasOwner) miss.push('[owner:human|agent]');
-              core.setFailed(`Titre de PR invalide: ajoutez ${miss.join(' et ')} ou ajoutez le label copilotage-exempt pour bypass.`);
-            } else {
-              core.info('Validation OK: PID détecté dans le titre.');
+
+            // Interdire tout label "journal" (legacy)
+            const forbidden = labels.filter(n => /^journal(?::|$)/i.test(n));
+            if (forbidden.length > 0) {
+              return fail(`Labels interdits détectés: ${forbidden.join(', ')}. Utilisez les labels courts: prov:host=..., prov:pid=..., agent:..., model:..., owner:...`);
             }
+
+            // Vérifier présence et forme de chaque label requis
+            const lower = labels.map(n => n.toLowerCase());
+            const problems = [];
+            for (const prefix of REQUIRED_PREFIXES) {
+              const i = lower.findIndex(n => n.startsWith(prefix));
+              if (i === -1) {
+                problems.push(`Manquant: label commençant par "${prefix}"`);
+                continue;
+              }
+              const label = labels[i];
+              if (label.length > MAX_LABEL_LEN) {
+                problems.push(`Label trop long (> ${MAX_LABEL_LEN}): "${label}"`);
+              }
+              const value = label.slice(prefix.length);
+              if (!value || value.trim().length === 0) {
+                problems.push(`Valeur vide pour le label "${label}"`);
+              }
+            }
+
+            if (problems.length > 0) {
+              return fail('Provenance invalide:\n- ' + problems.join('\n- '));
+            }
+
+            ok('Validation OK: labels de provenance présents et valides.');
