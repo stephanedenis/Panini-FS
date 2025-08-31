@@ -3,7 +3,7 @@
 Objectif: attribuer clairement les contributions entre agents humains et automatisés.
 
 ## Identifiants
-- PR: label `provenance:host=...,pid=...,agent=...,model=...,owner=...` requis.
+- PR: labels requis: `prov:host=...`, `prov:pid=...`, `agent:...`, `model:...`, `owner:...`.
 	Note: la journalisation Copilotage (dossier `Copilotage/journal/`) est obligatoire et mise à jour dans chaque PR, mais n'est pas encodée dans les labels de PR.
 - Commits: `Refs #<issue>` dans le message; optionnellement `Co-authored-by:` pour pairs.
 - Journal: `Copilotage/journal/YYYY-MM-DD-<host>-pid<pid>-<slug>.md` par session.
@@ -16,5 +16,5 @@ Objectif: attribuer clairement les contributions entre agents humains et automat
 - Utiliser le label `copilotage-exempt` pour documenter un bypass (raison courte dans la PR).
 
 ## Outils
-- `gh_pr_open.sh` pour ouvrir la PR et ajouter le label `provenance:` automatiquement.
-- `label-agent.yml` et `validate-agent-provenance.yml` pour labels dérivés et garde-fou CI.
+- `gh_pr_open.sh` pour ouvrir la PR et ajouter automatiquement les labels de provenance courts.
+- `label-agent.yml` et `validate-agent-provenance.yml` pour labels dérivés et garde-fou CI (validation sur labels courts).

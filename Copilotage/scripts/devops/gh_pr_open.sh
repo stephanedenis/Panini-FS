@@ -56,10 +56,23 @@ BODY="PR ouverte via gh_pr_open.sh.\n\n- Branche: ${CURR_BRANCH}\n- Modèle: ${M
 # Crée la PR
 gh pr create --title "$TITLE" --body "$BODY" --base "$BASE_BRANCH" --head "$CURR_BRANCH"
 
-# Ajoute le label provenance parsable
-HOST_SHORT=${HOSTNAME:-$(hostname -s 2>/dev/null || hostname 2>/dev/null || echo "host")}
+# Ajoute des labels provenance courts (<=50 chars chacun)
+HOST_RAW=${HOSTNAME:-$(hostname -s 2>/dev/null || hostname 2>/dev/null || echo "host")}
+# Normalise: minuscules, retire espaces, garde alnum.-_
+HOST_NORM=$(echo "$HOST_RAW" | tr '[:upper:]' '[:lower:]' | tr -cd 'a-z0-9._-' | cut -c1-24)
+[ -z "$HOST_NORM" ] && HOST_NORM="host"
 PID_HINT=$$
-PROVENANCE_LABEL="provenance:host=${HOST_SHORT},pid=${PID_HINT},agent=GitHubCopilot,model=${MODEL_TAG:-unspecified},owner=${OWNER_TAG}"
-gh label list --limit 200 | grep -Fq "$PROVENANCE_LABEL" || gh label create "$PROVENANCE_LABEL" --color FFFFFF --description "Agent provenance metadata" || true
+
+LBL_HOST="prov:host=${HOST_NORM}"
+LBL_PID="prov:pid=${PID_HINT}"
+LBL_AGENT="agent:GitHubCopilot"
+LBL_MODEL="model:${MODEL_TAG:-unspecified}"
+LBL_OWNER="owner:${OWNER_TAG}"
+
+# S'assure que les labels existent (couleur par défaut)
+for L in "$LBL_HOST" "$LBL_PID" "$LBL_AGENT" "$LBL_MODEL" "$LBL_OWNER"; do
+  gh label create "$L" --color BFD4F2 --description "Provenance/agent metadata" || true
+done
+
 PR_NUMBER=$(gh pr view --json number --jq .number)
-exec gh pr edit "$PR_NUMBER" --add-label "$PROVENANCE_LABEL"
+exec gh pr edit "$PR_NUMBER" --add-label "$LBL_HOST" --add-label "$LBL_PID" --add-label "$LBL_AGENT" --add-label "$LBL_MODEL" --add-label "$LBL_OWNER"
