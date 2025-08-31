@@ -30,6 +30,10 @@ jobs:
       - name: Install MkDocs deps
         run: |
           pip install -r docs_new/requirements.txt
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6327c22 (docs(copilotage): directives d’autonomie + PR template)
       - name: Validate FR/EN sync
         id: sync
         run: |
@@ -43,7 +47,7 @@ jobs:
             else
               base=${f#docs_new/}
               peer="docs_new/en/${base}"
-            fi
+                submodules: false
             # only check for markdown files
             if [[ "$f" == *.md ]]; then
               if [ ! -f "$peer" ]; then
@@ -53,8 +57,8 @@ jobs:
             fi
           done <<< "$changed"
           if [ $missing -ne 0 ]; then
-            echo "::error::FR/EN sync failed: missing counterpart files."
-            exit 1
+
+              - name: Validate FR/EN sync
           fi
 
       - name: Check submodule docs presence
@@ -111,6 +115,10 @@ jobs:
           KROKI_URL: https://kroki.io
         run: |
           mkdocs build --strict --config-file mkdocs.yml
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6327c22 (docs(copilotage): directives d’autonomie + PR template)
       - name: Summary
         run: |
           echo "Docs governance checks completed."

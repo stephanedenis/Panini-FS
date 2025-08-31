@@ -1,5 +1,5 @@
 {
-      // Tasks pour la documentation (réduisent les risques de blocage/pager)
+  // Tasks pour la documentation (réduisent les risques de blocage/pager)
   "version": "2.0.0",
   "tasks": [
     {
