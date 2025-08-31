@@ -67,6 +67,7 @@ plugins:
       locale: fr
   - kroki:
   # Options par défaut; l'URL est fournie via la variable d'environnement KROKI_URL dans CI
+  - include-markdown
 
 
 # Markdown extensions
