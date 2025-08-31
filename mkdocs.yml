@@ -85,9 +85,10 @@ markdown_extensions:
       smart_enable: all
   - pymdownx.caret
   - pymdownx.details
-  # - pymdownx.emoji:
-  #     emoji_generator: 'material.extensions.emoji.to_svg'
-  #     emoji_index: 'material.extensions.emoji.twemoji'
+  - pymdownx.emoji:
+      # Utilise les chemins de modules (compatibles avec pymdown-extensions >= 10.7)
+      emoji_index: "material.extensions.emoji.twemoji"
+      emoji_generator: "material.extensions.emoji.to_svg"
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
@@ -128,20 +129,6 @@ nav:
   - 📊 Guide Monitoring: monitoring-guide.md
   - Infrastructure: infrastructure.md
   - Surveillance: monitoring.md
-  - English:
-    - Home: en/index.md
-    - Vision: en/vision.md
-    - Linguistic Foundations: en/linguistic-foundations.md
-    - Dhātu Framework: en/dhatu-framework.md
-    - Architecture: en/architecture.md
-    - Diagrams (PlantUML): en/diagrams.md
-    - Specifications:
-      - Execution Orchestrator: en/specs/execution-orchestrator.md
-    - Documentation Process: en/doc-process.md
-    - Style Guide: en/style-guide.md
-    - External References: en/references.md
-    - Infrastructure: en/infrastructure.md
-    - Monitoring: en/monitoring.md
   - Modules docs: modules/index.md
 
 # Extra
