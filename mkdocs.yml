@@ -59,10 +59,7 @@ plugins:
       type: timeago
       locale: fr
   - kroki:
-      # Use external kroki server; allows SVG with hyperlinks
-      server_url: https://kroki.io
-      # Force SVG output for link support
-      output_format: svg
+  # Options par défaut; l'URL est fournie via la variable d'environnement KROKI_URL dans CI
   - i18n:
       languages:
         - locale: fr
@@ -70,29 +67,7 @@ plugins:
           default: true
         - locale: en
           name: English
-      nav_translations:
-        fr:
-          Home: Accueil
-          Vision: Vision
-          Architecture: Architecture
-          Linguistic Foundations: Fondations linguistiques
-          Dhātu Framework: Cadre Dhātu
-          Specifications: Spécifications
-          Execution Orchestrator: Orchestrateur d'exécution
-          Documentation Process: Processus documentation
-          Style Guide: Guide de style
-          External References: Références externes
-        en:
-          Accueil: Home
-          Vision: Vision
-          Architecture: Architecture
-          Fondations linguistiques: Linguistic Foundations
-          Cadre Dhātu: Dhātu Framework
-          Spécifications: Specifications
-          Orchestrateur d'exécution: Execution Orchestrator
-          Processus documentation: Documentation Process
-          Guide de style: Style Guide
-          Références externes: External References
+
 
 # Markdown extensions
 markdown_extensions:
