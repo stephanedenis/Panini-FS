@@ -1,0 +1,41 @@
+{
+  "version": "0.1",
+  "core": [
+    "AGENT",
+    "ACTION",
+    "PATIENT",
+    "PLACE",
+    "TIME",
+    "REL",
+    "POSSESSION",
+    "NEGATION",
+    "QUANT",
+    "MODALITY",
+    "ASPECT",
+    "COREF",
+    "INTERROGATIVE",
+    "STATE"
+  ],
+  "lexicon": {
+    "REL": {
+      "SUR": "rel:sur",
+      "DANS": "rel:dans",
+      "DE": "rel:de",
+      "ON": "rel:on",
+      "IN": "rel:in",
+      "OF": "rel:of"
+    },
+    "MODALITY": {
+      "PEUT": "modal:can",
+      "DOIT": "modal:must",
+      "CAN": "modal:can",
+      "MUST": "modal:must"
+    },
+    "ASPECT": {
+      "HABITUEL": "aspect:habitual",
+      "ACCOMPLI": "aspect:perfective",
+      "HABITUAL": "aspect:habitual",
+      "PERFECTIVE": "aspect:perfective"
+    }
+  }
+}
