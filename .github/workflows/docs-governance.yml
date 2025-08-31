@@ -1,4 +1,7 @@
 name: Docs Governance
+permissions:
+  contents: read
+  issues: write
 
 on:
   pull_request:
