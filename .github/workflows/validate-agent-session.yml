@@ -1,4 +1,4 @@
-name: Validate PR Agent Session Metadata
+name: Validate PR Agent Provenance Metadata
 
 on:
   pull_request:
@@ -8,18 +8,12 @@ permissions:
   contents: read
   pull-requests: read
 
-jobs:
-  validate:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Ensure PR has parsable journal metadata or is exempted
+      - name: Ensure PR has parsable provenance metadata or is exempted
         uses: actions/github-script@v7
         with:
           script: |
             const pr = context.payload.pull_request;
             const labels = (pr.labels || []).map(l => l.name);
-            const body = pr.body || '';
-
             const REQUIRED_KEYS = ['host','pid','agent','model','owner'];
 
             function ok(msg) {
@@ -27,10 +21,8 @@ jobs:
             }
 
             function fail(msg) {
-              core.setFailed(msg + '\n\nFormats acceptés:\n' +
-                '- Label unique: "journal:host=totoro,pid=163849,agent=GitHubCopilot,model=GPT-5,owner=agent"\n' +
-                '- OU: Label "journal" + bloc JSON dans le corps du PR:\n' +
-                '<!-- journal: {"host":"totoro","pid":163849,"agent":"GitHubCopilot","model":"GPT-5","owner":"agent"} -->\n' +
+              core.setFailed(msg + '\n\nFormat requis:\n' +
+                '- Label unique: "provenance:host=totoro,pid=163849,agent=GitHubCopilot,model=GPT-5,owner=agent"\n' +
                 '\nAstuce: ajoutez le label "copilotage-exempt" pour bypass ponctuel.');
             }
 
@@ -39,12 +31,12 @@ jobs:
             }
 
             function parseKVP(labelName) {
-              // Expect: journal:host=totoro,pid=163849,agent=GitHubCopilot,model=GPT-5,owner=agent
-              const m = labelName.match(/^journal:(.*)$/);
+              // Expect: provenance:host=totoro,pid=163849,agent=GitHubCopilot,model=GPT-5,owner=agent
+              const m = labelName.match(/^provenance:(.*)$/);
               if (!m) return null;
               const kvp = m[1];
               const obj = {};
-              kvp.split(/[,\s]+/).forEach(pair => {
+              kvp.split(/[\,\s]+/).forEach(pair => {
                 if (!pair) return;
                 const idx = pair.indexOf('=');
                 if (idx === -1) return;
@@ -63,29 +55,17 @@ jobs:
               return;
             }
 
-            // 1) Try a single parsable label starting with "journal:"
-            const journalLike = labels.find(n => n.toLowerCase().startsWith('journal:'));
-            if (journalLike) {
-              const parsed = parseKVP(journalLike);
+            // Expect a single parsable label starting with "provenance:"
+            const provLike = labels.find(n => n.toLowerCase().startsWith('provenance:'));
+            if (provLike) {
+              const parsed = parseKVP(provLike);
               if (parsed && hasAllKeys(parsed)) {
-                ok('Validation OK: métadonnées parsées depuis le label unique "' + journalLike + '".');
+                ok('Validation OK: métadonnées parsées depuis le label unique "' + provLike + '".');
                 return;
               }
             }
 
-            // 2) Try label "journal" combined with JSON block in PR body
-            if (labels.map(n => n.toLowerCase()).includes('journal')) {
-              const match = body.match(/<!--\s*journal:\s*(\{[\s\S]*?\})\s*-->/i);
-              if (match) {
-                try {
-                  const data = JSON.parse(match[1]);
-                  if (hasAllKeys(data)) {
-                    ok('Validation OK: métadonnées parsées depuis le bloc JSON en commentaire du PR.');
-                    return;
-                  }
-                } catch (e) {
-                  core.warning('JSON de journal invalide: ' + e.message);
-                }
+            fail('Métadonnées de session manquantes ou incomplètes.');
               }
             }
 

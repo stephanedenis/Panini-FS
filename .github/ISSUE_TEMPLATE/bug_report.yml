@@ -8,8 +8,8 @@ body:
       value: |
         Merci de suivre le workflow Copilotage: l’issue crée la branche fix et sera liée au PR.
         
-        - Branche: `fix/issue-<num>-<slug>`
-        - Titre de PR: doit inclure `[journal:HOST-pidPID]` (ex: `[journal:totoro-pid12345]`)
+        - Branche: "fix/issue-<num>-<slug>"
+        - Lors de l'ouverture de la PR: ajoutez le label `provenance:host=…,pid=…,agent=GitHubCopilot,model=…,owner=…` (utilisez le script gh_pr_open.sh)
   - type: input
     id: summary
     attributes:

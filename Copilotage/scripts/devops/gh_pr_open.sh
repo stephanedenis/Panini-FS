@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# gh_pr_open.sh — ouvre une PR avec titre auto-préfixé [journal:HOST-pidPID]
-# Usage: gh_pr_open.sh "<résumé court>" [--base <base-branch>] [--model <nom>]
+# gh_pr_open.sh — ouvre une PR et ajoute un label provenance parsable
+# Usage: gh_pr_open.sh "<résumé court>" [--base <base-branch>] [--model <nom>] [--owner <human|agent>]
 # - Détecte type/issue depuis le nom de branche: <type>/issue-<num>-<slug>
-# - Construit le titre: [journal:HOST-pidPID] [model:NOM] <type>: <résumé> (Refs #<num>)
+# - Construit le titre: <type>: <résumé> (Refs #<num>)
+# - Ajoute le label: provenance:host=HOST,pid=PID,agent=GitHubCopilot,model=MODELE,owner=OWNER
 
 SUMMARY=${1:-}
 BASE_BRANCH="master"
 MODEL_TAG=${MODEL_TAG:-}
+OWNER_TAG=${OWNER_TAG:-agent}
 
 shift || true
 while [[ $# -gt 0 ]]; do
@@ -17,6 +19,8 @@ while [[ $# -gt 0 ]]; do
       BASE_BRANCH=${2:-master}; shift 2;;
     --model)
       MODEL_TAG=${2:-}; shift 2;;
+    --owner)
+      OWNER_TAG=${2:-agent}; shift 2;;
     *)
       shift;;
   esac
@@ -42,17 +46,20 @@ fi
 
 HOST_SHORT=${HOSTNAME:-$(hostname -s 2>/dev/null || hostname 2>/dev/null || echo "host")}
 PID_HINT=$$
-PREFIX="[journal:${HOST_SHORT}-pid${PID_HINT}]"
-MODEL_PREFIX=""
-if [[ -n "$MODEL_TAG" ]]; then
-  MODEL_PREFIX=" [model:${MODEL_TAG}]"
-fi
-
-TITLE="${PREFIX}${MODEL_PREFIX} ${TYPE}: ${SUMMARY}"
+TITLE="${TYPE}: ${SUMMARY}"
 if [[ -n "$ISSUE_NUM" ]]; then
   TITLE+=" (Refs #${ISSUE_NUM})"
 fi
 
-BODY="PR ouverte via gh_pr_open.sh.\n\n- Branche: ${CURR_BRANCH}\n- Agent/Session: ${PREFIX}\n- Modèle: ${MODEL_TAG:-n/a}\n\nCloses #${ISSUE_NUM}"
+BODY="PR ouverte via gh_pr_open.sh.\n\n- Branche: ${CURR_BRANCH}\n- Modèle: ${MODEL_TAG:-n/a}\n\nCloses #${ISSUE_NUM}"
 
-exec gh pr create --title "$TITLE" --body "$BODY" --base "$BASE_BRANCH" --head "$CURR_BRANCH"
+# Crée la PR
+gh pr create --title "$TITLE" --body "$BODY" --base "$BASE_BRANCH" --head "$CURR_BRANCH"
+
+# Ajoute le label provenance parsable
+HOST_SHORT=${HOSTNAME:-$(hostname -s 2>/dev/null || hostname 2>/dev/null || echo "host")}
+PID_HINT=$$
+PROVENANCE_LABEL="provenance:host=${HOST_SHORT},pid=${PID_HINT},agent=GitHubCopilot,model=${MODEL_TAG:-unspecified},owner=${OWNER_TAG}"
+gh label list --limit 200 | grep -Fq "$PROVENANCE_LABEL" || gh label create "$PROVENANCE_LABEL" --color FFFFFF --description "Agent provenance metadata" || true
+PR_NUMBER=$(gh pr view --json number --jq .number)
+exec gh pr edit "$PR_NUMBER" --add-label "$PROVENANCE_LABEL"
