@@ -1,0 +1,6 @@
+@page { size: A4; margin: 16mm; }
+body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, sans-serif; line-height: 1.5; color: #111; }
+h1, h2, h3 { page-break-after: avoid; }
+pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+a[href^="http"]::after { content: " <" attr(href) ">"; font-size: 0.8em; color: #555; }
+img { max-width: 100%; }
