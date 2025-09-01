@@ -36,4 +36,14 @@
   "github.gitAuthentication": false,
   "git.terminalAuthentication": false,
   "update.mode": "none"
+  ,
+  // Autoriser les tâches automatiques sans confirmation (appliqué au workspace)
+  "task.allowAutomaticTasks": "on",
+  // Éviter les popups de fermeture du terminal
+  "terminal.integrated.confirmOnExit": "never"
+  ,
+  // Ouvrir les fichiers même en workspace non approuvé sans re-demander
+  "security.workspace.trust.untrustedFiles": "open",
+  // Ne pas demander confirmation à la fermeture de VS Code
+  "window.confirmBeforeClose": "never"
 }
