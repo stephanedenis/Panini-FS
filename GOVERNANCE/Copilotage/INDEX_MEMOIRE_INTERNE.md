@@ -6,7 +6,12 @@
 - `README_MEMOIRE_INTERNE.md` - Mémoire principale consolidée
 - Mission, règles, contexte architectural, statut recherche
 
-### 🔧 **WORKFLOWS** (`workflows/`)
+### � **GUIDES**
+- `GUIDE_COPILOTAGE.md` - Manuel opérationnel IA (style, outils, cadence, qualité, sécurité)
+- `CONVENTIONS_PR.md` - Conventions PR et checklist
+- `CHECKLIST_PR.md` - Checklist PR prête à cocher
+
+### �🔧 **WORKFLOWS** (`workflows/`)
 - `REGLES_COLLABORATION.md` - Protocoles humain-AI
 - Contraintes opérationnelles, séparation des responsabilités
 
@@ -39,6 +44,8 @@
 - ❌ **JAMAIS** requis pour collaboration humaine
 - ✅ Documentation complète existe dans `/DOCUMENTATION/` et `/README.md`
 - ✅ Séparation totale : mémoire AI ≠ documentation projet
+
+Note: l’ancien dossier racine `Copilotage/` est désormais déprécié (voir `Copilotage/DEPRECATED_README.md`).
 
 ---
 

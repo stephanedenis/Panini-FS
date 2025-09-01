@@ -1,4 +1,11 @@
 # Copilotage — Guide de contribution et d’orchestration
+# Copilotage — Guide de contribution et d’orchestration
+
+> IMPORTANT — Dossier legacy (déprécié)
+>
+> Ce dossier racine `Copilotage/` est conservé pour l’historique mais n’est plus la source de vérité.
+> La référence officielle est `GOVERNANCE/Copilotage/` (mémoire interne unifiée, conventions et checklists).
+> Merci de ne plus ajouter de nouveaux contenus ici. Migrez vers la structure en MAJUSCULES à la racine.
 
 [![CI Minimal](https://github.com/stephanedenis/PaniniFS/actions/workflows/paniniFS-ci.yml/badge.svg)](https://github.com/stephanedenis/PaniniFS/actions/workflows/paniniFS-ci.yml)
 [![CodeQL](https://github.com/stephanedenis/PaniniFS/actions/workflows/codeql.yml/badge.svg)](https://github.com/stephanedenis/PaniniFS/actions/workflows/codeql.yml)
