@@ -78,6 +78,12 @@ Critère: tout phénomène morpho‑syntaxique doit pouvoir se paraphraser via c
 	- Partage implicite des arguments: AGENT/PATIENT non répétés si identiques à travers la série.
 	- Encodage minimal: ne pas introduire de primitive sémantique nouvelle; SVC/SEQ sont des marqueurs structurels pour guidage du décodage.
 
+	### Convention INCORP (v0)
+
+	- INCORP: marque la relation d'incorporation nominale dans des langues polysynthétiques; elle n'ajoute aucune sémantique nouvelle mais indique que le PATIENT/THÈME est morphologiquement lié au verbe.
+	- Représentation: `LIAISON:INCORP` attachée à l'action ou au patient incorporé selon le besoin d'ambiguïté.
+	- Objectif: préserver la lisibilité et la réversibilité tout en évitant de multiplier les primitives de surface morphologique.
+
 ## Micro-cas (sanity checks)
 
 1) Agent-Action-Objet (AAO)
