@@ -32,6 +32,28 @@ def compute_metrics(corpus, gold):
         "avg_primitives_per_encoding": round(avg_len, 3)
     }
 
+def compute_child_metrics(lang_codes):
+    """Compute coverage/avg length for child prompts using gold_encodings_child.json."""
+    gold_path = os.path.join(HERE, "gold_encodings_child.json")
+    if not os.path.exists(gold_path):
+        raise FileNotFoundError(gold_path)
+    with open(gold_path, "r", encoding="utf-8") as f:
+        gold = json.load(f)
+    from collections import defaultdict
+    out = {}
+    for lc in lang_codes:
+        data = load_child_prompts(lc)
+        ids = [it["id"] for it in data.get("items", [])]
+        covered = [gid for gid in ids if gid in gold]
+        lengths = [len(gold[gid]) for gid in covered]
+        out[lc] = {
+            "sentences": len(ids),
+            "covered": len(covered),
+            "coverage_rate": round(len(covered)/len(ids), 3) if ids else 0.0,
+            "avg_primitives_per_encoding": round(sum(lengths)/len(lengths), 3) if lengths else 0.0
+        }
+    return out
+
 def list_typological_sample(sample):
     print(f"Typological sample v{sample.get('version')} priority={sample.get('priority')}")
     for lang in sample.get("languages", []):
@@ -84,6 +106,7 @@ def main(argv=None):
     p.add_argument("--list-child", metavar="LANG", help="List child-directed prompts for a language code (fr|en|…)")
     p.add_argument("--list-child-langs", action="store_true", help="List available child prompt languages")
     p.add_argument("--phenomena", nargs="*", help="Aggregate phenomena counts across child prompts for LANG codes (default: all child languages)")
+    p.add_argument("--child-metrics", nargs="*", help="Compute metrics for child prompts using gold_encodings_child.json (default: fr en)")
     args = p.parse_args(argv)
 
     corpus = load_json("toy_corpus.json")
@@ -110,7 +133,10 @@ def main(argv=None):
             langs = [os.path.splitext(fn)[0] for fn in os.listdir(base) if fn.endswith('.json') and fn != 'schema.json']
         cnt = aggregate_phenomena(langs)
         print(json.dumps(cnt.most_common(), ensure_ascii=False, indent=2))
-    if not args.list and not args.metrics and not args.list_sample and not args.list_child and not args.list_child_langs and args.phenomena is None:
+    if args.child_metrics is not None:
+        langs = args.child_metrics if args.child_metrics else ["fr", "en"]
+        print(json.dumps(compute_child_metrics(langs), ensure_ascii=False, indent=2))
+    if not args.list and not args.metrics and not args.list_sample and not args.list_child and not args.list_child_langs and args.phenomena is None and args.child_metrics is None:
         p.print_help()
 
 if __name__ == "__main__":
