@@ -43,11 +43,37 @@ def list_typological_sample(sample):
         for src in lang.get("child_sources", []):
             print(f"    • {src['type']}: {src['name']} -> {src['url']}")
 
+def load_child_prompts(lang_code: str):
+    path = os.path.join(HERE, "prompts_child", f"{lang_code}.json")
+    if not os.path.exists(path):
+        raise FileNotFoundError(path)
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+def list_child_prompts(lang_code: str):
+    data = load_child_prompts(lang_code)
+    print(f"Child prompts [{data.get('lang')}]: {len(data.get('items', []))} items")
+    for it in data.get("items", []):
+        ph = ",".join(it.get("phenomena", []))
+        print(f"- {it['id']}: {it['text']}  [{ph}]")
+
+def aggregate_phenomena(lang_codes):
+    from collections import Counter
+    cnt = Counter()
+    for lc in lang_codes:
+        data = load_child_prompts(lc)
+        for it in data.get("items", []):
+            for ph in it.get("phenomena", []):
+                cnt[ph] += 1
+    return cnt
+
 def main(argv=None):
     p = argparse.ArgumentParser()
     p.add_argument("--list", action="store_true", help="List toy corpus sentences")
     p.add_argument("--metrics", action="store_true", help="Print simple metrics from gold encodings")
     p.add_argument("--list-sample", action="store_true", help="List typological sample languages and child-directed sources")
+    p.add_argument("--list-child", metavar="LANG", help="List child-directed prompts for a language code (fr|en|…)")
+    p.add_argument("--phenomena", nargs="*", help="Aggregate phenomena counts across child prompts for LANG codes (default: fr en)")
     args = p.parse_args(argv)
 
     corpus = load_json("toy_corpus.json")
@@ -62,7 +88,13 @@ def main(argv=None):
         print(json.dumps(m, ensure_ascii=False, indent=2))
     if args.list_sample:
         list_typological_sample(sample)
-    if not args.list and not args.metrics:
+    if args.list_child:
+        list_child_prompts(args.list_child)
+    if args.phenomena is not None:
+        langs = args.phenomena if args.phenomena else ["fr", "en"]
+        cnt = aggregate_phenomena(langs)
+        print(json.dumps(cnt.most_common(), ensure_ascii=False, indent=2))
+    if not args.list and not args.metrics and not args.list_sample and not args.list_child and args.phenomena is None:
         p.print_help()
 
 if __name__ == "__main__":
