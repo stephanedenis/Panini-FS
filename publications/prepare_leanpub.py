@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
-Prepare a Leanpub-friendly manuscript folder from root mirror files:
+Prepare Leanpub-friendly manuscript folders from root mirror files, per language (FR/EN):
 - Renders diagrams to SVG and replaces code fences with image links
-- Copies assets and emits a manuscript/ with Book.txt
+- Splits the book into chapters (by H1) if requested
+- Copies assets and emits manuscript_fr/ and manuscript_en/ with Book.txt
 
 Assumptions:
 - Root sources listed in publications/sources.yml
@@ -13,11 +14,17 @@ import shutil
 import re
 from pathlib import Path
 import sys
+import argparse
+import re
+import unicodedata
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 PUB = ROOT / "publications"
-OUT = PUB / "leanpub" / "manuscript"
+# We create two parallel outputs: manuscript_fr and manuscript_en
+OUT_ROOT = PUB / "leanpub"
+OUT_FR = OUT_ROOT / "manuscript_fr"
+OUT_EN = OUT_ROOT / "manuscript_en"
 DIAGS = PUB / "diagrams"
 
 FENCE_RE = re.compile(r"```(mermaid|plantuml|puml)\n([\s\S]*?)\n```", re.MULTILINE)
@@ -40,51 +47,98 @@ def replace_fences_with_images(text: str) -> str:
 
     return FENCE_RE.sub(_repl, text)
 
+def slugify(title: str) -> str:
+    # ASCII-only, hyphen-separated
+    t = unicodedata.normalize("NFKD", title).encode("ascii", "ignore").decode("ascii")
+    t = re.sub(r"[^a-zA-Z0-9\s-]", "", t)
+    t = re.sub(r"\s+", "-", t).strip("-")
+    return t.lower() or "section"
 
-def prepare():
+
+def split_by_h1(text: str) -> list[tuple[str, str]]:
+    # Split on lines starting with '# ' and keep headings
+    lines = text.splitlines()
+    parts: list[list[str]] = []
+    current: list[str] = []
+    for line in lines:
+        if line.startswith("# "):
+            if current:
+                parts.append(current)
+            current = [line]
+        else:
+            current.append(line)
+    if current:
+        parts.append(current)
+    chapters: list[tuple[str, str]] = []
+    for i, chunk in enumerate(parts, 1):
+        heading = "Untitled"
+        if chunk and chunk[0].startswith("# "):
+            heading = chunk[0][2:].strip()
+        slug = slugify(heading)
+        fname = f"ch{str(i).zfill(2)}-{slug}.md"
+        chapters.append((fname, "\n".join(chunk).strip() + "\n"))
+    return chapters
+
+
+def prepare(split_chapters: bool = True, include_articles: bool = True):
     sources = load_sources()
-    if OUT.exists():
-        shutil.rmtree(OUT)
-    OUT.mkdir(parents=True, exist_ok=True)
+    # Fresh outputs
+    for out_dir in (OUT_FR, OUT_EN):
+        if out_dir.exists():
+            shutil.rmtree(out_dir)
+        out_dir.mkdir(parents=True, exist_ok=True)
     DIAGS.mkdir(parents=True, exist_ok=True)
 
-    # Render diagrams first
-    md_files = []
-    for kind, langs in sources.items():
-        for lang, rel in langs.items():
-            md_files.append(str((ROOT / rel).resolve()))
-    # Import sibling module
+    # Render diagrams once from all sources
+    md_files = [str((ROOT / rel).resolve()) for langs in sources.values() for rel in langs.values()]
     sys.path.insert(0, str(PUB))
     try:
         import render_diagrams  # type: ignore
     except Exception as e:
         print(f"[error] unable to import render_diagrams: {e}")
         return
-
     render_diagrams.main(md_files, str(DIAGS))
 
-    # Copy and transform
-    book_list = []
-    for kind, langs in sources.items():
-        for lang, rel in langs.items():
-            src = ROOT / rel
-            if not src.exists():
-                print(f"[skip] missing {src}")
-                continue
-            text = src.read_text(encoding="utf-8")
-            text = replace_fences_with_images(text)
-            # Copy diagrams referenced
-            for svg in DIAGS.glob("diag_*.svg"):
-                shutil.copy2(svg, OUT / svg.name)
-            # Write chapter file name
-            out_name = f"{kind}_{lang}.md"
-            (OUT / out_name).write_text(text, encoding="utf-8")
-            book_list.append(out_name)
+    # Helper to process a language
+    def process_lang(lang: str, out_dir: Path) -> None:
+        book_files: list[str] = []
+        # Copy diagrams
+        for svg in DIAGS.glob("diag_*.svg"):
+            shutil.copy2(svg, out_dir / svg.name)
+        # Books
+        if "books" in sources and lang in sources["books"]:
+            src = ROOT / sources["books"][lang]
+            if src.exists():
+                text = replace_fences_with_images(src.read_text(encoding="utf-8"))
+                if split_chapters:
+                    chapters = split_by_h1(text)
+                    for fname, content in chapters:
+                        (out_dir / fname).write_text(content, encoding="utf-8")
+                        book_files.append(fname)
+                else:
+                    name = f"book_{lang}.md"
+                    (out_dir / name).write_text(text, encoding="utf-8")
+                    book_files.append(name)
+        # Articles (optional)
+        if include_articles and "articles" in sources and lang in sources["articles"]:
+            src = ROOT / sources["articles"][lang]
+            if src.exists():
+                text = replace_fences_with_images(src.read_text(encoding="utf-8"))
+                name = f"article_{lang}.md"
+                (out_dir / name).write_text(text, encoding="utf-8")
+                book_files.append(name)
+        # Emit Book.txt
+        (out_dir / "Book.txt").write_text("\n".join(book_files) + "\n", encoding="utf-8")
+        print(f"[ok] Book.txt ({lang}) with {len(book_files)} entries")
 
-    # Emit Book.txt in rough order: FR then EN
-    (OUT / "Book.txt").write_text("\n".join(book_list) + "\n", encoding="utf-8")
-    print(f"[ok] Leanpub manuscript at {OUT}")
+    process_lang("fr", OUT_FR)
+    process_lang("en", OUT_EN)
+    print(f"[ok] Leanpub manuscripts at {OUT_FR} and {OUT_EN}")
 
 
 if __name__ == "__main__":
-    prepare()
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--no-split", dest="split", action="store_false", help="Do not split into chapters")
+    ap.add_argument("--no-articles", dest="articles", action="store_false", help="Do not include articles in Book.txt")
+    args = ap.parse_args()
+    prepare(split_chapters=args.split, include_articles=args.articles)

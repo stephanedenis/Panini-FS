@@ -1,0 +1,44 @@
+name: publications-and-docs
+
+on:
+  push:
+    branches: [ docs/research-bootstrap ]
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install docs deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r docs_new/requirements.txt
+
+      - name: Build site (strict)
+        run: |
+          mkdocs build --strict --clean
+
+      - name: Install publications deps
+        run: |
+          pip install -r publications/requirements.txt
+
+      - name: Prepare Leanpub manuscripts
+        run: |
+          python publications/prepare_leanpub.py
+
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-and-manuscripts
+          path: |
+            site/**
+            publications/leanpub/**
+            publications/out/**
