@@ -1,0 +1,15 @@
+{
+  "lang": "hau",
+  "items": [
+    {"id": "hau_aao_01", "text": "Mage ya na bin bera.", "phenomena": ["AAO"], "meta": {"origin": "constructed", "needs_native_review": true}},
+    {"id": "hau_poss_01", "text": "Littafi yana kan tebur na Mary.", "phenomena": ["possession", "spatial:on"]},
+    {"id": "hau_spa_01", "text": "Kwallo tana cikin akwati.", "phenomena": ["spatial:in"]},
+    {"id": "hau_quant_01", "text": "Yara uku suna gudu.", "phenomena": ["quantification", "aspect:progressive"]},
+    {"id": "hau_neg_01", "text": "Ba ya ci.", "phenomena": ["negation"]},
+    {"id": "hau_mod_01", "text": "Kana iya wasa yanzu.", "phenomena": ["modality:possibility", "time:now"]},
+    {"id": "hau_evid_01", "text": "Ana cewa ya zo.", "phenomena": ["evidential:reported"]},
+    {"id": "hau_seq_01", "text": "Je ka dauko kwallo ka dawo.", "phenomena": ["event:sequence"]},
+    {"id": "hau_comp_01", "text": "Wannan kek ya fi wancan girma.", "phenomena": ["comparison:more"]},
+    {"id": "hau_exist_01", "text": "Akwai kare a cikin lambu.", "phenomena": ["existence", "spatial:in"]}
+  ]
+}
