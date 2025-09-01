@@ -22,6 +22,7 @@ Résumé, hypothèses, protocoles de validation, résultats et références.
 ## Portée universelle: échantillonnage et couverture
 
 - Échantillonnage stratifié (WALS/Glottolog): au moins 1 langue par grande famille (≥ 25 familles), couvrant aussi des isolats; équilibre géographique (Afrique, Eurasie, Océanie, Amériques, Papouasie, Australie).
+- Priorité données: textes dirigés vers l’enfant (contes, dialogues parent‑enfant) pour ancrer les phénomènes minimaux d’abord.
 - Inclure des profils structuraux contrastés:
 	- Langues signées (ASL, Langue des Signes Nicaraguayenne/NSL) et émergentes.
 	- Créoles/pidgins (Haïtien, Tok Pisin) et langues à SVC (Ewe, Yoruba).
@@ -32,6 +33,7 @@ Résumé, hypothèses, protocoles de validation, résultats et références.
 	- Évidentialité obligatoire (Quechua, Tariana); systèmes honorifiques (Japonais, Coréen).
 	- Idéophones riches (Siwu, Ewe); systèmes numériques atypiques (Oksapmin, Pirahã — avec prudence méthodologique).
 - Jeux de données: WALS, APiCS (créoles), Universal Dependencies (arbres multi‑langues), Global Signbank (lexiques signés), Glottolog (métadonnées), TalkBank/CHILDES (développement).
+ - Échantillon JSON: `experiments/dhatu/typological_sample.json` (sources: CHILDES, African Storybook, Global Storybooks, UD, WALS).
 
 ## Observations (journalisées)
 
@@ -159,3 +161,4 @@ Notes pratiques
 - Dossier: `experiments/dhatu/`
 - Lister le corpus jouet: `python experiments/dhatu/validator.py --list`
 - Calculer des métriques brutes: `python experiments/dhatu/validator.py --metrics`
+ - Lister l’échantillon typologique (child-directed-first): `python experiments/dhatu/validator.py --list-sample`
