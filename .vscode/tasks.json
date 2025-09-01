@@ -5,27 +5,47 @@
     {
       "label": "Docs: Generate modules index",
       "type": "shell",
-      "command": "bash -lc 'source scripts/noninteractive_env.sh; PYTHONUNBUFFERED=1 CI=1 python3 scripts/generate_modules_docs_index.py && echo DONE'",
-      "problemMatcher": []
+      "command": "bash -lc 'source scripts/noninteractive_env.sh; PYTHONUNBUFFERED=1 CI=1 python3 scripts/devops/generate_modules_index.py && echo DONE'",
+      "problemMatcher": [],
+      "presentation": {
+        "showReuseMessage": false,
+        "reveal": "never",
+        "panel": "shared"
+      }
     },
     {
       "label": "Docs: Build",
       "type": "shell",
       "command": "bash -lc 'source scripts/noninteractive_env.sh; PYTHONUNBUFFERED=1 CI=1 KROKI_URL=https://kroki.io mkdocs build --strict --config-file mkdocs.yml && echo DONE'",
-      "problemMatcher": []
+      "problemMatcher": [],
+      "presentation": {
+        "showReuseMessage": false,
+        "reveal": "always",
+        "panel": "shared"
+      }
     },
     {
       "label": "Docs: Serve (localhost:8000)",
       "type": "shell",
       "isBackground": true,
       "command": "bash -lc 'source scripts/noninteractive_env.sh; PYTHONUNBUFFERED=1 CI=1 KROKI_URL=https://kroki.io mkdocs serve -a 127.0.0.1:8000 --config-file mkdocs.yml'",
-      "problemMatcher": []
+      "problemMatcher": [],
+      "presentation": {
+        "showReuseMessage": false,
+        "reveal": "never",
+        "panel": "shared"
+      }
     },
     {
       "label": "Git: Status (no pager)",
       "type": "shell",
       "command": "bash -lc 'source scripts/noninteractive_env.sh; git --no-pager status'",
-      "problemMatcher": []
+      "problemMatcher": [],
+      "presentation": {
+        "showReuseMessage": false,
+        "reveal": "always",
+        "panel": "shared"
+      }
     }
   ]
 }
