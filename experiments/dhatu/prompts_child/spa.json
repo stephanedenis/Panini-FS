@@ -1,0 +1,15 @@
+{
+  "lang": "spa",
+  "items": [
+    {"id": "spa_aao_01", "text": "El gato persigue al ratón.", "phenomena": ["AAO"], "meta": {"origin": "constructed", "needs_native_review": true}},
+    {"id": "spa_poss_01", "text": "El libro está sobre la mesa de María.", "phenomena": ["possession", "spatial:on"]},
+    {"id": "spa_spa_01", "text": "La pelota está en la caja.", "phenomena": ["spatial:in"]},
+    {"id": "spa_quant_01", "text": "Tres niños corren.", "phenomena": ["quantification"]},
+    {"id": "spa_neg_01", "text": "Él no come.", "phenomena": ["negation"]},
+    {"id": "spa_mod_01", "text": "Puedes jugar ahora.", "phenomena": ["modality:possibility", "time:now"]},
+    {"id": "spa_evid_01", "text": "Dicen que vino.", "phenomena": ["evidential:reported"]},
+    {"id": "spa_seq_01", "text": "Ve a coger la pelota y vuelve.", "phenomena": ["event:sequence"]},
+    {"id": "spa_comp_01", "text": "Este pastel es más grande que ese.", "phenomena": ["comparison:more"]},
+    {"id": "spa_exist_01", "text": "Hay un perro en el jardín.", "phenomena": ["existence", "spatial:in"]}
+  ]
+}
