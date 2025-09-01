@@ -21,12 +21,16 @@ jobs:
             const labels = (pr.labels || []).map(l => l.name);
             const exempt = labels.includes('copilotage-exempt');
             const hasJournal = /\[journal:[A-Za-z0-9._-]+-pid\d+\]/.test(title);
+            const hasOwner = /\[owner:(human|agent)\]/i.test(title);
             if (exempt) {
               core.notice('Bypass enabled via label copilotage-exempt.');
               return;
             }
-            if (!hasJournal) {
-              core.setFailed('Titre de PR invalide: ajoutez [journal:HOST-pidPID] (ex: [journal:totoro-pid12345]) ou ajoutez le label copilotage-exempt pour bypass.');
+            if (!hasJournal || !hasOwner) {
+              let miss = [];
+              if (!hasJournal) miss.push('[journal:HOST-pidPID]');
+              if (!hasOwner) miss.push('[owner:human|agent]');
+              core.setFailed(`Titre de PR invalide: ajoutez ${miss.join(' et ')} ou ajoutez le label copilotage-exempt pour bypass.`);
             } else {
               core.info('Validation OK: PID détecté dans le titre.');
             }
