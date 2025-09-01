@@ -70,10 +70,21 @@ LBL_AGENT="agent:${AGENT_TAG}"
 LBL_MODEL="model:${MODEL_TAG:-unspecified}"
 LBL_OWNER="owner:${OWNER_TAG}"
 
+# Opt-in par défaut: autofill provenance et auto-merge
+LBL_AUTOFILL="autofill-provenance"
+LBL_AUTOMERGE="automerge-provenance"
+
 # S'assure que les labels existent (couleur par défaut)
-for L in "$LBL_HOST" "$LBL_PID" "$LBL_AGENT" "$LBL_MODEL" "$LBL_OWNER"; do
+for L in "$LBL_HOST" "$LBL_PID" "$LBL_AGENT" "$LBL_MODEL" "$LBL_OWNER" "$LBL_AUTOFILL" "$LBL_AUTOMERGE"; do
   gh label create "$L" --color BFD4F2 --description "Provenance/agent metadata" || true
 done
 
 PR_NUMBER=$(gh pr view --json number --jq .number)
-exec gh pr edit "$PR_NUMBER" --add-label "$LBL_HOST" --add-label "$LBL_PID" --add-label "$LBL_AGENT" --add-label "$LBL_MODEL" --add-label "$LBL_OWNER"
+exec gh pr edit "$PR_NUMBER" \
+  --add-label "$LBL_HOST" \
+  --add-label "$LBL_PID" \
+  --add-label "$LBL_AGENT" \
+  --add-label "$LBL_MODEL" \
+  --add-label "$LBL_OWNER" \
+  --add-label "$LBL_AUTOFILL" \
+  --add-label "$LBL_AUTOMERGE"

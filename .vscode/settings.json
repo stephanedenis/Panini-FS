@@ -46,4 +46,13 @@
   "security.workspace.trust.untrustedFiles": "open",
   // Ne pas demander confirmation à la fermeture de VS Code
   "window.confirmBeforeClose": "never"
+  ,
+  // Désactive les pagers dans le terminal intégré pour toutes les sessions
+  "terminal.integrated.env.linux": {
+    "GIT_PAGER": "cat",
+    "PAGER": "cat",
+    "LESS": "FRX",
+    "GH_PAGER": "cat",
+    "GH_NO_UPDATE_NOTIFIER": "1"
+  }
 }
