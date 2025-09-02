@@ -1,0 +1,41 @@
+name: copilotage-journal-check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch PR labels (JSON)
+        id: fetch_labels
+        run: |
+          set -e
+          URL="${{ github.api_url }}/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels"
+          echo "Fetching labels from $URL"
+          JSON=$(curl -sS -H "authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "$URL" | tr -d '\n')
+          # Échapper les % et retours éventuels
+          JSON_ESC=${JSON//'%'/'%25'}
+          JSON_ESC=${JSON_ESC//$'\r'/'%0D'}
+          JSON_ESC=${JSON_ESC//$'\n'/'%0A'}
+          echo "json=$JSON_ESC" >> "$GITHUB_OUTPUT"
+
+      - name: Enforce journal presence (unless exempt)
+        run: |
+          set -e
+          echo "Evaluating labels..."
+          JSON='${{ steps.fetch_labels.outputs.json }}'
+          if echo "$JSON" | grep -q '"name":"copilotage-exempt"'; then
+            echo "Bypass: copilotage-exempt présent → on n'exécute pas le contrôle journal.";
+            exit 0;
+          fi
+          echo "Checking journal Copilotage presence..."
+          if ! ls -1 Copilotage/journal/*.md >/dev/null 2>&1; then
+            echo "::error::Aucun journal Copilotage trouvé dans Copilotage/journal/. Ajoutez une entrée ou ajoutez le label 'copilotage-exempt'."
+            exit 1
+          fi
+          echo "OK: journal présent."
