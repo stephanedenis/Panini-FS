@@ -9,11 +9,22 @@ on:
       - 'docs_new/**'
       - 'modules/**/docs/**'
       - 'mkdocs.yml'
+      - 'CNAME'
+      - '.github/workflows/deploy-docs.yml'
+  pull_request:
+    branches: [ master, main ]
+    paths:
+      - 'docs_new/**'
+      - 'modules/**/docs/**'
+      - 'mkdocs.yml'
       - '.github/workflows/deploy-docs.yml'
   workflow_dispatch:
 
 jobs:
   build-deploy:
+    concurrency:
+      group: deploy-docs
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     env:
       GIT_PAGER: cat
@@ -52,6 +63,7 @@ jobs:
           mkdocs build --strict --config-file mkdocs.yml
 
       - name: Deploy to GitHub Pages
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
