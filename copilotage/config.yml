@@ -1,0 +1,8 @@
+# Copilotage project configuration (per-repo)
+project:
+  name: ${REPO_NAME:-auto}
+  environment: auto
+  ruleset: default
+include:
+  - shared/rules/**/*.yml
+  - shared/workflows/**/*.yml

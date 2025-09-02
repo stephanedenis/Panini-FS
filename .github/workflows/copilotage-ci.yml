@@ -1,0 +1,17 @@
+name: Copilotage CI
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - run: git submodule update --init --recursive
+      - run: |
+          test -d copilotage || { echo "missing copilotage/"; exit 1; }
+          test -d copilotage/shared || { echo "missing copilotage/shared"; exit 1; }
