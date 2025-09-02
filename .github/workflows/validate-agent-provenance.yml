@@ -18,6 +18,7 @@ jobs:
           script: |
             const pr = context.payload.pull_request;
             const labels = (pr.labels || []).map(l => l.name);
+            // Validation uniquement via labels (pas de métadonnées dans le titre)
             const REQUIRED = ['prov:host=','prov:pid=','agent:','model:','owner:'];
             if (labels.includes('copilotage-exempt')) {
               core.notice('Bypass via label copilotage-exempt');
@@ -39,4 +40,4 @@ jobs:
               core.setFailed('Labels requis manquants: ' + missing.join(', '));
               return;
             }
-            core.info('Provenance OK via labels courts.');
+            core.info('Provenance OK via labels (labels-only).');
