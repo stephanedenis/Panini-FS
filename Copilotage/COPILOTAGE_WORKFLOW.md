@@ -24,6 +24,12 @@ Journalisation Copilotage (obligatoire):
 - Nommage: `YYYY-MM-DD-<host>-pid<pid>-<slug>.md` (host: ex. Hauru; pid: pid VSCode si dispo, sinon shell).
 - Voir `Copilotage/AGENT_CONVENTION.md` pour la règle d’identification agent/session.
 
+Automatisation journal & PR (recommandée):
+- `Copilotage/scripts/devops/gh_task_init.sh` crée la branche ET génère/commit automatiquement une entrée de journal (journal_session.sh).
+- `Copilotage/scripts/devops/gh_pr_open.sh` ouvre la PR en ajoutant le lien vers le journal le plus récent dans le corps.
+- CI `copilotage-journal-check.yml` bloque les PR sans journal présent sous `Copilotage/journal/`.
+	- Pour les rares exceptions, utilisez le label `copilotage-exempt` sur la PR.
+
 Cheatsheet:
 - Issue types: feat | fix | docs | chore | refactor | perf | test | ci
 - Slug court, kebab-case.

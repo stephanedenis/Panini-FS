@@ -57,4 +57,10 @@ fi
 
 BODY="PR ouverte via gh_pr_open.sh.\n\n- Branche: ${CURR_BRANCH}\n- Contexte: ${PREFIX}\n\nCloses #${ISSUE_NUM}"
 
+# Joindre le journal Copilotage le plus récent si présent
+LATEST_JOURNAL=$(ls -1t Copilotage/journal/*.md 2>/dev/null | head -n1 || true)
+if [[ -n "$LATEST_JOURNAL" ]]; then
+  BODY+="\n\nJournal: ${LATEST_JOURNAL}"
+fi
+
 exec gh pr create --title "$TITLE" --body "$BODY" --base "$BASE_BRANCH" --head "$CURR_BRANCH"
