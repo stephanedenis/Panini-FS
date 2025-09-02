@@ -141,6 +141,13 @@
         <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/linguistic-foundations/"/>
     </url>
     <url>
+        <loc>https://paninifs.org/en/monitoring-guide/</loc>
+        <lastmod>2025-09-02</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/monitoring-guide/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/monitoring-guide/"/>
+    </url>
+    <url>
         <loc>https://paninifs.org/en/monitoring/</loc>
         <lastmod>2025-09-02</lastmod>
         <changefreq>daily</changefreq>
@@ -167,6 +174,13 @@
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/vision/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/vision/"/>
+    </url>
+    <url>
+        <loc>https://paninifs.org/en/modules/</loc>
+        <lastmod>2025-09-02</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/modules/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/modules/"/>
     </url>
     <url>
         <loc>https://paninifs.org/en/research/</loc>
@@ -498,6 +512,13 @@
         <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/linguistic-foundations/"/>
     </url>
     <url>
+        <loc>https://paninifs.org/en/en/monitoring-guide/</loc>
+        <lastmod>2025-09-02</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/monitoring-guide/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/monitoring-guide/"/>
+    </url>
+    <url>
         <loc>https://paninifs.org/en/en/monitoring/</loc>
         <lastmod>2025-09-02</lastmod>
         <changefreq>daily</changefreq>
@@ -524,6 +545,13 @@
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/vision/"/>
         <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/vision/"/>
+    </url>
+    <url>
+        <loc>https://paninifs.org/en/en/modules/</loc>
+        <lastmod>2025-09-02</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/modules/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/modules/"/>
     </url>
     <url>
         <loc>https://paninifs.org/en/en/research/</loc>
