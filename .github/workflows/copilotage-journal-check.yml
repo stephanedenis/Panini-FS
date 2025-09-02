@@ -17,8 +17,12 @@ jobs:
           set -e
           URL="${{ github.api_url }}/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels"
           echo "Fetching labels from $URL"
-          JSON=$(curl -sS -H "authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "$URL")
-          echo "json=$JSON" >> $GITHUB_OUTPUT
+          JSON=$(curl -sS -H "authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "$URL" | tr -d '\n')
+          # Échapper les % et retours éventuels
+          JSON_ESC=${JSON//'%'/'%25'}
+          JSON_ESC=${JSON_ESC//$'\r'/'%0D'}
+          JSON_ESC=${JSON_ESC//$'\n'/'%0A'}
+          echo "json=$JSON_ESC" >> "$GITHUB_OUTPUT"
 
       - name: Enforce journal presence (unless exempt)
         run: |
