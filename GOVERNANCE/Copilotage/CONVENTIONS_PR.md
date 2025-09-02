@@ -1,10 +1,10 @@
 # 🧾 Conventions Pull Requests
 
 ## Titre
-`[hostname-pid-agent-model] sujet concis [owner:human|agent]`
+`[hostname-pid-agent-model] sujet concis [owner:agent|human|pair|ops|infra]`
 
 Exemple:
-`[xps15-4321-agent-gpt4o] publications: manuscrits FR/EN, CI artefacts [owner:agent]`
+`[xps15-4321-agent-gpt4o] publications: manuscrits FR/EN, CI artefacts [owner:agent]` (ou `[owner:human|pair|ops|infra]` selon le cas)
 
 ## Checklist PR
 - [ ] Build MkDocs en mode strict: PASS

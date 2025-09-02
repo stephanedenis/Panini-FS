@@ -23,6 +23,11 @@ Provenance (labels obligatoires sauf exemption):
 - agent:..., model:..., owner:...
 - Labels d’opt-in recommandés: `autofill-provenance`, `automerge-provenance`. Exemption: `copilotage-exempt`.
 
+Journalisation Copilotage (obligatoire):
+- À chaque session, ajouter un fichier `Copilotage/journal/<date>-<host>-pid<pid>-<session>.md`.
+- Contenu minimal: Contexte, Décisions & actions clés, Liens (issues/PR), Tests/quality gates, Prochaines étapes.
+- Nommage: `YYYY-MM-DD-<host>-pid<pid>-<slug>.md` (host: ex. Hauru; pid: pid VSCode si dispo, sinon shell).
+
 Cheatsheet:
 - Issue types: feat | fix | docs | chore | refactor | perf | test | ci
 - Slug court, kebab-case.
@@ -40,6 +45,12 @@ Mainteneur: consigner tout écart dans l’issue.
 - Éviter les questions non essentielles; n’en poser qu’en cas de blocage réel ou décision irréversible.
 - Commits atomiques et message concis; référencer l’issue; ouvrir/mettre à jour la PR en fin de lot.
 - Qualité en continu: build/lint/tests rapides après changements substantiels; ne pas laisser un build cassé.
+
+Anti‑blocages (pagers/éditeurs):
+- Désactiver les pagers/éditeurs dans les lots de commandes: `GIT_PAGER=cat PAGER=cat LESS=FRX EDITOR=true VISUAL=true GIT_EDITOR=true GH_EDITOR=true GIT_MERGE_AUTOEDIT=no …`
+- Utiliser le wrapper `Copilotage/scripts/devops/run_safe.sh <cmd …>` pour neutraliser automatiquement less/vi.
+- Préférer `--no-pager` (git) et `--no-editor`/`--title/--body-file` (gh) pour éviter les prompts.
+
 ### Note sur “Conserver” (modifications Copilot)
 
 - L’éditeur peut demander une confirmation manuelle pour appliquer des modifications proposées par l’agent.

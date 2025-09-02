@@ -1,25 +1,37 @@
+<!-- PR Template unifié -->
+
 Titre: <type>: <résumé court> (Refs #<issue>)
 
-Contexte
+## Objet
+
+Brève description du changement et impact.
+
+## Journal
+
+Lien vers l’entrée la plus récente sous `Copilotage/journal/` (obligatoire)
+
+## Contexte
+
 - Issue liée: #<num>
 - Branche: <type>/issue-<num>-<slug>
-- Métadonnées PR (obligatoire): labels courts `prov:host=<host>`, `prov:pid=<pid>`, `agent:<agent>`, `model:<modele>`, `owner:<human|agent>`
-- Interdits: tout label commençant par `journal:` et les tags de titre `[journal:…]`
-- Modèle (optionnel): [model:<nom>] (ex: gpt-4o, claude-3.5)
-- Propriétaire (optionnel): [owner:human] pour marquer une PR portée par un humain (sinon propriétaire inféré)
+- Métadonnées obligatoires (labels de provenance):
+  - `prov:host=<host>`, `prov:pid=<pid>`
+  - `agent:<nom>`, `model:<nom>`, `owner:<agent|human|pair|ops|infra>`
+- Interdits: labels commençant par `journal:` et tags de titre `[journal:…]`
 
-Changements
+## Changements
+
 - [ ] …
 
-Vérifications
-- [ ] CI passe (CodeQL, CI minimal)
-- [ ] Docs/dashboard impactés mis à jour si nécessaire
-- [ ] Journal de session ajouté dans `Copilotage/journal/`
-- [ ] Labels `prov:host=*`, `prov:pid=*`, `agent:*`, `owner:*` et `model:*` présents
-- [ ] Merge par un agent différent (cross-check)
+## Qualité (rapide)
 
-Clôture
-- Closes #<num> (remplacer si pertinent)
+- [ ] Build/Lint/Tests: PASS
+- [ ] Docs/README mises à jour si nécessaire
+- [ ] Journal ajouté dans `Copilotage/journal/`
+- [ ] Labels `prov:host=*`, `prov:pid=*`, `agent:*`, `owner:*`, `model:*` présents
 
-Astuce: utilisez `Copilotage/scripts/devops/gh_pr_open.sh` pour ouvrir la PR et ajouter automatiquement le label `provenance:` (`--model`, `--owner`).
-Astuce 2: `gh_pr_open.sh` peut aussi ajouter `autofill-provenance` et `automerge-provenance` (opt-in) pour l’auto-complétion et l’auto-merge quand la provenance est complète.
+## Clôture
+
+- Closes #<num>
+
+Astuce: utilisez `Copilotage/scripts/devops/gh_pr_open.sh` pour ouvrir la PR et ajouter automatiquement des labels de provenance (`--model`, `--owner`).
