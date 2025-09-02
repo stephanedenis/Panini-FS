@@ -1,0 +1,43 @@
+name: Validate PR Agent Provenance
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened, labeled]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure PR has provenance labels or is exempted
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const labels = (pr.labels || []).map(l => l.name);
+            // Validation uniquement via labels (pas de métadonnées dans le titre)
+            const REQUIRED = ['prov:host=','prov:pid=','agent:','model:','owner:'];
+            if (labels.includes('copilotage-exempt')) {
+              core.notice('Bypass via label copilotage-exempt');
+              return;
+            }
+            // Check presence of split labels
+            const hasHost = labels.some(n => /^prov:host=/i.test(n));
+            const hasPid = labels.some(n => /^prov:pid=/i.test(n));
+            const hasAgent = labels.some(n => /^agent:/i.test(n));
+            const hasModel = labels.some(n => /^model:/i.test(n));
+            const hasOwner = labels.some(n => /^owner:/i.test(n));
+            const missing = [];
+            if (!hasHost) missing.push('prov:host=<...>');
+            if (!hasPid) missing.push('prov:pid=<...>');
+            if (!hasAgent) missing.push('agent:<...>');
+            if (!hasModel) missing.push('model:<...>');
+            if (!hasOwner) missing.push('owner:<...>');
+            if (missing.length) {
+              core.setFailed('Labels requis manquants: ' + missing.join(', '));
+              return;
+            }
+            core.info('Provenance OK via labels (labels-only).');

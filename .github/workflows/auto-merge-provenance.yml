@@ -1,0 +1,100 @@
+name: Auto Merge (Provenance OK)
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  pull_request:
+    types: [opened, edited, synchronize, reopened, labeled, ready_for_review]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scan open PRs and auto-merge eligible ones
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            async function listOpenPRs() {
+              const prs = [];
+              let page = 1;
+              while (true) {
+                const { data } = await github.rest.pulls.list({ owner, repo, state: 'open', per_page: 50, page });
+                prs.push(...data);
+                if (data.length < 50) break;
+                page++;
+              }
+              return prs;
+            }
+
+            function hasAllProvenance(labels) {
+              const names = labels.map(l => l.name);
+              return (
+                names.some(n => /^prov:host=/i.test(n)) &&
+                names.some(n => /^prov:pid=/i.test(n)) &&
+                names.some(n => /^agent:/i.test(n)) &&
+                names.some(n => /^model:/i.test(n)) &&
+                names.some(n => /^owner:/i.test(n))
+              );
+            }
+
+            function hasLabel(labels, name) {
+              return labels.map(l => l.name).includes(name);
+            }
+
+            async function checksPassed(sha) {
+              // If there are check runs, ensure no failures and at least one success
+              const { data } = await github.rest.checks.listForRef({ owner, repo, ref: sha });
+              if ((data.total_count || 0) === 0) return true; // no checks => OK
+              let hasSuccess = false;
+              for (const run of data.check_runs) {
+                if (run.status !== 'completed') continue;
+                if (run.conclusion === 'failure' || run.conclusion === 'timed_out' || run.conclusion === 'cancelled') return false;
+                if (run.conclusion === 'success') hasSuccess = true;
+              }
+              return hasSuccess;
+            }
+
+            const prs = await listOpenPRs();
+            for (const pr of prs) {
+              if (pr.draft) continue;
+              const number = pr.number;
+              const labels = pr.labels || [];
+              // Opt-in label for safety
+              if (!hasLabel(labels, 'automerge-provenance')) continue;
+              if (!hasAllProvenance(labels)) continue;
+
+              // Optionally ensure validation passed by checking check runs on head sha
+              const ok = await checksPassed(pr.head.sha);
+              if (!ok) {
+                core.info(`PR #${number}: checks not green yet.`);
+                continue;
+              }
+
+              // Try merge (squash)
+              try {
+                await github.rest.pulls.merge({ owner, repo, pull_number: number, merge_method: 'squash' });
+                core.notice(`Merged PR #${number} via auto-merge.`);
+              } catch (e) {
+                core.info(`Merge skipped for PR #${number}: ${e.message}`);
+                continue;
+              }
+
+              // Try delete branch if from same repo
+              try {
+                if (pr.head.repo && pr.head.repo.full_name === `${owner}/${repo}`) {
+                  const ref = `heads/${pr.head.ref}`;
+                  await github.rest.git.deleteRef({ owner, repo, ref });
+                  core.info(`Deleted branch ${ref} after merge.`);
+                }
+              } catch (e) {
+                core.info(`Delete branch skipped for PR #${number}: ${e.message}`);
+              }
+            }

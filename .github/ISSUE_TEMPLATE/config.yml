@@ -1,8 +1,5 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Copilotage — Consignes
-    url: https://github.com/stephanedenis/PaniniFS/blob/master/Copilotage/COPILOTAGE_WORKFLOW.md
-    about: "Rappel des règles (journal, labels owner, PR/Issue)"
   - name: Discussions générales
     url: https://github.com/stephanedenis/PaniniFS/discussions
-    about: "Questions, idées, échanges informels"
+    about: Questions, idées, échanges informels

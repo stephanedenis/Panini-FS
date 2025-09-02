@@ -3,14 +3,14 @@
 Objectif: distinguer les PRs par agent pour permettre des validations croisées.
 
 ## Comment marquer une PR
-- Ajoutez dans le titre: `[journal:HOST-pidPID]` (ex: `[journal:totoro-pid12345]`).
+- Ajoutez un label unique de provenance: `provenance:host=<HOST>,pid=<PID>,agent=GitHubCopilot,model=<MODELE>,owner=<human|agent>`.
 - Optionnel: ajoutez `[model:NOM]` (ex: `[model:gpt-4o]`, `[model:claude-3.5]`).
 - Optionnel: pour lever toute ambiguïté d’attribution, ajoutez `[owner:human]` si la PR est portée par un humain (sinon propriétaire inféré côté automatisation quand `journal`/`model` présents).
 - À défaut, utilisez un nom de branche: `agents/HOST/ma-feature` (moins précis; ne remplace pas le PID).
 
 ## Automatisation
-- Le workflow `.github/workflows/label-agent.yml` ajoute automatiquement des labels `agent:<host>`, `journal:<host>-pid<pid>` et `model:<nom>` si présent.
-- Le workflow `.github/workflows/validate-agent-session.yml` échoue si le titre ne contient pas `[journal:HOST-pidPID]`.
+- Le workflow `.github/workflows/label-agent.yml` peut ajouter des labels complémentaires (`agent:<host>`, `model:<nom>`).
+- Le workflow `validate-agent-provenance.yml` échoue si le label `provenance:...` est absent ou incomplet.
 - Exception: ajoutez le label `copilotage-exempt` pour bypass (cas rares).
 
 ## Bonnes pratiques

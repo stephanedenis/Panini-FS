@@ -1,4 +1,4 @@
-name: Validate PR Agent Session Tag
+name: Validate Agent Provenance Labels (legacy alias)
 
 on:
   pull_request:
@@ -12,26 +12,27 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Ensure [hostname-pid-agent-model] present or exempted
+      - name: Ensure PR has required provenance labels or is exempted
         uses: actions/github-script@v7
         with:
           script: |
             const pr = context.payload.pull_request;
-            const title = pr.title || '';
-            const labels = (pr.labels || []).map(l => l.name);
-            const exempt = labels.includes('copilotage-exempt');
-            // New required prefix: [hostname-pid-agent-model]
-            const hasPrefix = /\[[A-Za-z0-9._-]+-\d+-[A-Za-z0-9._-]+-[^\]]+\]/.test(title);
-            const hasOwner = /\[owner:(human|agent)\]/i.test(title);
-            if (exempt) {
-              core.notice('Bypass enabled via label copilotage-exempt.');
-              return;
+            const labels = (pr.labels || []).map(l => String(l.name));
+            const REQUIRED_PREFIXES = ['prov:host=','prov:pid=','agent:','model:','owner:'];
+            const MAX_LABEL_LEN = 50;
+            function ok(m){core.info(m)}; function fail(m){core.setFailed(m)};
+            if (labels.includes('copilotage-exempt')) return ok('Bypass enabled.');
+            const forbidden = labels.filter(n => /^journal(?::|$)/i.test(n));
+            if (forbidden.length) return fail(`Labels interdits: ${forbidden.join(', ')}`);
+            const lower = labels.map(n => n.toLowerCase());
+            const problems = [];
+            for (const p of REQUIRED_PREFIXES) {
+              const i = lower.findIndex(n => n.startsWith(p));
+              if (i === -1) { problems.push(`Manquant: ${p}`); continue; }
+              const label = labels[i];
+              if (label.length > MAX_LABEL_LEN) problems.push(`Trop long: ${label}`);
+              const val = label.slice(p.length);
+              if (!val || !val.trim()) problems.push(`Valeur vide: ${label}`);
             }
-            if (!hasPrefix || !hasOwner) {
-              const miss = [];
-              if (!hasPrefix) miss.push('[hostname-pid-agent-model]');
-              if (!hasOwner) miss.push('[owner:human|agent]');
-              core.setFailed(`Titre de PR invalide: ajoutez ${miss.join(' et ')} ou ajoutez le label copilotage-exempt pour bypass.`);
-            } else {
-              core.info('Validation OK: préfixe et owner détectés dans le titre.');
-            }
+            if (problems.length) return fail('Provenance invalide:\n- ' + problems.join('\n- '));
+            ok('Validation OK: provenance labels');

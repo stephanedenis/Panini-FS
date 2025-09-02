@@ -1,7 +1,7 @@
 # DevOps utilitaires (Copilotage)
 
 - devops/gh_task_init.sh — ouvre (ou réutilise) une issue et crée la branche `<type>/issue-<num>-<slug>`
-- devops/gh_pr_open.sh — ouvre une PR avec titre auto-préfixé `[journal:HOST-pidPID]`
+- devops/gh_pr_open.sh — ouvre une PR et ajoute les labels `prov:host=…`, `prov:pid=…`, `agent:GitHubCopilot`, `model=…`, `owner=…`
 - devops/journal_session.sh — génère un squelette de journal dans Copilotage/journal
 - fix_remotes.sh: bascule/normalise l'URL du remote (HTTPS <-> SSH)
 - git_audit.sh: audit rapide (remotes, status, fetch, submodules, dernier commit)
@@ -20,4 +20,4 @@ Copilotage/scripts/devops/gh_task_init.sh "[docs] Consolidation Copilotage" docs
 Copilotage/scripts/devops/gh_pr_open.sh "Consolidation Copilotage"
 ```
 
-Règle de titre PR imposée par CI: `[journal:HOST-pidPID]` (ex: `[journal:totoro-pid12345]`).
+Règle CI: métadonnées `provenance` requises via labels courts (`prov:host`, `prov:pid`, `agent:*`, `model:*`, `owner:*`).
