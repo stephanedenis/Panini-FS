@@ -1,0 +1,77 @@
+name: Owner labeler
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  apply-owner-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Detect and apply owner label from title
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const isPR = !!context.payload.pull_request;
+            const number = isPR ? context.payload.pull_request.number : context.payload.issue.number;
+            const title = isPR ? context.payload.pull_request.title : context.payload.issue.title;
+
+            // Match [owner:agent] / [owner:human] / [owner:pair] / [owner:ops] / [owner:infra]
+            const m = title && title.match(/\[owner:(agent|human|pair|ops|infra)\]/i);
+            if (!m) {
+              core.info('No owner tag found in title. Skipping.');
+              return;
+            }
+            const group = m[1].toLowerCase();
+            const labelName = `owner:${group}`;
+
+            // Ensure label exists (create if missing)
+            async function ensureLabel(name, color, description) {
+              try {
+                await github.rest.issues.getLabel({ owner, repo, name });
+              } catch (e) {
+                if (e.status === 404) {
+                  await github.rest.issues.createLabel({ owner, repo, name, color, description });
+                  core.info(`Created label ${name}`);
+                } else { throw e; }
+              }
+            }
+
+            const palette = {
+              'owner:agent':   { color: '06B6D4', desc: 'Propriété: agent IA' },
+              'owner:human':   { color: '3B82F6', desc: 'Propriété: humain' },
+              'owner:pair':    { color: '8B5CF6', desc: 'Propriété: binôme humain+IA' },
+              'owner:ops':     { color: '10B981', desc: 'Propriété: opérations' },
+              'owner:infra':   { color: 'F59E0B', desc: 'Propriété: infrastructure' },
+            };
+            const p = palette[labelName] || { color: '6B7280', desc: 'Propriété' };
+            await ensureLabel(labelName, p.color, p.desc);
+
+            // Fetch current labels on the item
+            const { data: item } = isPR
+              ? await github.rest.pulls.get({ owner, repo, pull_number: number })
+              : await github.rest.issues.get({ owner, repo, issue_number: number });
+            const current = (item.labels || []).map(l => (typeof l === 'string' ? l : l.name));
+
+            // Remove other owner:* labels to keep at most one
+            const otherOwnerLabels = current.filter(n => n.startsWith('owner:') && n !== labelName);
+            for (const n of otherOwnerLabels) {
+              await github.rest.issues.removeLabel({ owner, repo, issue_number: number, name: n }).catch(() => {});
+            }
+
+            // Add the desired label if not present
+            if (!current.includes(labelName)) {
+              await github.rest.issues.addLabels({ owner, repo, issue_number: number, labels: [labelName] });
+              core.info(`Applied label ${labelName} to #${number}`);
+            } else {
+              core.info(`Label ${labelName} already present on #${number}`);
+            }
