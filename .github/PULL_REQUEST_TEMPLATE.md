@@ -1,9 +1,10 @@
-Titre: [journal:<host>-pid<pid>] [model:<nom>] [owner:human|agent] <type>: <résumé court> (Refs #<issue>)
+Titre: <type>: <résumé court> (Refs #<issue>)
 
 Contexte
 - Issue liée: #<num>
 - Branche: <type>/issue-<num>-<slug>
-- Agent/Session: [journal:<host>-pid<pid>] (ou [agent:<id>] si PID indisponible)
+- Métadonnées PR (obligatoire): labels courts `prov:host=<host>`, `prov:pid=<pid>`, `agent:<agent>`, `model:<modele>`, `owner:<human|agent>`
+- Interdits: tout label commençant par `journal:` et les tags de titre `[journal:…]`
 - Modèle (optionnel): [model:<nom>] (ex: gpt-4o, claude-3.5)
 - Propriétaire (optionnel): [owner:human] pour marquer une PR portée par un humain (sinon propriétaire inféré)
 
@@ -14,10 +15,11 @@ Vérifications
 - [ ] CI passe (CodeQL, CI minimal)
 - [ ] Docs/dashboard impactés mis à jour si nécessaire
 - [ ] Journal de session ajouté dans `Copilotage/journal/`
-- [ ] Labels auto présents: `agent:<id>`, `journal:<host>-pid<pid>`, `owner:human|agent` et si applicable `model:<nom>`
+- [ ] Labels `prov:host=*`, `prov:pid=*`, `agent:*`, `owner:*` et `model:*` présents
 - [ ] Merge par un agent différent (cross-check)
 
 Clôture
 - Closes #<num> (remplacer si pertinent)
 
-Astuce: utilisez `Copilotage/scripts/devops/gh_pr_open.sh` pour générer le titre conforme (`--model`, `--owner`).
+Astuce: utilisez `Copilotage/scripts/devops/gh_pr_open.sh` pour ouvrir la PR et ajouter automatiquement le label `provenance:` (`--model`, `--owner`).
+Astuce 2: `gh_pr_open.sh` peut aussi ajouter `autofill-provenance` et `automerge-provenance` (opt-in) pour l’auto-complétion et l’auto-merge quand la provenance est complète.

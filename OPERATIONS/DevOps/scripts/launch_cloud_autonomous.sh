@@ -33,7 +33,7 @@ show_progress "Vérification configuration"
 
 if [ -z "$GITHUB_TOKEN" ]; then
     echo "⚠️ Variable GITHUB_TOKEN non définie"
-    echo "💡 Utilisez: export GITHUB_TOKEN=ghp_votre_token"
+    echo "💡 Utilisez: export GITHUB_TOKEN=<VOTRE_TOKEN_PAT>"
     echo "🔗 Ou lancez sans token pour repos publics uniquement"
 fi
 

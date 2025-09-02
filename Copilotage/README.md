@@ -3,7 +3,7 @@
 [![CI Minimal](https://github.com/stephanedenis/PaniniFS/actions/workflows/paniniFS-ci.yml/badge.svg)](https://github.com/stephanedenis/PaniniFS/actions/workflows/paniniFS-ci.yml)
 [![CodeQL](https://github.com/stephanedenis/PaniniFS/actions/workflows/codeql.yml/badge.svg)](https://github.com/stephanedenis/PaniniFS/actions/workflows/codeql.yml)
 [![Label PRs by Agent](https://github.com/stephanedenis/PaniniFS/actions/workflows/label-agent.yml/badge.svg)](https://github.com/stephanedenis/PaniniFS/actions/workflows/label-agent.yml)
-[![Validate Agent Session Tag](https://github.com/stephanedenis/PaniniFS/actions/workflows/validate-agent-session.yml/badge.svg)](https://github.com/stephanedenis/PaniniFS/actions/workflows/validate-agent-session.yml)
+[![Validate Agent Provenance](https://github.com/stephanedenis/PaniniFS/actions/workflows/validate-agent-provenance.yml/badge.svg)](https://github.com/stephanedenis/PaniniFS/actions/workflows/validate-agent-provenance.yml)
 [![Cross-check visibility](https://github.com/stephanedenis/PaniniFS/actions/workflows/cross-check-visibility.yml/badge.svg)](https://github.com/stephanedenis/PaniniFS/actions/workflows/cross-check-visibility.yml)
 
 Ce dossier regroupe les normes, scripts et artefacts pour structurer le travail assisté par agents IA.
@@ -20,11 +20,11 @@ Quickstart
 2) Créez la branche liée:
    - Script: Copilotage/scripts/devops/gh_task_init.sh "[type] Titre" type slug
 3) Travaillez en petits commits référencés: "… (Refs #<num>)".
-4) Ouvrez une PR vers master avec checklists et journal associé.
+4) Ouvrez une PR vers master avec checklists, journal associé et labels `prov:host`, `prov:pid`, `agent:*`, `model:*`, `owner:*`.
 
 ## Outils DevOps
 - scripts/devops/gh_task_init.sh — crée/retrouve l’issue et la branche
-- scripts/devops/gh_pr_open.sh — ouvre une PR avec titre auto-préfixé `[journal:HOST-pidPID]`
+- scripts/devops/gh_pr_open.sh — ouvre une PR et ajoute les labels `prov:host=…`, `prov:pid=…`, `agent:GitHubCopilot`, `model=…`, `owner=…`
 
 ### Exemple
 ```bash
