@@ -15,6 +15,11 @@ on:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+    env:
+      GIT_PAGER: cat
+      GH_PAGER: cat
+      PAGER: cat
+      LESS: FRSX
 
     steps:
       - name: Checkout
@@ -31,11 +36,14 @@ jobs:
       - name: Install MkDocs deps
         run: |
           pip install -r docs_new/requirements.txt
-          pip install jq
 
-      - name: Generate modules docs index
+      - name: Generate modules docs index (no-op if script missing)
         run: |
-          python3 scripts/generate_modules_docs_index.py
+          if [ -f scripts/devops/generate_modules_index.py ]; then \
+            python3 scripts/devops/generate_modules_index.py; \
+          else \
+            echo "No generate_modules_index.py found, skipping"; \
+          fi
 
       - name: Build site
         env:
