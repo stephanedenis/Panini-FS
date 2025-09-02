@@ -1,8 +1,9 @@
 # 🎌 PaniniFS - Écosystème de Compression Sémantique Universelle
 
-> Contribution et workflow: voir `Copilotage/CONTRIBUTING.md` et `Copilotage/COPILOTAGE_WORKFLOW.md`.
+[![Build Docs](https://github.com/stephanedenis/PaniniFS/actions/workflows/docs-build.yml/badge.svg)](https://github.com/stephanedenis/PaniniFS/actions/workflows/docs-build.yml)
+[![Modules Index](https://github.com/stephanedenis/PaniniFS/actions/workflows/update-modules-index.yml/badge.svg)](https://github.com/stephanedenis/PaniniFS/actions/workflows/update-modules-index.yml)
 
-- Journal des sessions (index): `Copilotage/journal/INDEX.md`
+> Contribution et workflow: voir `Copilotage/CONTRIBUTING.md` et `Copilotage/COPILOTAGE_WORKFLOW.md`.
 
 **PaniniFS** est un écosystème révolutionnaire de systèmes de fichiers basé sur l'analyse linguistique et la compression sémantique des contenus. Inspiré des travaux de Pāṇini et de la découverte des **dhātu informationnels** - les atomes conceptuels universels de l'information.
 

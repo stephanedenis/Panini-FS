@@ -8,8 +8,8 @@ body:
       value: |
         Merci de suivre Copilotage: l’issue pilote la branche et la PR.
         
-        - Branche: `<type>/issue-<num>-<slug>`
-        - Titre de PR: doit inclure `[journal:HOST-pidPID]` (ex: `[journal:totoro-pid12345]`)
+  - Branche: "<type>/issue-<num>-<slug>"
+  - Lors de l'ouverture de la PR: ajoutez les labels `prov:host=…`, `prov:pid=…`, `agent:GitHubCopilot`, `model=…`, `owner=…` (utilisez le script gh_pr_open.sh)
   - type: input
     id: goal
     attributes:

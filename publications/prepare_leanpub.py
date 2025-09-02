@@ -15,9 +15,10 @@ import re
 from pathlib import Path
 import sys
 import argparse
-import re
 import unicodedata
-import yaml
+from typing import Any
+import importlib
+yaml: Any = importlib.import_module("yaml")
 
 ROOT = Path(__file__).resolve().parents[1]
 PUB = ROOT / "publications"
@@ -30,7 +31,7 @@ DIAGS = PUB / "diagrams"
 FENCE_RE = re.compile(r"```(mermaid|plantuml|puml)\n([\s\S]*?)\n```", re.MULTILINE)
 
 
-def load_sources():
+def load_sources() -> Any:
     return yaml.safe_load((PUB / "sources.yml").read_text())
 
 
@@ -94,7 +95,7 @@ def prepare(split_chapters: bool = True, include_articles: bool = True):
     sys.path.insert(0, str(PUB))
     try:
         import render_diagrams  # type: ignore
-    except Exception as e:
+    except ImportError as e:
         print(f"[error] unable to import render_diagrams: {e}")
         return
     render_diagrams.main(md_files, str(DIAGS))

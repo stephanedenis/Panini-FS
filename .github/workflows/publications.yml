@@ -1,8 +1,12 @@
 name: publications-and-docs
+permissions:
+  contents: read
 
 on:
   push:
-    branches: [ docs/research-bootstrap ]
+    branches: [ master, docs/** ]
+  pull_request:
+    branches: [ master ]
   workflow_dispatch: {}
 
 jobs:
@@ -23,6 +27,12 @@ jobs:
           pip install -r docs_new/requirements.txt
 
       - name: Build site (strict)
+        env:
+          KROKI_URL: https://kroki.io
+          GIT_PAGER: cat
+          PAGER: cat
+          GH_PAGER: cat
+          LESS: FRX
         run: |
           mkdocs build --strict --clean
 

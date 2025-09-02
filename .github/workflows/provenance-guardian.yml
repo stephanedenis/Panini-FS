@@ -1,0 +1,127 @@
+name: Provenance Guardian
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch: {}
+  pull_request:
+    types: [opened, edited, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure labels exist
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const ensure = async (name, description) => {
+              try {
+                await github.rest.issues.getLabel({ owner: context.repo.owner, repo: context.repo.repo, name });
+              } catch {
+                try {
+                  await github.rest.issues.createLabel({ owner: context.repo.owner, repo: context.repo.repo, name, color: 'BFD4F2', description });
+                } catch {}
+              }
+            };
+            await ensure('needs-provenance', 'PR manque les labels de provenance');
+            await ensure('autofill-provenance', 'Autorise l’autoremplissage des labels de provenance par le guardian');
+      - name: Guard open PRs for provenance labels
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const { data: prs } = await github.rest.pulls.list({ owner, repo, state: 'open', per_page: 50 });
+            const runId = process.env.GITHUB_RUN_ID || String(Date.now());
+            const hostVal = 'gha-runner';
+            function parseTitle(title) {
+              let t = title || '';
+              let host = null, pid = null, agent = null, model = null, ownerType = null;
+              const m = t.match(/^\s*\[([^\]]+)\]\s*/);
+              if (m) {
+                const raw = m[1];
+                const parts = raw.split('-');
+                if (parts.length >= 4) {
+                  host = parts[0] || null;
+                  pid = parts[1] || null;
+                  agent = parts[2] || null;
+                  model = parts.slice(3).join('-') || null;
+                }
+                t = t.slice(m[0].length);
+              }
+              const mo = t.match(/^\s*\[owner:([^\]]+)\]\s*/i);
+              if (mo) {
+                ownerType = (mo[1] || '').trim() || null;
+                t = t.slice(mo[0].length);
+              }
+              return { host, pid, agent, model, ownerType, cleanTitle: t.trim() };
+            }
+            for (const pr of prs) {
+              const number = pr.number;
+              const labels = (pr.labels || []).map(l => l.name);
+              const hasHost = labels.some(n => /^prov:host=/i.test(n));
+              const hasPid = labels.some(n => /^prov:pid=/i.test(n));
+              const hasAgent = labels.some(n => /^agent:/i.test(n));
+              const hasModel = labels.some(n => /^model:/i.test(n));
+              const hasOwner = labels.some(n => /^owner:/i.test(n));
+              const missing = [];
+              if (!hasHost) missing.push('prov:host=<...>');
+              if (!hasPid) missing.push('prov:pid=<...>');
+              if (!hasAgent) missing.push('agent:<...>');
+              if (!hasModel) missing.push('model:<...>');
+              if (!hasOwner) missing.push('owner:<...>');
+              if (!missing.length) continue;
+
+              // Marquer besoin de provenance
+              await github.rest.issues.addLabels({ owner, repo, issue_number: number, labels: ['needs-provenance'] }).catch(() => {});
+
+              // 1) Convertir les blocs de titre en labels et nettoyer
+              const p = parseTitle(pr.title || '');
+              const fromTitle = [];
+              if (!hasHost && p.host) fromTitle.push(`prov:host=${p.host}`);
+              if (!hasPid && p.pid) fromTitle.push(`prov:pid=${p.pid}`);
+              if (!hasAgent && p.agent) fromTitle.push(`agent:${String(p.agent).toLowerCase()}`);
+              if (!hasModel && p.model) fromTitle.push(`model:${String(p.model).toLowerCase()}`);
+              if (!hasOwner && p.ownerType) fromTitle.push(`owner:${String(p.ownerType).toLowerCase()}`);
+              if (fromTitle.length) {
+                for (const name of fromTitle) {
+                  try { await github.rest.issues.getLabel({ owner, repo, name }); }
+                  catch { try { await github.rest.issues.createLabel({ owner, repo, name, color: 'BFD4F2', description: 'Provenance/agent metadata' }); } catch {} }
+                }
+                await github.rest.issues.addLabels({ owner, repo, issue_number: number, labels: fromTitle }).catch(() => {});
+                const newTitle = p.cleanTitle && p.cleanTitle.length ? p.cleanTitle : pr.title;
+                if (newTitle && newTitle !== pr.title) {
+                  try { await github.rest.pulls.update({ owner, repo, pull_number: number, title: newTitle }); } catch {}
+                }
+              }
+
+              // 2) Autofill si encore manquants et autorisé
+              const allowAuto = labels.includes('autofill-provenance');
+              if (!allowAuto) continue;
+              const { data: prRef } = await github.rest.pulls.get({ owner, repo, pull_number: number });
+              const labels2 = (prRef.labels || []).map(l => l.name);
+              const hasHost2 = labels2.some(n => /^prov:host=/i.test(n));
+              const hasPid2 = labels2.some(n => /^prov:pid=/i.test(n));
+              const hasAgent2 = labels2.some(n => /^agent:/i.test(n));
+              const hasModel2 = labels2.some(n => /^model:/i.test(n));
+              const hasOwner2 = labels2.some(n => /^owner:/i.test(n));
+              const toAdd = [];
+              if (!hasHost2) toAdd.push(`prov:host=${hostVal}`);
+              if (!hasPid2) toAdd.push(`prov:pid=${runId}`);
+              if (!hasAgent2) toAdd.push('agent:githubcopilot');
+              if (!hasModel2) toAdd.push('model:unspecified');
+              if (!hasOwner2) toAdd.push('owner:agent');
+              for (const name of toAdd) {
+                try { await github.rest.issues.getLabel({ owner, repo, name }); }
+                catch { try { await github.rest.issues.createLabel({ owner, repo, name, color: 'BFD4F2', description: 'Provenance/agent metadata' }); } catch {} }
+              }
+              if (toAdd.length) {
+                await github.rest.issues.addLabels({ owner, repo, issue_number: number, labels: toAdd }).catch(() => {});
+              }
+            }

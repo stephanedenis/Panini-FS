@@ -33,7 +33,4 @@ TEST_WORKFLOW_OUTPUT/
 
 # MkDocs build output (ne pas versionner)
 site/
-publications/out/
-publications/leanpub/manuscript_fr/
-publications/leanpub/manuscript_en/
 

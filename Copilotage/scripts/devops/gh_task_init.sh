@@ -42,27 +42,8 @@ fi
 
 git push -u origin HEAD || true
 
-# Afficher le préfixe PR recommandé
-HOST_SHORT=${HOSTNAME:-$(hostname -s 2>/dev/null || hostname 2>/dev/null || echo "host")}
-PID_HINT=$$
-RECOMMENDED_PREFIX="[journal:${HOST_SHORT}-pid${PID_HINT}]"
-echo "Astuce PR: Préfixe recommandé: ${RECOMMENDED_PREFIX} <type>: <résumé> (Refs #${ISSUE_NUM})" >&2
+# Astuce PR: utilisez Copilotage/scripts/devops/gh_pr_open.sh pour ajouter automatiquement le label provenance
+echo "Astuce PR: utilisez Copilotage/scripts/devops/gh_pr_open.sh \"<résumé>\" [--model <nom>] [--owner human|agent]" >&2
 
 echo "Issue #$ISSUE_NUM" >&2
 echo "Branche: $BRANCH" >&2
-
-# Auto: créer et commiter une entrée de journal Copilotage pour cette session
-if [[ -x Copilotage/scripts/devops/journal_session.sh ]]; then
-  JFILE=$(Copilotage/scripts/devops/journal_session.sh session || true)
-  if [[ -n "$JFILE" && -f "$JFILE" ]]; then
-    echo "Journal créé: $JFILE" >&2
-    git add "$JFILE" || true
-    DATE_STR=$(date +%F)
-    git commit -m "journal(copilotage): init ${DATE_STR} ${HOST_SHORT}-pid${PID_HINT} (auto via gh_task_init)" || true
-    git push || true
-  else
-    echo "(info) Journal non créé (déjà existant ou script silencieux)." >&2
-  fi
-else
-  echo "(warn) Script journal_session.sh introuvable/exécutable, saut de la création auto du journal." >&2
-fi

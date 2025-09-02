@@ -70,7 +70,7 @@ crontab -e
 ### Variables d'environnement
 ```bash
 # Optionnel pour API GitHub (workflows)
-export GITHUB_TOKEN="your_token_here"
+export GITHUB_TOKEN="<VOTRE_TOKEN_PAT>"
 ```
 
 ## 📊 Structure données JSON

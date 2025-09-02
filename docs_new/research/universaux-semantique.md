@@ -69,21 +69,6 @@ Extension universelle (v0.1)
 
 Critère: tout phénomène morpho‑syntaxique doit pouvoir se paraphraser via combinaisons de ces primitives sémantiques, indépendamment de la réalisation de surface.
 
-### Conventions SVC vs SEQ (v0)
-
-- SEQ: indique une séquence ordonnée d'événements distincts (macro‑événement décomposable). Représentation: `SEQ:` suivi d'une liste d'actions ordonnées.
-- SVC: indique une sérialisation verbale dans une même clause (macro‑événement unique, partage des participants/temps/aspect), fréquente en langues Kwa/Benue‑Congo (Ewe, Yoruba). Représentation: `SVC:` suivi d'une chaîne d'actions; les rôles/portées s'appliquent au paquet complet sauf spécification contraire.
-- Principes:
-	- Préserver l'ordre des noyaux verbaux.
-	- Partage implicite des arguments: AGENT/PATIENT non répétés si identiques à travers la série.
-	- Encodage minimal: ne pas introduire de primitive sémantique nouvelle; SVC/SEQ sont des marqueurs structurels pour guidage du décodage.
-
-	### Convention INCORP (v0)
-
-	- INCORP: marque la relation d'incorporation nominale dans des langues polysynthétiques; elle n'ajoute aucune sémantique nouvelle mais indique que le PATIENT/THÈME est morphologiquement lié au verbe.
-	- Représentation: `LIAISON:INCORP` attachée à l'action ou au patient incorporé selon le besoin d'ambiguïté.
-	- Objectif: préserver la lisibilité et la réversibilité tout en évitant de multiplier les primitives de surface morphologique.
-
 ## Micro-cas (sanity checks)
 
 1) Agent-Action-Objet (AAO)
@@ -114,10 +99,9 @@ Critère: tout phénomène morpho‑syntaxique doit pouvoir se paraphraser via c
 	- Test: neutraliser l’ancrage morphologique local tout en conservant la source (visuel, inférentiel, rapporté).
 
 6) Sérialisation verbale (événements chaînés)
-	- Entrée (Ewe/Yoruba): « aller‑prendre‑revenir »
-	- Dhātu (SVC, même clause): [SVC:] [ACTION:aller] [ACTION:prendre] [ACTION:revenir]
-	- Dhātu (SEQ, événements séparés): [SEQ:] [ACTION:aller] [ACTION:prendre] [ACTION:revenir]
-	- Test: conserver l'ordre et le partage d'arguments; SVC pour macro‑événement unique vs SEQ pour suite d'événements.
+	- Entrée (Ewe/Yoruba): « aller‑prendre‑venir » (aller prendre quelque chose et revenir)
+	- Dhātu: [ACTION:aller][ACTION:prendre][ACTION:venir][CHAÎNAGE:SEQ]
+	- Test: séquence ordonnée d’événements sans subordination morphologique.
 
 7) Incorporation nominale (polysynthèse)
 	- Entrée (Mohawk/Inuktitut): verbe+nom incorporé « poisson‑manger »
