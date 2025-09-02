@@ -7,11 +7,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      GIT_PAGER: cat
+      GH_PAGER: cat
+      PAGER: cat
+      LESS: FRSX
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: recursive
-      - run: git submodule update --init --recursive
-      - run: |
-          test -d copilotage || { echo "missing copilotage/"; exit 1; }
-          test -d copilotage/shared || { echo "missing copilotage/shared"; exit 1; }
+          submodules: false
+      - name: Validate copilotage tree exists (case-insensitive)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -d Copilotage ]; then BASE=Copilotage; elif [ -d copilotage ]; then BASE=copilotage; else echo "missing Copilotage/ (or copilotage/)"; exit 1; fi
+          echo "Detected: $BASE"
+          test -d "$BASE" || { echo "missing $BASE/"; exit 1; }
+          test -d "$BASE/shared" || { echo "missing $BASE/shared"; exit 1; }
