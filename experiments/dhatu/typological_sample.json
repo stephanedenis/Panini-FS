@@ -1,0 +1,216 @@
+{
+  "version": "0.1",
+  "priority": "child-directed-first",
+  "sources": {
+    "CHILDES": "https://childes.talkbank.org/",
+    "AfricanStorybook": "https://www.africanstorybook.org/",
+    "GlobalStorybooks": "https://globalstorybooks.net/",
+    "StorybooksCanada": "https://storybookscanada.ca/",
+    "UD": "https://universaldependencies.org/",
+    "WALS": "https://wals.info/"
+  },
+  "languages": [
+    {
+      "name": "English",
+      "iso639_3": "eng",
+      "family": "Indo-European > Germanic",
+      "script": "Latin",
+      "profile": ["SVO"],
+      "child_sources": [
+        {"type": "CHILDES", "name": "Brown/Providence", "url": "https://childes.talkbank.org/access/Eng-NA/"},
+        {"type": "GlobalStorybooks", "name": "English", "url": "https://globalstorybooks.net/collections/english/"}
+      ]
+    },
+    {
+      "name": "French",
+      "iso639_3": "fra",
+      "family": "Indo-European > Romance",
+      "script": "Latin",
+      "profile": ["SVO"],
+      "child_sources": [
+        {"type": "CHILDES", "name": "French corpora", "url": "https://childes.talkbank.org/access/French/"},
+        {"type": "GlobalStorybooks", "name": "Français", "url": "https://globalstorybooks.net/collections/french/"}
+      ]
+    },
+    {
+      "name": "Spanish",
+      "iso639_3": "spa",
+      "family": "Indo-European > Romance",
+      "script": "Latin",
+      "profile": ["SVO"],
+      "child_sources": [
+        {"type": "CHILDES", "name": "Spanish corpora", "url": "https://childes.talkbank.org/access/Spanish/"},
+        {"type": "GlobalStorybooks", "name": "Español", "url": "https://globalstorybooks.net/collections/spanish/"}
+      ]
+    },
+    {
+      "name": "German",
+      "iso639_3": "deu",
+      "family": "Indo-European > Germanic",
+      "script": "Latin",
+      "profile": ["SVO", "V2"],
+      "child_sources": [
+        {"type": "CHILDES", "name": "German corpora", "url": "https://childes.talkbank.org/access/German/"},
+        {"type": "GlobalStorybooks", "name": "Deutsch", "url": "https://globalstorybooks.net/collections/german/"}
+      ]
+    },
+    {
+      "name": "Dutch",
+      "iso639_3": "nld",
+      "family": "Indo-European > Germanic",
+      "script": "Latin",
+      "profile": ["SVO", "V2"],
+      "child_sources": [
+        {"type": "CHILDES", "name": "Dutch corpora", "url": "https://childes.talkbank.org/access/Dutch/"}
+      ]
+    },
+    {
+      "name": "Italian",
+      "iso639_3": "ita",
+      "family": "Indo-European > Romance",
+      "script": "Latin",
+      "profile": ["SVO"],
+      "child_sources": [
+        {"type": "CHILDES", "name": "Italian corpora", "url": "https://childes.talkbank.org/access/Italian/"},
+        {"type": "GlobalStorybooks", "name": "Italiano", "url": "https://globalstorybooks.net/collections/italian/"}
+      ]
+    },
+    {
+      "name": "Portuguese",
+      "iso639_3": "por",
+      "family": "Indo-European > Romance",
+      "script": "Latin",
+      "profile": ["SVO"],
+      "child_sources": [
+        {"type": "CHILDES", "name": "Portuguese corpora", "url": "https://childes.talkbank.org/access/Portuguese/"},
+        {"type": "GlobalStorybooks", "name": "Português", "url": "https://globalstorybooks.net/collections/portuguese/"}
+      ]
+    },
+    {
+      "name": "Mandarin Chinese",
+      "iso639_3": "cmn",
+      "family": "Sino-Tibetan",
+      "script": "Han",
+      "profile": ["SVO", "classifiers"],
+      "child_sources": [
+        {"type": "CHILDES", "name": "Mandarin corpora", "url": "https://childes.talkbank.org/access/Mandarin/"},
+        {"type": "GlobalStorybooks", "name": "中文 (简体)", "url": "https://globalstorybooks.net/collections/chinese-simplified/"}
+      ]
+    },
+    {
+      "name": "Japanese",
+      "iso639_3": "jpn",
+      "family": "Japonic",
+      "script": "Kana/Kanji",
+      "profile": ["SOV", "honorifics"],
+      "child_sources": [
+        {"type": "CHILDES", "name": "Japanese corpora", "url": "https://childes.talkbank.org/access/Japanese/"},
+        {"type": "GlobalStorybooks", "name": "日本語", "url": "https://globalstorybooks.net/collections/japanese/"}
+      ]
+    },
+    {
+      "name": "Korean",
+      "iso639_3": "kor",
+      "family": "Koreanic",
+      "script": "Hangul",
+      "profile": ["SOV", "honorifics"],
+      "child_sources": [
+        {"type": "CHILDES", "name": "Korean corpora", "url": "https://childes.talkbank.org/access/Korean/"},
+        {"type": "GlobalStorybooks", "name": "한국어", "url": "https://globalstorybooks.net/collections/korean/"}
+      ]
+    },
+    {
+      "name": "Turkish",
+      "iso639_3": "tur",
+      "family": "Turkic",
+      "script": "Latin",
+      "profile": ["SOV", "agglutinative"],
+      "child_sources": [
+        {"type": "CHILDES", "name": "Turkish corpora", "url": "https://childes.talkbank.org/access/Turkish/"},
+        {"type": "GlobalStorybooks", "name": "Türkçe", "url": "https://globalstorybooks.net/collections/turkish/"}
+      ]
+    },
+    {
+      "name": "Hungarian",
+      "iso639_3": "hun",
+      "family": "Uralic",
+      "script": "Latin",
+      "profile": ["agglutinative"],
+      "child_sources": [
+        {"type": "CHILDES", "name": "Hungarian corpora", "url": "https://childes.talkbank.org/access/Hungarian/"},
+        {"type": "GlobalStorybooks", "name": "Magyar", "url": "https://globalstorybooks.net/collections/hungarian/"}
+      ]
+    },
+    {
+      "name": "Hebrew",
+      "iso639_3": "heb",
+      "family": "Afro-Asiatic > Semitic",
+      "script": "Hebrew",
+      "profile": ["root-and-pattern"],
+      "child_sources": [
+        {"type": "CHILDES", "name": "Hebrew corpora", "url": "https://childes.talkbank.org/access/Hebrew/"},
+        {"type": "GlobalStorybooks", "name": "עברית", "url": "https://globalstorybooks.net/collections/hebrew/"}
+      ]
+    },
+    {
+      "name": "Arabic",
+      "iso639_3": "arb",
+      "family": "Afro-Asiatic > Semitic",
+      "script": "Arabic",
+      "profile": ["VSO/SVO", "root-and-pattern"],
+      "child_sources": [
+        {"type": "GlobalStorybooks", "name": "العربية", "url": "https://globalstorybooks.net/collections/arabic/"}
+      ]
+    },
+    {
+      "name": "Swahili",
+      "iso639_3": "swa",
+      "family": "Niger-Congo > Bantu",
+      "script": "Latin",
+      "profile": ["SVO", "noun classes"],
+      "child_sources": [
+        {"type": "AfricanStorybook", "name": "Kiswahili", "url": "https://www.africanstorybook.org/language/kiswahili"}
+      ]
+    },
+    {
+      "name": "Yoruba",
+      "iso639_3": "yor",
+      "family": "Niger-Congo",
+      "script": "Latin",
+      "profile": ["SVO", "SVC"],
+      "child_sources": [
+        {"type": "AfricanStorybook", "name": "Yorùbá", "url": "https://www.africanstorybook.org/language/yoruba"}
+      ]
+    },
+    {
+      "name": "Hausa",
+      "iso639_3": "hau",
+      "family": "Afro-Asiatic > Chadic",
+      "script": "Latin/Arabic",
+      "profile": ["SVO"],
+      "child_sources": [
+        {"type": "AfricanStorybook", "name": "Hausa", "url": "https://www.africanstorybook.org/language/hausa"}
+      ]
+    },
+    {
+      "name": "Zulu",
+      "iso639_3": "zul",
+      "family": "Niger-Congo > Bantu",
+      "script": "Latin",
+      "profile": ["SVO", "noun classes"],
+      "child_sources": [
+        {"type": "AfricanStorybook", "name": "isiZulu", "url": "https://www.africanstorybook.org/language/isizulu"}
+      ]
+    },
+    {
+      "name": "Inuktitut",
+      "iso639_3": "iku",
+      "family": "Eskimo–Aleut",
+      "script": "Syllabics/Latin",
+      "profile": ["polysynthetic", "incorporation"],
+      "child_sources": [
+        {"type": "StorybooksCanada", "name": "ᐃᓄᒃᑎᑐᑦ (Inuktitut)", "url": "https://storybookscanada.ca/?lang=iu"}
+      ]
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-name: Validate Agent Provenance Labels
+name: Validate Agent Provenance Labels (legacy alias)
 
 on:
   pull_request:
@@ -18,51 +18,21 @@ jobs:
           script: |
             const pr = context.payload.pull_request;
             const labels = (pr.labels || []).map(l => String(l.name));
-
-            const REQUIRED_PREFIXES = [
-              'prov:host=',
-              'prov:pid=',
-              'agent:',
-              'model:',
-              'owner:'
-            ];
-            const MAX_LABEL_LEN = 50; // longueur max recommandée
-
-            function ok(msg) { core.info(msg); }
-            function fail(msg) { core.setFailed(msg); }
-
-            // Bypass
-            if (labels.includes('copilotage-exempt')) {
-              return ok('Bypass enabled via label copilotage-exempt.');
-            }
-
-            // Interdire tout label "journal" (legacy)
+            const REQUIRED_PREFIXES = ['prov:host=','prov:pid=','agent:','model:','owner:'];
+            const MAX_LABEL_LEN = 50;
+            function ok(m){core.info(m)}; function fail(m){core.setFailed(m)};
+            if (labels.includes('copilotage-exempt')) return ok('Bypass enabled.');
             const forbidden = labels.filter(n => /^journal(?::|$)/i.test(n));
-            if (forbidden.length > 0) {
-              return fail(`Labels interdits détectés: ${forbidden.join(', ')}. Utilisez les labels courts: prov:host=..., prov:pid=..., agent:..., model:..., owner:...`);
-            }
-
-            // Vérifier présence et forme de chaque label requis
+            if (forbidden.length) return fail(`Labels interdits: ${forbidden.join(', ')}`);
             const lower = labels.map(n => n.toLowerCase());
             const problems = [];
-            for (const prefix of REQUIRED_PREFIXES) {
-              const i = lower.findIndex(n => n.startsWith(prefix));
-              if (i === -1) {
-                problems.push(`Manquant: label commençant par "${prefix}"`);
-                continue;
-              }
+            for (const p of REQUIRED_PREFIXES) {
+              const i = lower.findIndex(n => n.startsWith(p));
+              if (i === -1) { problems.push(`Manquant: ${p}`); continue; }
               const label = labels[i];
-              if (label.length > MAX_LABEL_LEN) {
-                problems.push(`Label trop long (> ${MAX_LABEL_LEN}): "${label}"`);
-              }
-              const value = label.slice(prefix.length);
-              if (!value || value.trim().length === 0) {
-                problems.push(`Valeur vide pour le label "${label}"`);
-              }
+              if (label.length > MAX_LABEL_LEN) problems.push(`Trop long: ${label}`);
+              const val = label.slice(p.length);
+              if (!val || !val.trim()) problems.push(`Valeur vide: ${label}`);
             }
-
-            if (problems.length > 0) {
-              return fail('Provenance invalide:\n- ' + problems.join('\n- '));
-            }
-
-            ok('Validation OK: labels de provenance présents et valides.');
+            if (problems.length) return fail('Provenance invalide:\n- ' + problems.join('\n- '));
+            ok('Validation OK: provenance labels');

@@ -66,7 +66,9 @@ plugins:
       type: timeago
       locale: fr
   - kroki:
-  # Options par défaut; l'URL peut être fournie via la variable d'environnement KROKI_URL dans CI
+  # Options par défaut; l'URL est fournie via la variable d'environnement KROKI_URL dans CI
+  - include-markdown
+
 
 # Markdown extensions
 markdown_extensions:
@@ -84,10 +86,6 @@ markdown_extensions:
       smart_enable: all
   - pymdownx.caret
   - pymdownx.details
-  - pymdownx.emoji:
-      # Utilise les chemins de modules (compatibles avec pymdown-extensions >= 10.7)
-      emoji_index: "material.extensions.emoji.twemoji"
-      emoji_generator: "material.extensions.emoji.to_svg"
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
@@ -128,21 +126,15 @@ nav:
   - 📊 Guide Monitoring: monitoring-guide.md
   - Infrastructure: infrastructure.md
   - Surveillance: monitoring.md
-  - English:
-    - Home: en/index.md
-    - Vision: en/vision.md
-    - Linguistic Foundations: en/linguistic-foundations.md
-    - Dhātu Framework: en/dhatu-framework.md
-    - Architecture: en/architecture.md
-    - Diagrams (PlantUML): en/diagrams.md
-    - Specifications:
-      - Execution Orchestrator: en/specs/execution-orchestrator.md
-    - Documentation Process: en/doc-process.md
-    - Style Guide: en/style-guide.md
-    - External References: en/references.md
-    - Infrastructure: en/infrastructure.md
-    - Monitoring: en/monitoring.md
   - Modules docs: modules/index.md
+  - Recherche:
+    - research/index.md
+    - Universaux sémantiques: research/universaux-semantique.md
+    - Langage humain et développement: research/langage-humain-developpement.md
+    - Compression sémantique: research/compression-semantique.md
+  - Hypothèses et alternatives: research/hypotheses-and-alternatives.md
+  - Références de recherche: research/references.md
+  - Inventaire Dhātu v0.1: research/inventaire-dhatu-v0-1.md
 
 # Extra
 extra:
