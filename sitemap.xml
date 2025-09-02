@@ -71,6 +71,13 @@
         <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/monitoring/"/>
     </url>
     <url>
+        <loc>https://paninifs.org/publications/</loc>
+        <lastmod>2025-09-02</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/publications/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/publications/"/>
+    </url>
+    <url>
         <loc>https://paninifs.org/references/</loc>
         <lastmod>2025-09-02</lastmod>
         <changefreq>daily</changefreq>
@@ -153,6 +160,13 @@
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/monitoring/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/monitoring/"/>
+    </url>
+    <url>
+        <loc>https://paninifs.org/en/publications/</loc>
+        <lastmod>2025-09-02</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/publications/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/publications/"/>
     </url>
     <url>
         <loc>https://paninifs.org/en/references/</loc>
@@ -442,6 +456,13 @@
         <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/monitoring/"/>
     </url>
     <url>
+        <loc>https://paninifs.org/en/publications/</loc>
+        <lastmod>2025-09-02</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/publications/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/publications/"/>
+    </url>
+    <url>
         <loc>https://paninifs.org/en/references/</loc>
         <lastmod>2025-09-02</lastmod>
         <changefreq>daily</changefreq>
@@ -524,6 +545,13 @@
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/monitoring/"/>
         <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/monitoring/"/>
+    </url>
+    <url>
+        <loc>https://paninifs.org/en/en/publications/</loc>
+        <lastmod>2025-09-02</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://paninifs.org/en/en/publications/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://paninifs.org/en/publications/"/>
     </url>
     <url>
         <loc>https://paninifs.org/en/en/references/</loc>
