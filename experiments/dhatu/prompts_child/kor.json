@@ -1,0 +1,15 @@
+{
+  "lang": "kor",
+  "items": [
+    {"id": "kor_aao_01", "text": "고양이가 쥐를 쫓아간다.", "phenomena": ["AAO"], "meta": {"origin": "constructed", "needs_native_review": true}},
+    {"id": "kor_poss_01", "text": "책이 메리의 책상 위에 있다.", "phenomena": ["possession", "spatial:on"], "meta": {"needs_native_review": true}},
+    {"id": "kor_spa_01", "text": "공이 상자 안에 있다.", "phenomena": ["spatial:in"]},
+    {"id": "kor_quant_01", "text": "세 아이가 달리고 있다.", "phenomena": ["quantification", "aspect:progressive"]},
+    {"id": "kor_neg_01", "text": "그는 먹지 않는다.", "phenomena": ["negation"]},
+    {"id": "kor_mod_01", "text": "지금 놀아도 돼.", "phenomena": ["modality:permission", "time:now"]},
+    {"id": "kor_evid_01", "text": "그가 왔다고 한다.", "phenomena": ["evidential:reported"]},
+    {"id": "kor_seq_01", "text": "가서 공을 가지고 와.", "phenomena": ["event:sequence"]},
+    {"id": "kor_comp_01", "text": "이 케이크가 저것보다 더 크다.", "phenomena": ["comparison:more"]},
+    {"id": "kor_exist_01", "text": "정원에 개가 있다.", "phenomena": ["existence", "spatial:in"]}
+  ]
+}

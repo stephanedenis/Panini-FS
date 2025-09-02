@@ -1,0 +1,4 @@
+books_fr.md
+books_en.md
+articles_fr.md
+articles_en.md
