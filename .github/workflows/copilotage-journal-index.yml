@@ -8,14 +8,33 @@ jobs:
   index:
     runs-on: ubuntu-latest
     steps:
+      - name: Read PR labels (PR only)
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        id: prlabels
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const labels = pr ? (pr.labels || []).map(l => l.name) : [];
+            core.notice(`PR labels: ${labels.join(', ')}`);
+            return { labels };
+      - name: Bypass on copilotage-exempt
+        if: github.event_name == 'pull_request' && contains(steps.prlabels.outputs.result, 'copilotage-exempt')
+        run: |
+          echo "Bypass: copilotage-exempt présent, on n'exécute pas l'index."
+          exit 0
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Generate journal index (no commit)
         run: |
           set -e
-          chmod +x Copilotage/scripts/devops/journal_index.sh
-          Copilotage/scripts/devops/journal_index.sh >/tmp/jfile_path 2>/dev/null || true
+          if [ -f Copilotage/scripts/devops/journal_index.sh ]; then
+            chmod +x Copilotage/scripts/devops/journal_index.sh
+            Copilotage/scripts/devops/journal_index.sh >/tmp/jfile_path 2>/dev/null || true
+          else
+            echo "::notice::Script journal_index.sh introuvable; on continue sans échec."
+          fi
           # Afficher diff éventuel sans échouer le job
           if git diff --quiet -- Copilotage/journal/INDEX.md; then
             echo "Index à jour."
