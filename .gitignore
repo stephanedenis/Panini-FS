@@ -34,3 +34,7 @@ TEST_WORKFLOW_OUTPUT/
 # MkDocs build output (ne pas versionner)
 site/
 
+# Publications build output (ne pas versionner)
+publications/out/
+publications/tmp/
+

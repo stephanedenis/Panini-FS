@@ -46,6 +46,11 @@ Mainteneur: consigner tout écart dans l’issue.
 - Commits atomiques et message concis; référencer l’issue; ouvrir/mettre à jour la PR en fin de lot.
 - Qualité en continu: build/lint/tests rapides après changements substantiels; ne pas laisser un build cassé.
 
+Anti‑blocages (pagers/éditeurs):
+- Désactiver les pagers/éditeurs dans les lots de commandes: `GIT_PAGER=cat PAGER=cat LESS=FRX EDITOR=true VISUAL=true GIT_EDITOR=true GH_EDITOR=true GIT_MERGE_AUTOEDIT=no …`
+- Utiliser le wrapper `Copilotage/scripts/devops/run_safe.sh <cmd …>` pour neutraliser automatiquement less/vi.
+- Préférer `--no-pager` (git) et `--no-editor`/`--title/--body-file` (gh) pour éviter les prompts.
+
 ### Note sur “Conserver” (modifications Copilot)
 
 - L’éditeur peut demander une confirmation manuelle pour appliquer des modifications proposées par l’agent.
