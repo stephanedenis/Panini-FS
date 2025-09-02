@@ -1,0 +1,15 @@
+{
+  "lang": "iku",
+  "items": [
+    {"id": "iku_aao_01", "text": "ᓄᓇᕗᑦ ᐊᖓᔪᖅ ᐃᒡᓗᓕᒃ ᑕᑯᓐᓂᖅᑕᖅ.", "phenomena": ["AAO"], "meta": {"origin": "constructed", "needs_native_review": true}},
+    {"id": "iku_poss_01", "text": "ᓯᕗᓂ ᐱᓕᕆᐊ ᒥᑦ ᖃᓪᓗᓈ ᓯᑎᒍ.", "phenomena": ["possession", "spatial:on"], "meta": {"needs_native_review": true}},
+    {"id": "iku_spa_01", "text": "ᐊᐳᓱ ᐃᓗᓕᖅ ᐊᒥᖅ.", "phenomena": ["spatial:in"], "meta": {"needs_native_review": true}},
+    {"id": "iku_quant_01", "text": "ᓂᔭᕆ ᐊᑦᑕ ᐊᓯᐊᓂᖅ.", "phenomena": ["quantification", "aspect:progressive"], "meta": {"needs_native_review": true}},
+    {"id": "iku_neg_01", "text": "ᐊᓕᖅᓯᓂᖅ ᐱᓕᕆᐊᖅᑎᑦᑎᓂᖅ.", "phenomena": ["negation"], "meta": {"needs_native_review": true}},
+    {"id": "iku_mod_01", "text": "ᐊᔾᔨᖅ ᐱᓕᕆᐊᖅᑐᖅ ᐊᔭᕙ.", "phenomena": ["modality:possibility", "time:now"], "meta": {"needs_native_review": true}},
+    {"id": "iku_evid_01", "text": "ᐊᖏᖅᑯᓯᒪᔪᖅ ᐊᖓᔪᖅ.", "phenomena": ["evidential:reported"], "meta": {"needs_native_review": true}},
+    {"id": "iku_seq_01", "text": "ᐊᖏᖅ ᐊᓯᓂ ᐱᓇᓱᒃ ᐊᓯᔾᔨᖅᑕᖅ.", "phenomena": ["event:sequence", "incorporation?"], "meta": {"needs_native_review": true}},
+    {"id": "iku_comp_01", "text": "ᐊᖏᖅ ᐃᓚᖓ ᐊᖏᖅ ᐅᑎᖅᓯᒪᖅ ᐅᖃᐅᓯᖅ.", "phenomena": ["comparison:more"], "meta": {"needs_native_review": true}},
+    {"id": "iku_exist_01", "text": "ᐊᖏᖅ ᓂᖅᑲᓗ ᐊᐃᑦᑐᖅ ᓴᓂᖅ.", "phenomena": ["existence", "spatial:in"], "meta": {"needs_native_review": true}}
+  ]
+}

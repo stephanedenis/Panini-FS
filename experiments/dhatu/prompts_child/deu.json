@@ -1,0 +1,15 @@
+{
+  "lang": "deu",
+  "items": [
+    {"id": "deu_aao_01", "text": "Die Katze jagt die Maus.", "phenomena": ["AAO"]},
+    {"id": "deu_poss_01", "text": "Das Buch liegt auf Marys Tisch.", "phenomena": ["possession", "spatial:on"], "meta": {"origin": "constructed", "needs_native_review": true}},
+    {"id": "deu_spa_01", "text": "Der Ball ist in der Kiste.", "phenomena": ["spatial:in"]},
+    {"id": "deu_quant_01", "text": "Drei Kinder laufen.", "phenomena": ["quantification"]},
+    {"id": "deu_neg_01", "text": "Er isst nicht.", "phenomena": ["negation"]},
+    {"id": "deu_mod_01", "text": "Du darfst jetzt spielen.", "phenomena": ["modality:permission", "time:now"]},
+    {"id": "deu_evid_01", "text": "Man sagt, er sei gekommen.", "phenomena": ["evidential:reported"]},
+    {"id": "deu_seq_01", "text": "Hol den Ball und komm zurück.", "phenomena": ["event:sequence"]},
+    {"id": "deu_comp_01", "text": "Dieser Kuchen ist größer als jener.", "phenomena": ["comparison:more"]},
+    {"id": "deu_exist_01", "text": "Es gibt einen Hund im Garten.", "phenomena": ["existence", "spatial:in"]}
+  ]
+}

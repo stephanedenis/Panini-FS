@@ -1,0 +1,15 @@
+{
+  "lang": "yor",
+  "items": [
+    {"id": "yor_aao_01", "text": "Ologbo ń lé ẹkute.", "phenomena": ["AAO"], "meta": {"origin": "constructed", "needs_native_review": true}},
+    {"id": "yor_poss_01", "text": "Ìwé wà lórí tábìlì Mary.", "phenomena": ["possession", "spatial:on"], "meta": {"needs_native_review": true}},
+    {"id": "yor_spa_01", "text": "Bọ́ọ̀lù wà nínú àpótí.", "phenomena": ["spatial:in"], "meta": {"needs_native_review": true}},
+    {"id": "yor_quant_01", "text": "Ọmọ mẹ́ta ń sare.", "phenomena": ["quantification", "aspect:progressive"], "meta": {"needs_native_review": true}},
+    {"id": "yor_neg_01", "text": "Ó kì í jẹun.", "phenomena": ["negation", "habitual?"], "meta": {"needs_native_review": true}},
+    {"id": "yor_mod_01", "text": "O lè ṣeré ní báyìí.", "phenomena": ["modality:possibility", "time:now"], "meta": {"needs_native_review": true}},
+    {"id": "yor_evid_01", "text": "Wọ́n ní pé ó wá.", "phenomena": ["evidential:reported"], "meta": {"needs_native_review": true}},
+    {"id": "yor_seq_01", "text": "Lọ mú bọ́ọ̀lù kí o padà wá.", "phenomena": ["event:sequence", "SVC"], "meta": {"needs_native_review": true}},
+    {"id": "yor_comp_01", "text": "Àkara yìí tóbi jù ti yẹn lọ.", "phenomena": ["comparison:more"], "meta": {"needs_native_review": true}},
+    {"id": "yor_exist_01", "text": "Òwúrẹ̀ kan wà nínú ọgbà.", "phenomena": ["existence", "spatial:in"], "meta": {"needs_native_review": true}}
+  ]
+}

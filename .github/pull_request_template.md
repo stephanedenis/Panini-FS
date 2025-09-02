@@ -5,8 +5,8 @@ Décrivez brièvement le changement et son impact.
 ## Métadonnées Copilotage
 
 - Owner: [human|agent]
-- Model (si agent): ex. gpt-4o, claude-3.5
-- Journal: ajouter au titre: [journal:HOST-pidPID]
+- Model (si agent): ex. GPT5- (Preview), gpt-4o, claude-3.5
+- Titre: préfixe requis [hostname-pid-agent-model]
 
 ## Requirements coverage
 
@@ -21,32 +21,16 @@ Décrivez brièvement le changement et son impact.
 ## Liens
 
 - Issue(s): Closes #
-- Journal de session: lien vers Copilotage/journal/...
+-- Journal de session: lien vers Copilotage/journal/... (si utilisé)
 
 ## Risques & rollback
 
 Points de vigilance et plan de retour arrière si nécessaire.
-## Objet
-
-Décrire brièvement le changement et l’objectif.
-
-## Lien(s) Issue
-
-Closes #
-
-## Changements clés
-
-- 
-
 ## Checklist
 - [ ] Issue liée (Closes/Refs #...)
 - [ ] CI verte (build/lint/tests)
 - [ ] Docs mises à jour si nécessaire
 - [ ] Sync FR/EN des pages modifiées (docs_new)
-- [ ] TODO: pertinents ajoutés dans la doc si des travaux restent
+- [ ] TODO pertinents ajoutés si travaux restent
 - [ ] Respect des Directives d’autonomie (lots 5–10 min, checkpoints)
-
-## Notes de QA
-
-Comment vérifier rapidement (commandes/tâches VS Code, pages à tester, etc.).
 
