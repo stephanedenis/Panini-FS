@@ -25,8 +25,10 @@ jobs:
           set -e
           echo "Evaluating labels..."
           JSON='${{ steps.fetch_labels.outputs.json }}'
-          echo "$JSON" | grep -q '"name":"copilotage-exempt"' && {
-            echo "Label 'copilotage-exempt' present → skipping check."; exit 0; }
+          if echo "$JSON" | grep -q '"name":"copilotage-exempt"'; then
+            echo "Bypass: copilotage-exempt présent → on n'exécute pas le contrôle journal.";
+            exit 0;
+          fi
           echo "Checking journal Copilotage presence..."
           if ! ls -1 Copilotage/journal/*.md >/dev/null 2>&1; then
             echo "::error::Aucun journal Copilotage trouvé dans Copilotage/journal/. Ajoutez une entrée ou ajoutez le label 'copilotage-exempt'."
