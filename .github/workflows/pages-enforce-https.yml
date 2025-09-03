@@ -46,6 +46,27 @@ jobs:
             -f cname="$domain" \
             -f https_enforced=true || true
 
+      - name: Set Pages source to gh-pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          owner_repo='${{ github.repository }}'
+          # Tente update de la source vers gh-pages (branch=gh-pages, path=/)
+          echo '{"source": {"branch": "gh-pages", "path": "/"}}' > body.json
+          # Essaye PATCH puis POST (certains endpoints varient selon l'état du site)
+          gh api -X PATCH -H "Accept: application/vnd.github+json" \
+            "/repos/$owner_repo/pages" \
+            --input body.json || \
+          gh api -X POST -H "Accept: application/vnd.github+json" \
+            "/repos/$owner_repo/pages" \
+            --input body.json || true
+
+      - name: Show Pages settings after update
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api "/repos/${{ github.repository }}/pages" --jq '{cname:.cname,https_enforced:.https_enforced,status:.status,source:.source,build_type:.build_type}' || true
+
       - name: Verify live
         run: |
           curl -I -L --max-time 20 https://${{ inputs.domain }} || true
