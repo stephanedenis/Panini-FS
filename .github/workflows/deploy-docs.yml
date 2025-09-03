@@ -9,33 +9,20 @@ on:
       - 'docs_new/**'
       - 'modules/**/docs/**'
       - 'mkdocs.yml'
-      - 'CNAME'
-      - '.github/workflows/deploy-docs.yml'
-  pull_request:
-    branches: [ master, main ]
-    paths:
-      - 'docs_new/**'
-      - 'modules/**/docs/**'
-      - 'mkdocs.yml'
       - '.github/workflows/deploy-docs.yml'
   workflow_dispatch:
     inputs:
       force_deploy:
-        description: "Déployer même en exécution manuelle (workflow_dispatch)"
+        description: 'Forcer le déploiement (utile hors main/master)'
         required: false
-        default: "false"
+        default: 'false'
 
 jobs:
   build-deploy:
+    runs-on: ubuntu-latest
     concurrency:
       group: deploy-docs
-      cancel-in-progress: true
-    runs-on: ubuntu-latest
-    env:
-      GIT_PAGER: cat
-      GH_PAGER: cat
-      PAGER: cat
-      LESS: FRSX
+      cancel-in-progress: false
 
     steps:
       - name: Checkout
@@ -52,14 +39,11 @@ jobs:
       - name: Install MkDocs deps
         run: |
           pip install -r docs_new/requirements.txt
+          pip install jq
 
-      - name: Generate modules docs index (no-op if script missing)
+      - name: Generate modules docs index
         run: |
-          if [ -f scripts/devops/generate_modules_index.py ]; then \
-            python3 scripts/devops/generate_modules_index.py; \
-          else \
-            echo "No generate_modules_index.py found, skipping"; \
-          fi
+          python3 scripts/generate_modules_docs_index.py
 
       - name: Build site
         env:
@@ -68,18 +52,11 @@ jobs:
           mkdocs build --strict --config-file mkdocs.yml
 
       - name: Deploy to GitHub Pages
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && inputs.force_deploy == 'true')
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site
           cname: paninifs.org
-
-      - name: Verify live site (optional)
-        if: always()
-        run: |
-          echo "HEADERS:" && curl -fsSIL --max-time 20 https://paninifs.org || true
-          echo "BODY (top 60 lines):" && curl -fsSL --max-time 20 https://paninifs.org | sed -n '1,60p' || true
 
       - name: Success
         run: |

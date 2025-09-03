@@ -1,57 +1,46 @@
 name: Pages Diagnostics
+permissions:
+  contents: read
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: {}
   push:
-    branches:
-      - ci/terminal-stability
+    branches: [ master, main, ci/terminal-stability ]
     paths:
-      - '.github/workflows/pages-diagnostics.yml'
       - '.github/ops/triggers/pages-diagnostics.txt'
 
 jobs:
   diag:
-    name: Inspect Pages & gh-pages
     runs-on: ubuntu-latest
-    concurrency:
-      group: pages-diagnostics
-      cancel-in-progress: false
-    env:
-      GIT_PAGER: cat
-      GH_PAGER: cat
-      PAGER: cat
-      LESS: FRSX
     steps:
       - name: Checkout gh-pages
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           ref: gh-pages
-          submodules: false
+          fetch-depth: 1
 
-      - name: List top files in gh-pages
+      - name: List top level files
         run: |
-          ls -la | sed -n '1,200p'
-          echo "---- CNAME ----"; (head -n 5 CNAME || true)
-          echo "---- index.html (head) ----"; (sed -n '1,50p' index.html || true)
+          ls -la | sed -n '1,120p'
 
-      - name: Repo default branch & Pages settings
+      - name: Show CNAME and index.html head
+        run: |
+          if [ -f CNAME ]; then echo '--- CNAME ---'; cat CNAME; else echo 'CNAME missing'; fi
+          echo '--- index.html head ---'
+          if [ -f index.html ]; then head -n 80 index.html; else echo 'index.html missing'; fi
+
+      - name: Repo Pages settings
         uses: actions/github-script@v7
         with:
           script: |
-            const repo = context.repo;
-            const { data: repository } = await github.rest.repos.get(repo);
-            const { data: pages } = await github.rest.repos.getPages(repo).catch(e => ({ data: { error: e.message } }));
-            core.info(`default_branch=${repository.default_branch}`);
-            core.info(`pages.cname=${pages?.cname}`);
-            core.info(`pages.https_enforced=${pages?.https_enforced}`);
-            core.info(`pages.status=${pages?.status}`);
-            core.info(`pages.build_type=${pages?.build_type}`);
-            if (pages?.error) core.warning(`pages.error=${pages.error}`);
+            const {owner, repo} = context.repo;
+            const res = await github.rest.repos.getPages({ owner, repo });
+            core.info(JSON.stringify(res.data, null, 2));
 
-      - name: Curl site (HTTPS)
+      - name: Curl live site
         run: |
-          set -x
-          curl -fsSIL --max-time 20 https://paninifs.org || true
-          echo "\n---- Fetch body (first 80 lines) ----"
-          curl -fsSL --max-time 20 https://paninifs.org | sed -n '1,80p' || true
+          set +e
+          echo '--- HTTPS HEAD ---'
+          curl -I --max-time 20 -L https://paninifs.org || true
+          echo '--- HTTPS body sample ---'
+          curl -s --max-time 20 -L https://paninifs.org | head -n 80 || true
