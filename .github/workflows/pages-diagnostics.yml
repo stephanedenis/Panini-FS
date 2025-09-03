@@ -2,6 +2,12 @@ name: Pages Diagnostics
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - ci/terminal-stability
+    paths:
+      - '.github/workflows/pages-diagnostics.yml'
+      - '.github/ops/triggers/pages-diagnostics.txt'
 
 jobs:
   diag:
