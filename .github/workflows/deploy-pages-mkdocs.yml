@@ -40,6 +40,12 @@ jobs:
         env:
           PIP_DISABLE_PIP_VERSION_CHECK: '1'
 
+      - name: Generate RESEARCH RSS feed
+        env:
+          SITE_URL: https://paninifs.org
+        run: |
+          python scripts/generate_research_rss.py
+
       - name: Build MkDocs
         run: |
           mkdocs build --clean --strict

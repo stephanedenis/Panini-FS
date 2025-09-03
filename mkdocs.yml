@@ -134,6 +134,7 @@ nav:
   - Recherche:
     - Vue d'ensemble: research/overview.md
     - Quoi de neuf (14 jours): research/whats-new.md
+    - Flux (RSS): research/whats-new.html
     - Universaux sémantiques: research/universaux-semantique.md
     - Langage humain et développement: research/langage-humain-developpement.md
     - Compression sémantique: research/compression-semantique.md

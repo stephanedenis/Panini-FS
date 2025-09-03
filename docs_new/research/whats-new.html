@@ -1,0 +1,34 @@
+---
+title: Quoi de neuf — flux
+---
+<h1>Quoi de neuf — RESEARCH</h1>
+<p>Flux dynamique basé sur le feed RSS statique généré à la build.</p>
+
+<div id="feed"></div>
+
+<script>
+async function loadRSS() {
+  const res = await fetch('feed.xml', { cache: 'no-cache' });
+  const text = await res.text();
+  const parser = new DOMParser();
+  const xml = parser.parseFromString(text, 'application/xml');
+  const items = Array.from(xml.querySelectorAll('item')).slice(0, 30);
+  const container = document.getElementById('feed');
+  if (!items.length) { container.textContent = 'Aucune mise à jour récente.'; return; }
+  const ul = document.createElement('ul');
+  items.forEach(it => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = it.querySelector('link')?.textContent || '#';
+    a.textContent = it.querySelector('title')?.textContent || 'Mise à jour';
+    const date = document.createElement('small');
+    date.style.marginLeft = '8px';
+    date.textContent = it.querySelector('pubDate')?.textContent || '';
+    const desc = document.createElement('div');
+    desc.textContent = it.querySelector('description')?.textContent || '';
+    li.appendChild(a); li.appendChild(date); li.appendChild(desc); ul.appendChild(li);
+  });
+  container.appendChild(ul);
+}
+loadRSS();
+</script>
