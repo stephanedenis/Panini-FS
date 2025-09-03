@@ -141,9 +141,7 @@ nav:
   - Inventaire Dhātu v0.1: research/inventaire-dhatu-v0-1.md
   - Livre:
     - livre/index.md
-    - Lecture intégrale (FR): livre/lecture-integrale-fr.md
-    - en:
-      - Full reading (EN): en/livre/lecture-integrale-en.md
+  - Lecture intégrale: livre/lecture-integrale.md
 
 # Extra
 extra:
