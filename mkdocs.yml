@@ -113,6 +113,7 @@ markdown_extensions:
 nav:
   - Accueil: index.md
   - Vision: vision.md
+  - Vision sociale: vision-sociale.md
   - Fondations linguistiques: linguistic-foundations.md
   - Cadre Dhātu: dhatu-framework.md
   - Architecture: architecture.md
@@ -122,6 +123,8 @@ nav:
   - Processus documentation: doc-process.md
   - Guide de style: style-guide.md
   - Références externes: references.md
+  - Avancement: avancement.md
+  - Licences: licences.md
   - 🏕️ Dashboard: dashboard.md
   - 📊 Guide Monitoring: monitoring-guide.md
   - Infrastructure: infrastructure.md
@@ -142,7 +145,7 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/stephanedenis
     - icon: fontawesome/brands/linkedin
-      link: https://linkedin.com/in/stephanedenis
+  link: https://www.linkedin.com/in/neuronspikes
   alternate:
     - name: Français
       link: /
@@ -153,7 +156,9 @@ extra:
 
 # Copyright
 copyright: >
-  Copyright &copy; 2025 Stéphane Denis
+  © 2025 Stéphane Denis — Contenu sous licence
+  <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>
+  (sauf mention contraire). Code sous licence MIT.
 
 # Docs directory
 docs_dir: docs_new
