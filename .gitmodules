@@ -38,3 +38,5 @@
 	path = modules/attribution-registry
 	url = git@github.com:stephanedenis/PaniniFS-AttributionRegistry.git
 	branch = main
+[submodule "RESEARCH"]
+	branch = main
