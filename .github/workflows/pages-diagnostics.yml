@@ -4,10 +4,6 @@ permissions:
 
 on:
   workflow_dispatch: {}
-  push:
-    branches: [ master, main, ci/terminal-stability ]
-    paths:
-      - '.github/ops/triggers/pages-diagnostics.txt'
 
 jobs:
   diag:
