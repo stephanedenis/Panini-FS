@@ -1,35 +1,21 @@
-name: Deploy MkDocs Site
+name: Deploy Docs Auto
 permissions:
   contents: write
 
 on:
   push:
-    branches: [ master, main ]
+    branches: [ master, main, ci/terminal-stability ]
     paths:
-      - 'docs_new/**'
-      - 'modules/**/docs/**'
-      - 'mkdocs.yml'
-      - '.github/workflows/deploy-docs.yml'
-  workflow_dispatch:
-    inputs:
-      force_deploy:
-        description: 'Forcer le déploiement (utile hors main/master)'
-        required: false
-        default: 'false'
+      - '.github/ops/triggers/deploy-docs.txt'
 
 jobs:
-  build-deploy:
+  auto-deploy:
     runs-on: ubuntu-latest
-    concurrency:
-      group: deploy-docs
-      cancel-in-progress: false
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          submodules: false
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -39,7 +25,6 @@ jobs:
       - name: Install MkDocs deps
         run: |
           pip install -r docs_new/requirements.txt
-          pip install jq
 
       - name: Generate modules docs index
         run: |
@@ -58,6 +43,6 @@ jobs:
           publish_dir: ./site
           cname: paninifs.org
 
-      - name: Success
+      - name: Verify live
         run: |
-          echo "Site built and deployed to https://paninifs.org"
+          curl -I -L --max-time 20 https://paninifs.org || true

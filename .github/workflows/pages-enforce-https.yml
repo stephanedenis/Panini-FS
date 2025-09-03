@@ -1,0 +1,51 @@
+name: Pages Enforce HTTPS
+permissions:
+  pages: write
+  contents: write
+
+on:
+  workflow_dispatch:
+    inputs:
+      domain:
+        description: 'Custom domain to enforce'
+        default: 'paninifs.org'
+        required: true
+
+jobs:
+  enforce:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          fetch-depth: 1
+
+      - name: Ensure CNAME exists
+        run: |
+          DOMAIN='${{ inputs.domain }}'
+          if [ ! -f CNAME ] || ! grep -qx "$DOMAIN" CNAME; then
+            echo "$DOMAIN" > CNAME
+            git config user.name 'github-actions'
+            git config user.email 'github-actions@github.com'
+            git add CNAME
+            git commit -m "Ensure CNAME $DOMAIN" || true
+            git push origin HEAD:gh-pages || true
+          fi
+
+      - name: Enforce HTTPS via API
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          owner_repo='${{ github.repository }}'
+          domain='${{ inputs.domain }}'
+          gh api \
+            -X PATCH \
+            -H "Accept: application/vnd.github+json" \
+            "/repos/$owner_repo/pages" \
+            -f cname="$domain" \
+            -f https_enforced=true || true
+
+      - name: Verify live
+        run: |
+          curl -I -L --max-time 20 https://${{ inputs.domain }} || true
