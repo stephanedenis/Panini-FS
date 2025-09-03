@@ -1,0 +1,69 @@
+name: Pages Enforce HTTPS
+
+on:
+  workflow_dispatch:
+    inputs:
+      cname:
+        description: "Custom domain (CNAME)"
+        required: false
+        default: "paninifs.org"
+
+jobs:
+  enforce:
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      contents: write
+      actions: read
+    steps:
+      - name: Ensure gh-pages CNAME exists (checkout gh-pages)
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          fetch-depth: 0
+          submodules: false
+
+      - name: Write CNAME file if missing
+        run: |
+          set -e
+          CNAME_VALUE="${{ inputs.cname }}"
+          if [ -z "$CNAME_VALUE" ]; then CNAME_VALUE="paninifs.org"; fi
+          echo "CNAME target: $CNAME_VALUE"
+          NEED_COMMIT=0
+          if [ ! -f CNAME ]; then echo "$CNAME_VALUE" > CNAME; NEED_COMMIT=1; else echo "CNAME already present"; fi
+          if [ $NEED_COMMIT -eq 1 ]; then
+            git config user.name "github-actions"
+            git config user.email "actions@github.com"
+            git add CNAME
+            git commit -m "chore(pages): add CNAME $CNAME_VALUE"
+            git push
+          fi
+
+      - name: Enforce HTTPS and CNAME via API
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          OWNER=${GITHUB_REPOSITORY%%/*}
+          REPO=${GITHUB_REPOSITORY##*/}
+          CNAME_VALUE="${{ inputs.cname }}"
+          if [ -z "$CNAME_VALUE" ]; then CNAME_VALUE="paninifs.org"; fi
+          echo "Updating Pages settings for $OWNER/$REPO (cname=$CNAME_VALUE, https_enforced=true)"
+          gh api -X PATCH repos/$OWNER/$REPO/pages \
+            -f cname="$CNAME_VALUE" \
+            -f https_enforced=true || true
+
+      - name: Show Pages status
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          OWNER=${GITHUB_REPOSITORY%%/*}
+          REPO=${GITHUB_REPOSITORY##*/}
+          gh api repos/$OWNER/$REPO/pages --jq '{cname:.cname, https_enforced:.https_enforced, status:.status, build_type:.build_type}' || true
+
+      - name: Curl site (HTTPS)
+        run: |
+          set +e
+          curl -fsSIL --max-time 25 https://paninifs.org || true
+          echo "-- body (top 80) --"; curl -fsSL --max-time 25 https://paninifs.org | sed -n '1,80p' || true
+          set -e

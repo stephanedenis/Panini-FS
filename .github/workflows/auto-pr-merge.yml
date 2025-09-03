@@ -1,0 +1,48 @@
+name: Auto PR Merge ci/terminal-stability
+
+on:
+  workflow_dispatch:
+    inputs:
+      head_branch:
+        description: "Branche source"
+        required: false
+        default: "ci/terminal-stability"
+
+jobs:
+  pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: read
+    steps:
+      - name: Resolve default branch
+        id: repo
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const repo = context.repo;
+            const { data: repository } = await github.rest.repos.get(repo);
+            core.setOutput('default', repository.default_branch);
+
+      - name: Create PR (idempotent)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          DEF="${{ steps.repo.outputs.default }}"
+          HEAD="${{ inputs.head_branch }}"
+          echo "Default branch=$DEF, head=$HEAD"
+          gh pr view "$HEAD" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || \
+          gh pr create --repo "$GITHUB_REPOSITORY" -H "$HEAD" -B "$DEF" \
+            -t "ci(terminal): stabilité + docs deploy + pages diagnostics" \
+            -b "Stabilisation terminal + workflows Docs/Pages (CNAME/PR triggers, concurrency, force_deploy), ajout Pages Diagnostics et auto-trigger deploy."
+
+      - name: Enable auto-merge (squash)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "${{ inputs.head_branch }}" --limit 1 --json number -q '.[0].number')
+          echo "PR=$PR"
+          gh pr merge "$PR" --squash --auto --delete-branch --repo "$GITHUB_REPOSITORY"
