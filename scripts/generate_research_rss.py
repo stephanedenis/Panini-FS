@@ -25,7 +25,15 @@ def main():
 
     # Collect recent commits touching RESEARCH (last 30 days, max 50)
     try:
-        log = run(['git', 'log', '--since=30 days ago', '--max-count=200', '--name-only', '--pretty=%H%x09%ct%x09%s', 'RESEARCH'])
+        if os.path.isdir(os.path.join(RESEARCH_DIR, '.git')):
+            # Submodule: query inside RESEARCH
+            log = subprocess.check_output([
+                'git', '-C', RESEARCH_DIR, 'log', '--since=30 days ago', '--max-count=200',
+                '--name-only', '--pretty=%H%x09%ct%x09%s'
+            ], text=True)
+        else:
+            # In-tree folder
+            log = run(['git', 'log', '--since=30 days ago', '--max-count=200', '--name-only', '--pretty=%H%x09%ct%x09%s', 'RESEARCH'])
     except subprocess.CalledProcessError:
         log = ''
 

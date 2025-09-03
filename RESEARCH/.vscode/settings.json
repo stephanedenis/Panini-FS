@@ -1,0 +1,8 @@
+{
+  "peacock.color": "#2b579a",
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#2b579a",
+    "titleBar.inactiveBackground": "#2b579a99"
+  },
+  "#": "Importer ces règles communes si souhaité: COPILOTAGE_SHARED/settings.json"
+}

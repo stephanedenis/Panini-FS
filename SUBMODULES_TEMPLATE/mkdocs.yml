@@ -1,0 +1,17 @@
+site_name: "Module Docs"
+site_description: "Documentation du module"
+site_url: ""
+
+theme:
+  name: material
+  language: fr
+
+nav:
+  - Accueil: docs/index.md
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+
+docs_dir: docs
