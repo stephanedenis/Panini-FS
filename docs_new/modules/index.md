@@ -10,6 +10,8 @@ Cette page liste les modules et pointe vers leurs documents sur GitHub tant que 
 
 - [Attribution Registry](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/attribution-registry) — Sources du module attribution-registry.
 - [Autonomous Missions](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/autonomous-missions) — Sources du module autonomous-missions.
+- [Cloud Orchestrator](https://github.com/stephanedenis/PaniniFS/blob/HEAD/modules/cloud-orchestrator/README.md) — README du module cloud-orchestrator.
+- [Colab Controller](https://github.com/stephanedenis/PaniniFS/blob/HEAD/modules/colab-controller/README.md) — README du module colab-controller.
 - [Datasets Ingestion](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/datasets-ingestion) — Sources du module datasets-ingestion.
 - [Execution Orchestrator](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/execution-orchestrator) — Sources du module execution-orchestrator.
 - [Publication Engine](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/publication-engine) — Sources du module publication-engine.
