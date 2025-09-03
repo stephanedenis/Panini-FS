@@ -18,7 +18,7 @@ Society before tech. Goal: make information truly useful, accessible and traceab
 - Attribution and idea provenance (collective memory)
 - Open governance, aligned with the Montreal Declaration
 
-More: see [Social vision](vision-social.md) and [External references](references.md).
+More: see [Social vision](vision-sociale.md) and [External references](references.md).
 
 ## Research progress
 
@@ -28,7 +28,7 @@ Highlights and active workstreams:
 - Conceptual deduplication and semantic compression (proofs of concept)
 - Unified execution orchestrator (local/colab/cloud)
 
-More: [Progress & roadmap](progress.md) and [Research](research/index.md).
+More: [Progress & roadmap](avancement.md) and [Research](research/index.md).
 
 ## Find me
 
