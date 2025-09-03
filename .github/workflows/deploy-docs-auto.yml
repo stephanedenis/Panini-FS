@@ -1,0 +1,63 @@
+name: Deploy Docs Auto
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - ci/terminal-stability
+    paths:
+      - '.github/workflows/deploy-docs-auto.yml'
+      - '.github/ops/triggers/deploy-docs.txt'
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-docs
+      cancel-in-progress: true
+    env:
+      GIT_PAGER: cat
+      GH_PAGER: cat
+      PAGER: cat
+      LESS: FRSX
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: false
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install MkDocs deps
+        run: |
+          pip install -r docs_new/requirements.txt
+
+      - name: Generate modules docs index (no-op if script missing)
+        run: |
+          if [ -f scripts/devops/generate_modules_index.py ]; then \
+            python3 scripts/devops/generate_modules_index.py; \
+          else \
+            echo "No generate_modules_index.py found, skipping"; \
+          fi
+
+      - name: Build site
+        env:
+          KROKI_URL: https://kroki.io
+        run: |
+          mkdocs build --strict --config-file mkdocs.yml
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          cname: paninifs.org
+
+      - name: Verify live site (optional)
+        run: |
+          echo "HEADERS:" && curl -fsSIL --max-time 20 https://paninifs.org || true
+          echo "BODY (top 60 lines):" && curl -fsSL --max-time 20 https://paninifs.org | sed -n '1,60p' || true
