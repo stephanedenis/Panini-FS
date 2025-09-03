@@ -12,6 +12,15 @@ jobs:
         with:
           submodules: recursive
       - run: git submodule update --init --recursive
-      - run: |
-          test -d copilotage || { echo "missing copilotage/"; exit 1; }
-          test -d copilotage/shared || { echo "missing copilotage/shared"; exit 1; }
+      - name: Validate Copilotage layout
+        run: |
+          set -euo pipefail
+          # Dossier principal requis (respecte la casse)
+          if [ ! -d "Copilotage" ]; then
+            echo "::error::Missing required directory: Copilotage/";
+            exit 1;
+          fi
+          # Dossier shared optionnel
+          if [ ! -d "Copilotage/shared" ]; then
+            echo "::notice::Optional directory Copilotage/shared not found; skipping related checks.";
+          fi
