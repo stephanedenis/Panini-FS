@@ -1,0 +1,127 @@
+{
+  "timestamp": "2025-08-22T19:18:38.247839+00:00",
+  "camping_strategy": {
+    "active": true,
+    "totoro_mode": "minimal",
+    "cloud_services": {
+      "colab_master": "operational",
+      "github_actions": "active",
+      "vercel_deploy": "configured",
+      "github_pages": "deployed"
+    }
+  },
+  "agents": {
+    "total_count": 7,
+    "active_count": 7,
+    "agents": [
+      {
+        "name": "Theoretical Research Agent",
+        "path": "GOVERNANCE/Copilotage/agents/theoretical_research_agent.py",
+        "status": "active",
+        "last_check": "2025-08-22T19:18:38.248413+00:00"
+      },
+      {
+        "name": "Adversarial Critic Agent",
+        "path": "GOVERNANCE/Copilotage/agents/adversarial_critic_agent.py",
+        "status": "active",
+        "last_check": "2025-08-22T19:18:38.248514+00:00"
+      },
+      {
+        "name": "Orchestrator With Github",
+        "path": "GOVERNANCE/Copilotage/agents/orchestrator_with_github.py",
+        "status": "active",
+        "last_check": "2025-08-22T19:18:38.248592+00:00"
+      },
+      {
+        "name": "Simple Autonomous Orchestrator",
+        "path": "GOVERNANCE/Copilotage/agents/simple_autonomous_orchestrator.py",
+        "status": "active",
+        "last_check": "2025-08-22T19:18:38.248686+00:00"
+      },
+      {
+        "name": "Continuous Improvement Orchestrator",
+        "path": "GOVERNANCE/Copilotage/agents/continuous_improvement_orchestrator.py",
+        "status": "active",
+        "last_check": "2025-08-22T19:18:38.248764+00:00"
+      },
+      {
+        "name": "Adversarial Critic Simple",
+        "path": "GOVERNANCE/Copilotage/agents/adversarial_critic_simple.py",
+        "status": "active",
+        "last_check": "2025-08-22T19:18:38.248838+00:00"
+      },
+      {
+        "name": "Theoretical Research Simple",
+        "path": "GOVERNANCE/Copilotage/agents/theoretical_research_simple.py",
+        "status": "active",
+        "last_check": "2025-08-22T19:18:38.248908+00:00"
+      }
+    ],
+    "categories": {
+      "research": {
+        "count": 2
+      },
+      "critique": {
+        "count": 2
+      },
+      "orchestrators": {
+        "count": 3
+      },
+      "monitoring": {
+        "count": 4
+      },
+      "devops": {
+        "count": 2
+      }
+    }
+  },
+  "workflows": {
+    "github_actions": {
+      "status": "unknown",
+      "message": "Token GitHub non configuré"
+    }
+  },
+  "domains": {
+    "total": 5,
+    "configured": [
+      {
+        "domain": "paninifs.com",
+        "status": "online",
+        "cname": "stephanedenis.github.io",
+        "ssl": "active"
+      },
+      {
+        "domain": "o-tomate.com",
+        "status": "online",
+        "cname": "stephanedenis.github.io",
+        "ssl": "active"
+      },
+      {
+        "domain": "stephanedenis.cc",
+        "status": "online",
+        "cname": "stephanedenis.github.io",
+        "ssl": "active"
+      },
+      {
+        "domain": "sdenis.net",
+        "status": "online",
+        "cname": "stephanedenis.github.io",
+        "ssl": "active"
+      },
+      {
+        "domain": "paninifs.org",
+        "status": "online",
+        "cname": "stephanedenis.github.io",
+        "ssl": "active"
+      }
+    ]
+  },
+  "system_health": {
+    "overall_status": "healthy",
+    "camping_mode_active": true,
+    "externalization_complete": true,
+    "agents_operational": 13,
+    "monitoring_active": true,
+    "last_health_check": "2025-08-22T19:18:38.983234+00:00"
+  }
+}

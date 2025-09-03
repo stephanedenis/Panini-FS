@@ -12,26 +12,28 @@
         <meta name="author" content="Stéphane Denis">
       
       
-        <link rel="canonical" href="https://paninifs.org/">
+        <link rel="canonical" href="https://paninifs.org/diagrams/">
       
       
+        <link rel="prev" href="../architecture/">
       
-        <link rel="next" href="vision/">
+      
+        <link rel="next" href="../specs/execution-orchestrator/">
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
     
     
       
-        <title>Pāṇini File System</title>
+        <title>Schémas (PlantUML) - Pāṇini File System</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.7e37652d.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e37652d.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -50,9 +52,9 @@
       
     
     
-      <link rel="stylesheet" href="css/timeago.css">
+      <link rel="stylesheet" href="../css/timeago.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -78,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#panini-file-system" class="md-skip">
+        <a href="#schemas-plantuml-via-kroki" class="md-skip">
           Aller au contenu
         </a>
       
@@ -92,7 +94,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="En-tête">
-    <a href="." title="Pāṇini File System" class="md-header__button md-logo" aria-label="Pāṇini File System" data-md-component="logo">
+    <a href=".." title="Pāṇini File System" class="md-header__button md-logo" aria-label="Pāṇini File System" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3zm12 7h6v4h-6zm0 7h6v4h-6zm-2-4H7v5h6v2H5V9h2v2h6z"/></svg>
@@ -112,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Accueil
+              Schémas (PlantUML)
             
           </span>
         </div>
@@ -159,13 +161,13 @@
       <ul class="md-select__list">
         
           <li class="md-select__item">
-            <a href="/" hreflang="fr" class="md-select__link">
+            <a href="./" hreflang="fr" class="md-select__link">
               Français
             </a>
           </li>
         
           <li class="md-select__item">
-            <a href="/en/" hreflang="en" class="md-select__link">
+            <a href="../en/diagrams/" hreflang="en" class="md-select__link">
               English
             </a>
           </li>
@@ -252,11 +254,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="." class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
         
   
   
@@ -275,7 +275,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="vision/" class="md-tabs__link">
+      <a href="../vision/" class="md-tabs__link">
         
   
   
@@ -294,7 +294,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="linguistic-foundations/" class="md-tabs__link">
+      <a href="../linguistic-foundations/" class="md-tabs__link">
         
   
   
@@ -313,7 +313,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="dhatu-framework/" class="md-tabs__link">
+      <a href="../dhatu-framework/" class="md-tabs__link">
         
   
   
@@ -332,7 +332,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="architecture/" class="md-tabs__link">
+      <a href="../architecture/" class="md-tabs__link">
         
   
   
@@ -349,9 +349,11 @@
   
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="diagrams/" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
         
   
   
@@ -372,7 +374,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="specs/execution-orchestrator/" class="md-tabs__link">
+        <a href="../specs/execution-orchestrator/" class="md-tabs__link">
           
   
   
@@ -392,7 +394,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="doc-process/" class="md-tabs__link">
+      <a href="../doc-process/" class="md-tabs__link">
         
   
   
@@ -411,7 +413,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="style-guide/" class="md-tabs__link">
+      <a href="../style-guide/" class="md-tabs__link">
         
   
   
@@ -430,7 +432,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="references/" class="md-tabs__link">
+      <a href="../references/" class="md-tabs__link">
         
   
   
@@ -449,7 +451,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="dashboard/" class="md-tabs__link">
+      <a href="../dashboard/" class="md-tabs__link">
         
   
   
@@ -468,7 +470,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="monitoring-guide/" class="md-tabs__link">
+      <a href="../monitoring-guide/" class="md-tabs__link">
         
   
   
@@ -487,7 +489,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="infrastructure/" class="md-tabs__link">
+      <a href="../infrastructure/" class="md-tabs__link">
         
   
   
@@ -506,7 +508,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="monitoring/" class="md-tabs__link">
+      <a href="../monitoring/" class="md-tabs__link">
         
   
   
@@ -525,7 +527,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="modules/" class="md-tabs__link">
+      <a href="../modules/" class="md-tabs__link">
         
   
   
@@ -546,7 +548,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="research/" class="md-tabs__link">
+        <a href="../research/" class="md-tabs__link">
           
   
   
@@ -566,7 +568,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="research/hypotheses-and-alternatives/" class="md-tabs__link">
+      <a href="../research/hypotheses-and-alternatives/" class="md-tabs__link">
         
   
   
@@ -585,7 +587,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="research/references/" class="md-tabs__link">
+      <a href="../research/references/" class="md-tabs__link">
         
   
   
@@ -604,7 +606,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="research/inventaire-dhatu-v0-1/" class="md-tabs__link">
+      <a href="../research/inventaire-dhatu-v0-1/" class="md-tabs__link">
         
   
   
@@ -639,7 +641,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Pāṇini File System" class="md-nav__button md-logo" aria-label="Pāṇini File System" data-md-component="logo">
+    <a href=".." title="Pāṇini File System" class="md-nav__button md-logo" aria-label="Pāṇini File System" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3zm12 7h6v4h-6zm0 7h6v4h-6zm-2-4H7v5h6v2H5V9h2v2h6z"/></svg>
@@ -666,19 +668,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -689,7 +682,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -701,7 +693,7 @@
   
   
     <li class="md-nav__item">
-      <a href="vision/" class="md-nav__link">
+      <a href="../vision/" class="md-nav__link">
         
   
   
@@ -723,7 +715,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linguistic-foundations/" class="md-nav__link">
+      <a href="../linguistic-foundations/" class="md-nav__link">
         
   
   
@@ -745,7 +737,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dhatu-framework/" class="md-nav__link">
+      <a href="../dhatu-framework/" class="md-nav__link">
         
   
   
@@ -767,7 +759,7 @@
   
   
     <li class="md-nav__item">
-      <a href="architecture/" class="md-nav__link">
+      <a href="../architecture/" class="md-nav__link">
         
   
   
@@ -786,10 +778,19 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="diagrams/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -800,6 +801,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -860,7 +862,7 @@
   
   
     <li class="md-nav__item">
-      <a href="specs/execution-orchestrator/" class="md-nav__link">
+      <a href="../specs/execution-orchestrator/" class="md-nav__link">
         
   
   
@@ -890,7 +892,7 @@
   
   
     <li class="md-nav__item">
-      <a href="doc-process/" class="md-nav__link">
+      <a href="../doc-process/" class="md-nav__link">
         
   
   
@@ -912,7 +914,7 @@
   
   
     <li class="md-nav__item">
-      <a href="style-guide/" class="md-nav__link">
+      <a href="../style-guide/" class="md-nav__link">
         
   
   
@@ -934,7 +936,7 @@
   
   
     <li class="md-nav__item">
-      <a href="references/" class="md-nav__link">
+      <a href="../references/" class="md-nav__link">
         
   
   
@@ -956,7 +958,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dashboard/" class="md-nav__link">
+      <a href="../dashboard/" class="md-nav__link">
         
   
   
@@ -978,7 +980,7 @@
   
   
     <li class="md-nav__item">
-      <a href="monitoring-guide/" class="md-nav__link">
+      <a href="../monitoring-guide/" class="md-nav__link">
         
   
   
@@ -1000,7 +1002,7 @@
   
   
     <li class="md-nav__item">
-      <a href="infrastructure/" class="md-nav__link">
+      <a href="../infrastructure/" class="md-nav__link">
         
   
   
@@ -1022,7 +1024,7 @@
   
   
     <li class="md-nav__item">
-      <a href="monitoring/" class="md-nav__link">
+      <a href="../monitoring/" class="md-nav__link">
         
   
   
@@ -1044,7 +1046,7 @@
   
   
     <li class="md-nav__item">
-      <a href="modules/" class="md-nav__link">
+      <a href="../modules/" class="md-nav__link">
         
   
   
@@ -1097,7 +1099,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="research/" class="md-nav__link ">
+            <a href="../research/" class="md-nav__link ">
               
   
   
@@ -1132,7 +1134,7 @@
   
   
     <li class="md-nav__item">
-      <a href="research/universaux-semantique/" class="md-nav__link">
+      <a href="../research/universaux-semantique/" class="md-nav__link">
         
   
   
@@ -1162,7 +1164,7 @@
   
   
     <li class="md-nav__item">
-      <a href="research/langage-humain-developpement/" class="md-nav__link">
+      <a href="../research/langage-humain-developpement/" class="md-nav__link">
         
   
   
@@ -1192,7 +1194,7 @@
   
   
     <li class="md-nav__item">
-      <a href="research/compression-semantique/" class="md-nav__link">
+      <a href="../research/compression-semantique/" class="md-nav__link">
         
   
   
@@ -1229,7 +1231,7 @@
   
   
     <li class="md-nav__item">
-      <a href="research/hypotheses-and-alternatives/" class="md-nav__link">
+      <a href="../research/hypotheses-and-alternatives/" class="md-nav__link">
         
   
   
@@ -1258,7 +1260,7 @@
   
   
     <li class="md-nav__item">
-      <a href="research/references/" class="md-nav__link">
+      <a href="../research/references/" class="md-nav__link">
         
   
   
@@ -1287,7 +1289,7 @@
   
   
     <li class="md-nav__item">
-      <a href="research/inventaire-dhatu-v0-1/" class="md-nav__link">
+      <a href="../research/inventaire-dhatu-v0-1/" class="md-nav__link">
         
   
   
@@ -1346,18 +1348,27 @@
   
 
 
-<h1 id="panini-file-system">Pāṇini File System<a class="headerlink" href="#panini-file-system" title="Permanent link">&para;</a></h1>
-<p>Plateforme modulaire pour traitement et stockage d’information métalinguistique.</p>
-<ul>
-<li>Vision: <a href="linguistic-foundations/">Fondations linguistiques</a>, <a href="dhatu-framework/">Cadre Dhātu</a></li>
-<li>Architecture: <a href="architecture/">Architecture globale</a>, <a href="specs/execution-orchestrator/">Orchestrateur d’exécution</a></li>
-<li>Documentation: <a href="doc-process/">Processus</a>, <a href="style-guide/">Style</a>, <a href="references/">Références</a></li>
-<li>Schémas: <a href="diagrams/">Diagrams (PlantUML)</a></li>
-<li>Modules: <a href="modules/">Index docs modules</a></li>
-</ul>
-<p>Actualités:
-- La documentation est désormais la source prioritaire; les tâches GitHub sont extraites automatiquement des TODO: de cette doc.
-- Le site est bilingue FR/EN (menu English).</p>
+<h1 id="schemas-plantuml-via-kroki">Schémas (PlantUML via Kroki)<a class="headerlink" href="#schemas-plantuml-via-kroki" title="Permanent link">&para;</a></h1>
+<p>Ce projet rend les schémas à partir de diagram-as-code en SVG, avec hyperliens cliquables.</p>
+<p>Exemple PlantUML avec liens:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>@startuml
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>skinparam linetype ortho
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>skinparam defaultFontName Roboto
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>skinparam ArrowColor #1976D2
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>skinparam RectangleFontStyle bold
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>rectangle &quot;[[https://paninifs.org Accueil]]&quot; as Home #lightblue
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>rectangle &quot;[[https://github.com/stephanedenis/PaniniFS Repo]]&quot; as Repo #lightgreen
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>rectangle &quot;[[/specs/execution-orchestrator/ Orchestrateur]]&quot; as Orchestrator #lightyellow
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>Home --&gt; Repo : code
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>Home --&gt; Orchestrator : specs
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>Repo --&gt; Orchestrator : submodule
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>@enduml
+</span></code></pre></div>
+<p>Notes:
+- Les liens PlantUML <code>[[url label]]</code> sont transformés en liens SVG.
+- Mermaid est aussi supporté via superfences.</p>
 
 
 
@@ -1380,7 +1391,7 @@
     <span class="md-icon" title="Dernière mise à jour">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="31 août 2025 12:41:00 UTC"><span class="timeago" datetime="2025-08-31T12:41:00+00:00" locale="fr"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="31 août 2025 12:41:00 UTC">2025-08-31</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="31 août 2025 00:56:59 UTC"><span class="timeago" datetime="2025-08-31T00:56:59+00:00" locale="fr"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="31 août 2025 00:56:59 UTC">2025-08-31</span>
   </span>
 
     
@@ -1390,7 +1401,7 @@
     <span class="md-icon" title="Créé">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="13 juin 2020 05:10:00 UTC"><span class="timeago" datetime="2020-06-13T05:10:00+00:00" locale="fr"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="13 juin 2020 05:10:00 UTC">2020-06-13</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="31 août 2025 00:56:59 UTC"><span class="timeago" datetime="2025-08-31T00:56:59+00:00" locale="fr"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="31 août 2025 00:56:59 UTC">2025-08-31</span>
   </span>
 
     
@@ -1478,14 +1489,14 @@
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.92b07e13.min.js"></script>
+      <script src="../assets/javascripts/bundle.92b07e13.min.js"></script>
       
-        <script src="js/timeago.min.js"></script>
+        <script src="../js/timeago.min.js"></script>
       
-        <script src="js/timeago_mkdocs_material.js"></script>
+        <script src="../js/timeago_mkdocs_material.js"></script>
       
     
   </body>
