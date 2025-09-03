@@ -132,7 +132,8 @@ nav:
   - Surveillance: monitoring.md
   - Modules docs: modules/index.md
   - Recherche:
-    - research/index.md
+    - Vue d'ensemble: research/overview.md
+    - Quoi de neuf (14 jours): research/whats-new.md
     - Universaux sémantiques: research/universaux-semantique.md
     - Langage humain et développement: research/langage-humain-developpement.md
     - Compression sémantique: research/compression-semantique.md
