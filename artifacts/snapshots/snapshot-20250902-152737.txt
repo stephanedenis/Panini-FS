@@ -1,0 +1,40 @@
+=== Repo/CI Snapshot @ 2025-09-02T15:27:37-04:00 ===
+CWD=/home/stephane/GitHub/PaniniFS
+
+-- Git --
+Branch: ci/owner-labeler-and-templates
+Status (porcelain):
+ ? modules/attribution-registry
+ ? modules/autonomous-missions
+ ? modules/datasets-ingestion
+ m modules/execution-orchestrator
+ ? modules/publication-engine
+ ? modules/semantic-core
+ ? modules/ultra-reactive
+?? artifacts/
+?? scripts/devops/repo_ci_snapshot.sh
+?? scripts/devops/terminal_diagnostics.sh
+Recent commits (origin/master):
+fe0c76e 2025-09-02 Stéphane Denis ci: owner auto-labeler + templates + journal guards
+26608e7 2025-09-02 Stéphane Denis docs: Automatisation journal & garde-fous PR + index des journaux (#52)
+690796b 2025-09-01 Stéphane Denis ci(provenance): labels-only + conversion depuis titre → labels; nettoyage titres automatique; outils de monitoring PR (Playwright)
+dec91cc 2025-09-01 Stéphane Denis [totoro-361169-agent-copilot] publications: site FR/EN, manuscrits Leanpub, CI, conventions copilotage [owner:agent] (#42)
+feaa1f1 2025-09-01 Stéphane Denis CI/Gov/Docs: provenance labels + docs build + modules index; fix gitleaks (#40)
+1d6e0f8 2025-09-01 Stéphane Denis [totoro-163849-GitHubCopilot-GPT5-(Preview)] [owner:agent] docs: exposer la section Recherche (QUOI) + navigation (#39)
+-- Open PRs --
+
+-- Recent workflows --
+id=17413802633 | wf=Bootstrap Provenance for PR | branch=master | status=completed | conclusion=success | title=Bootstrap Provenance for PR
+id=17413743917 | wf=Auto Merge (Provenance OK) | branch=master | status=completed | conclusion=success | title=Auto Merge (Provenance OK)
+id=17413743337 | wf=Provenance Guardian | branch=master | status=completed | conclusion=success | title=Provenance Guardian
+id=17413620659 | wf=Bootstrap Provenance for PR | branch=master | status=completed | conclusion=success | title=Bootstrap Provenance for PR
+id=17413373207 | wf=Auto Merge (Provenance OK) | branch=master | status=completed | conclusion=success | title=Auto Merge (Provenance OK)
+id=17413369758 | wf=Provenance Guardian | branch=master | status=completed | conclusion=success | title=Provenance Guardian
+id=17413319568 | wf=Bootstrap Provenance for PR | branch=master | status=completed | conclusion=success | title=Bootstrap Provenance for PR
+id=17413107659 | wf=Bootstrap Provenance for PR | branch=master | status=completed | conclusion=success | title=Bootstrap Provenance for PR
+id=17413043450 | wf=Provenance Guardian | branch=master | status=completed | conclusion=success | title=Provenance Guardian
+id=17413042732 | wf=Auto Merge (Provenance OK) | branch=master | status=completed | conclusion=success | title=Auto Merge (Provenance OK)
+id=17412949478 | wf=Bootstrap Provenance for PR | branch=master | status=completed | conclusion=success | title=Bootstrap Provenance for PR
+id=17412813792 | wf=Auto Merge (Provenance OK) | branch=master | status=completed | conclusion=success | title=Auto Merge (Provenance OK)
+
+Snapshot saved to: artifacts/snapshots/snapshot-20250902-152737.txt
