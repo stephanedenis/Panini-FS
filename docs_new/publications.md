@@ -1,4 +1,12 @@
+---
+title: Publications
+---
+
 # Publications
+
+- Livre (Leanpub) — Lecture intégrale (FR): [Lire maintenant](livre/lecture-integrale-fr.md)
+- Book (Leanpub) — Full reading (EN): [Read now](en/livre/lecture-integrale-en.md)
+- Medium (articles): https://medium.com/@neuronspikes
 
 Cette page regroupe les supports publics et les sorties éditoriales.
 

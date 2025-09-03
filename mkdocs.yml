@@ -123,6 +123,7 @@ nav:
   - Processus documentation: doc-process.md
   - Guide de style: style-guide.md
   - Références externes: references.md
+  - Publications: publications.md
   - Avancement: avancement.md
   - Licences: licences.md
   - 🏕️ Dashboard: dashboard.md
@@ -138,6 +139,11 @@ nav:
   - Hypothèses et alternatives: research/hypotheses-and-alternatives.md
   - Références de recherche: research/references.md
   - Inventaire Dhātu v0.1: research/inventaire-dhatu-v0-1.md
+  - Livre:
+    - livre/index.md
+    - Lecture intégrale (FR): livre/lecture-integrale-fr.md
+    - en:
+      - Full reading (EN): en/livre/lecture-integrale-en.md
 
 # Extra
 extra:
