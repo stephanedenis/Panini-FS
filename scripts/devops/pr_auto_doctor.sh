@@ -1,14 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Shell non-interactif/pager-safe
-NONINT_ENV="$(dirname "$0")/../noninteractive_env.sh"
-[ -f "$NONINT_ENV" ] && source "$NONINT_ENV"
-export GIT_PAGER=${GIT_PAGER:-cat}
-export GH_PAGER=${GH_PAGER:-cat}
-export PAGER=${PAGER:-cat}
-export LESS=${LESS:-FRSX}
-
 # PR Auto-Doctor: diagnose -> fix docs FR/EN sync -> push -> wait checks -> merge
 # Requires: gh, jq, git
 # Usage examples:
@@ -21,10 +13,6 @@ export LESS=${LESS:-FRSX}
 confirm() {
   if [[ "${ASSUME_YES:-0}" == "1" ]]; then
     return 0
-  fi
-  # Fallback non-interactif: par défaut, refuser s'il n'y a pas de TTY
-  if [[ ! -t 0 ]]; then
-    return 1
   fi
   read -r -p "$1 [y/N]: " resp
   [[ "$resp" =~ ^[Yy]$ ]]

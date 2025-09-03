@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
-# Anti-pager/éditeur pour exécution non interactive
-export GIT_PAGER=cat PAGER=cat LESS=FRX EDITOR=true VISUAL=true GIT_EDITOR=true GH_EDITOR=true GIT_MERGE_AUTOEDIT=no
 
 # gh_pr_open.sh — ouvre une PR et ajoute des labels de provenance courts
 # Usage: gh_pr_open.sh "<résumé court>" [--base <base-branch>] [--model <nom>] [--owner <human|agent>]
@@ -57,7 +55,7 @@ fi
 BODY="PR ouverte via gh_pr_open.sh.\n\n- Branche: ${CURR_BRANCH}\n- Modèle: ${MODEL_TAG:-n/a}\n\nCloses #${ISSUE_NUM}"
 
 # Crée la PR
-gh pr create --title "$TITLE" --body "$BODY" --base "$BASE_BRANCH" --head "$CURR_BRANCH" --fill=false
+gh pr create --title "$TITLE" --body "$BODY" --base "$BASE_BRANCH" --head "$CURR_BRANCH"
 
 # Ajoute des labels provenance courts (<=50 chars chacun)
 HOST_RAW=${HOSTNAME:-$(hostname -s 2>/dev/null || hostname 2>/dev/null || echo "host")}

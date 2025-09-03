@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-# Note: ce script est souvent lancé par un shell; assurez-vous que l'environnement
-# non interactif est chargé (GH_PAGER/GIT_PAGER/PAGER/LESS). Voir scripts/noninteractive_env.sh
 """
 Monitor GitHub PRs with Playwright (headless):
 - Navigates to PR overview and checks pages

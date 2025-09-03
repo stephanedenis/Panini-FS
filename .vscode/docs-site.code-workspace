@@ -1,0 +1,17 @@
+{
+  "folders": [
+    { "path": "." }
+  ],
+  "settings": {
+    "files.exclude": { "**/.git": true },
+    "markdownlint.config": { "MD013": false },
+    "editor.wordWrap": "on"
+  },
+  "extensions": {
+    "recommendations": [
+      "yzhang.markdown-all-in-one",
+      "bierner.markdown-mermaid",
+      "redhat.vscode-yaml"
+    ]
+  }
+}

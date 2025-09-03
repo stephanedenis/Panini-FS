@@ -38,6 +38,3 @@
 	path = modules/attribution-registry
 	url = git@github.com:stephanedenis/PaniniFS-AttributionRegistry.git
 	branch = main
-[submodule "copilotage/shared"]
-	path = copilotage/shared
-	url = https://github.com/stephanedenis/copilotage-shared.git

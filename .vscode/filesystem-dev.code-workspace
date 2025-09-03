@@ -1,0 +1,21 @@
+{
+  "folders": [
+    { "path": "." },
+    { "path": "modules/execution-orchestrator" },
+    { "path": "modules/datasets-ingestion" },
+    { "path": "modules/attribution-registry" }
+  ],
+  "settings": {
+    "files.exclude": { "**/.git": true, "**/site": true },
+    "python.analysis.typeCheckingMode": "basic",
+    "python.testing.unittestEnabled": true,
+    "python.testing.pytestEnabled": true
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-python.python",
+      "ms-python.vscode-pylance",
+      "ms-azuretools.vscode-docker"
+    ]
+  }
+}
