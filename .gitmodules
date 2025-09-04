@@ -1,4 +1,5 @@
-[submodule "modules/autonomous-missions"]
+[
+submodule "modules/autonomous-missions"]
 	path = modules/autonomous-missions
 	url = git@github.com:stephanedenis/PaniniFS-AutonomousMissions.git
 	branch = main
@@ -25,18 +26,4 @@
 [submodule "modules/attribution-registry"]
 	path = modules/attribution-registry
 	url = git@github.com:stephanedenis/PaniniFS-AttributionRegistry.git
-	branch = main
-[submodule "modules/execution-orchestrator"]
-	path = modules/execution-orchestrator
-	url = git@github.com:stephanedenis/PaniniFS-ExecutionOrchestrator.git
-	branch = main
-[submodule "modules/datasets-ingestion"]
-	path = modules/datasets-ingestion
-	url = git@github.com:stephanedenis/PaniniFS-DatasetsIngestion.git
-	branch = main
-[submodule "modules/attribution-registry"]
-	path = modules/attribution-registry
-	url = git@github.com:stephanedenis/PaniniFS-AttributionRegistry.git
-	branch = main
-[submodule "RESEARCH"]
 	branch = main
