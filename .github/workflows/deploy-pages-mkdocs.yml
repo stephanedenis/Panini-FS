@@ -32,7 +32,16 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          submodules: recursive
+          submodules: false
+
+      - name: Init RESEARCH submodule only
+        run: |
+          if [ -f .gitmodules ]; then
+            # Initialize only the RESEARCH submodule (avoid failing on other optional submodules)
+            if git config -f .gitmodules --name-only --get-regexp '^submodule\.RESEARCH\.' >/dev/null 2>&1; then
+              git submodule update --init RESEARCH
+            fi
+          fi
 
       - name: Setup Python
         uses: actions/setup-python@v5
