@@ -3,10 +3,13 @@ name: Deploy MkDocs via GitHub Pages
 on:
   workflow_dispatch:
   push:
-    branches: [ master ]
+    branches:
+      - master
     paths:
       - 'mkdocs.yml'
       - 'docs_new/**'
+      - 'RESEARCH/**'
+      - 'scripts/generate_research_rss.py'
       - '.github/workflows/deploy-pages-mkdocs.yml'
 
 permissions:
@@ -37,11 +40,11 @@ jobs:
           python-version: '3.x'
 
       - name: Install MkDocs deps
+        env:
+          PIP_DISABLE_PIP_VERSION_CHECK: '1'
         run: |
           python -m pip install --upgrade pip
           if [ -f docs_new/requirements.txt ]; then pip install -r docs_new/requirements.txt; else pip install mkdocs mkdocs-material; fi
-        env:
-          PIP_DISABLE_PIP_VERSION_CHECK: '1'
 
       - name: Generate RESEARCH RSS feed
         env:

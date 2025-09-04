@@ -2,7 +2,22 @@
   "peacock.color": "#2b579a",
   "workbench.colorCustomizations": {
     "titleBar.activeBackground": "#2b579a",
-    "titleBar.inactiveBackground": "#2b579a99"
+    "titleBar.inactiveBackground": "#2b579a99",
+    "activityBar.activeBackground": "#366ec2",
+    "activityBar.background": "#366ec2",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#e39bb8",
+    "activityBarBadge.foreground": "#15202b",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#366ec2",
+    "statusBar.background": "#2b579a",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#366ec2",
+    "statusBarItem.remoteBackground": "#2b579a",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveForeground": "#e7e7e799"
   },
   "#": "Importer ces règles communes si souhaité: COPILOTAGE_SHARED/settings.json"
 }
