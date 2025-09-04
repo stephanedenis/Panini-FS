@@ -1,5 +1,4 @@
-[
-submodule "modules/autonomous-missions"]
+[submodule "modules/autonomous-missions"]
 	path = modules/autonomous-missions
 	url = git@github.com:stephanedenis/PaniniFS-AutonomousMissions.git
 	branch = main
