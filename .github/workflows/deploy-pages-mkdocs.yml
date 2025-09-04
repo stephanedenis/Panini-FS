@@ -6,11 +6,13 @@ on:
     branches:
       - master
     paths:
-      - 'mkdocs.yml'
-      - 'docs_new/**'
-      - 'RESEARCH/**'
-      - 'scripts/generate_research_rss.py'
-      - '.github/workflows/deploy-pages-mkdocs.yml'
+      - mkdocs.yml
+      - docs_new/**
+      - RESEARCH/**
+      - RESEARCH
+      - .gitmodules
+      - scripts/generate_research_rss.py
+      - .github/workflows/deploy-pages-mkdocs.yml
 
 permissions:
   contents: read
