@@ -37,8 +37,20 @@ def compute_child_metrics(lang_codes):
     gold_path = os.path.join(HERE, "gold_encodings_child.json")
     if not os.path.exists(gold_path):
         raise FileNotFoundError(gold_path)
-    with open(gold_path, "r", encoding="utf-8") as f:
-        gold = json.load(f)
+    # Handle empty or invalid JSON gracefully by treating as empty mapping
+    gold: dict
+    try:
+        if os.path.getsize(gold_path) == 0:
+            gold = {}
+        else:
+            with open(gold_path, "r", encoding="utf-8") as f:
+                gold = json.load(f)
+            if gold is None:
+                gold = {}
+    except json.JSONDecodeError:
+        # Print a lightweight notice to stderr and continue with empty annotations
+        print(f"[warn] gold_encodings_child.json is empty or invalid JSON; proceeding with empty annotations", file=sys.stderr)
+        gold = {}
     from collections import defaultdict
     out = {}
     for lc in lang_codes:
