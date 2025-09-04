@@ -10,8 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: recursive
-      - run: git submodule update --init --recursive
+          submodules: false
+      # Pas d'init récursif: le job ne dépend pas des submodules
+      # - run: git submodule update --init --recursive
       - name: Validate Copilotage layout
         run: |
           set -euo pipefail

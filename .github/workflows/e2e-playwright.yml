@@ -1,0 +1,52 @@
+name: E2E - Playwright (live)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '12 * * * *'
+  push:
+    branches: [ master ]
+    paths:
+      - 'e2e/**'
+      - '.github/workflows/e2e-playwright.yml'
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps
+        working-directory: e2e
+        run: |
+          npm ci || npm install
+          npx playwright install --with-deps
+
+      - name: Run smoke tests against live site
+        working-directory: e2e
+        env:
+          BASE_URL: https://paninifs.org
+        run: |
+          npx playwright test e2e/tests/smoke.spec.js --reporter=dot
+
+      - name: Run research tests (tolerate current 404s)
+        working-directory: e2e
+        env:
+          BASE_URL: https://paninifs.org
+        run: |
+          npx playwright test e2e/tests/research.spec.js --reporter=dot
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: e2e/playwright-report
+          if-no-files-found: ignore

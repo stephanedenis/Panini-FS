@@ -40,3 +40,7 @@ jobs:
           curl -I --max-time 20 -L https://paninifs.org || true
           echo '--- HTTPS body sample ---'
           curl -s --max-time 20 -L https://paninifs.org | head -n 80 || true
+          echo '--- Research whats-new ---'
+          curl -I --max-time 20 -L https://paninifs.org/research/whats-new.html || true
+          echo '--- Research feed.xml ---'
+          curl -I --max-time 20 -L https://paninifs.org/research/feed.xml || true
