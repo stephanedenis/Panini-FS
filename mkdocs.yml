@@ -130,6 +130,8 @@ nav:
   - 📊 Guide Monitoring: monitoring-guide.md
   - Infrastructure: infrastructure.md
   - Surveillance: monitoring.md
+  - Écosystème:
+      - OntoWave (vision): ecosystem/ontowave.md
   - Modules docs: modules/index.md
   - Recherche:
       - Vue d'ensemble: research/overview.md
