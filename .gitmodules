@@ -36,3 +36,7 @@
 	path = RESEARCH
 	url = git@github.com:stephanedenis/PaniniFS-Research.git
 	branch = main
+[submodule "modules/ontowave-app"]
+	path = modules/ontowave-app
+	url = git@github.com:stephanedenis/OntoWave.git
+	branch = main
