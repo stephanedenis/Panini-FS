@@ -12,4 +12,4 @@ Summary of research state and ongoing work.
 - Public-facing documentation and social use-cases
 - Open governance: attribution, traceability, ethics by design
 
-For details: see [Research](research/index.md) and the [Roadmap](../OPERATIONS/DevOps/roadmap.md).
+For details: see [Research](research/index.md) and the [Roadmap](OPERATIONS/DevOps/roadmap.md).

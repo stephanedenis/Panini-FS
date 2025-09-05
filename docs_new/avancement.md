@@ -12,4 +12,4 @@ Synthèse de l’état de la recherche et des travaux en cours.
 - Documentation grand public et cas d’usage sociaux
 - Gouvernance ouverte: attribution, traçabilité, éthique by design
 
-Pour le détail: voir [Recherche](research/index.md) et la [Roadmap](../OPERATIONS/DevOps/roadmap.md).
+Pour le détail: voir [Recherche](research/index.md) et la [Roadmap](OPERATIONS/DevOps/roadmap.md).
