@@ -10,11 +10,10 @@ test.describe('Research section', () => {
     await expect(page.locator('h1')).toContainText(/Recherche|Research/i);
   });
 
-  test('whats-new and feed.xml should be live soon (currently 404)', async ({ page }) => {
+  test('whats-new and feed.xml are live', async ({ page }) => {
     const resp1 = await page.request.get('/research/whats-new.html');
-    expect([200, 404]).toContain(resp1.status());
+    expect(resp1.status()).toBe(200);
     const resp2 = await page.request.get('/research/feed.xml');
-    expect([200, 404]).toContain(resp2.status());
-    // TODO: switch to expect 200 once Pages workflow includes RSS generation output
+    expect(resp2.status()).toBe(200);
   });
 });
