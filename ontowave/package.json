@@ -1,0 +1,25 @@
+{
+  "name": "ontowave",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "sitemap": "node tools/build-sitemap.mjs"
+  },
+  "dependencies": {
+    "highlight.js": "^11.9.0",
+    "katex": "^0.16.10",
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^8.6.7",
+    "markdown-it-footnote": "^3.0.3",
+    "markdown-it-katex": "^0.6.0",
+    "mermaid": "^10.9.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "vite": "^5.4.0"
+  }
+}
