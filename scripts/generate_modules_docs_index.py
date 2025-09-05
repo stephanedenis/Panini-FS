@@ -3,6 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS_MODULES = ROOT / 'docs_new' / 'modules' / 'index.md'
+AGG_ROOT = ROOT / 'docs_new' / 'modules' / '_ext'
 
 OWNER = 'stephanedenis'
 REPO = 'PaniniFS'
@@ -47,7 +48,11 @@ def render(mods):
     for m in mods:
         name = m['name']
         title = m['title']
-        if m['has_docs_index']:
+        local_index = AGG_ROOT / name / 'index.md'
+        if local_index.exists():
+            url = f"../modules/_ext/{name}/index.md"
+            desc = f"— Docs agrégées du module {name} (local)"
+        elif m['has_docs_index']:
             url = f"{BASE_URL}/blob/HEAD/modules/{name}/docs/index.md"
             desc = f"— Docs du module {name} (index)"
         elif m['has_readme']:

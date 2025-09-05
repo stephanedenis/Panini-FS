@@ -41,6 +41,12 @@ OntoWave est le navigateur sémantique et lecteur Markdown côté client de l’
 - Exposition d’un `sitemap.json` et de métadonnées (frontmatter) que OntoWave pourra indexer.
 - À terme, un connecteur « knowledge graph » pour rapprocher Dhātu, universaux sémantiques et facettes de navigation.
 
+### Pattern recommandé dans les sous-modules
+
+- Servir le SPA OntoWave comme `index.html` à la racine du dossier docs/ du module.
+- La doc statique (Markdown) reste dans `docs/` pour agrégation MkDocs; le SPA offre une navigation dynamique sur le même corpus.
+- Aucune dépendance build côté PaniniFS: les sous-modules restent autonomes pour leur SPA.
+
 ## Références
 
 - Dépôt OntoWave : https://github.com/stephanedenis/OntoWave

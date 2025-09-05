@@ -41,6 +41,12 @@ OntoWave is the semantic browser and client-side Markdown reader of the PaniniFS
 - Expose a `sitemap.json` and metadata (frontmatter) for OntoWave to index.
 - Eventually, a “knowledge graph” connector to bridge Dhātu, semantic universals, and navigation facets.
 
+### Recommended pattern in submodules
+
+- Serve the OntoWave SPA as `index.html` at the root of the module's `docs/` folder.
+- Static docs (Markdown) stay in `docs/` for MkDocs aggregation; the SPA provides dynamic navigation on the same corpus.
+- No build coupling in PaniniFS: submodules own their SPA lifecycle.
+
 ## References
 
 - OntoWave repo: https://github.com/stephanedenis/OntoWave

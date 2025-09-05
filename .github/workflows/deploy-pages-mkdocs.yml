@@ -36,13 +36,29 @@ jobs:
           fetch-depth: 0
           submodules: false
 
-      - name: Init RESEARCH submodule only
+      - name: Init selected submodules (RESEARCH + modules/* via HTTPS)
         run: |
           if [ -f .gitmodules ]; then
-            # Initialize only the RESEARCH submodule (avoid failing on other optional submodules)
+            # Convert all submodule URLs to HTTPS to avoid SSH key requirements
+            git config -f .gitmodules --get-regexp '^submodule\..*\.url$' | while read -r key url; do
+              if echo "$url" | grep -q '^git@github.com:'; then
+                https_url=$(echo "$url" | sed -E 's#^git@github.com:(.*)#https://github.com/\1#')
+                git config -f .gitmodules "$key" "$https_url"
+              fi
+            done
+            git submodule sync --recursive
+            # Initialize only submodules that are required for docs aggregation
+            # Always init RESEARCH; then init modules/* if present
             if git config -f .gitmodules --name-only --get-regexp '^submodule\.RESEARCH\.' >/dev/null 2>&1; then
-              git submodule update --init RESEARCH
+              git submodule update --init RESEARCH || true
             fi
+            # Init modules/* if any
+            git config -f .gitmodules --get-regexp '^submodule\.modules/' | awk '{print $1}' | sed -E 's/^submodule\.([^.]*)\..*/\1/' | while read -r name; do
+              path=$(git config -f .gitmodules --get "submodule.${name}.path" || true)
+              if [ -n "$path" ]; then
+                git submodule update --init "$path" || true
+              fi
+            done
           fi
 
       - name: Setup Python
@@ -56,6 +72,14 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           if [ -f docs_new/requirements.txt ]; then pip install -r docs_new/requirements.txt; else pip install mkdocs mkdocs-material; fi
+
+      - name: Aggregate submodule docs into docs_new/modules/_ext
+        run: |
+          python scripts/aggregate_submodule_docs.py
+
+      - name: Generate modules index
+        run: |
+          python scripts/generate_modules_docs_index.py
 
       - name: Generate RESEARCH RSS feed
         env:
