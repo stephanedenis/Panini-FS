@@ -31,10 +31,7 @@ TEST_WORKFLOW_OUTPUT/
 *.log
 *.tmp
 
-# MkDocs build output (ne pas versionner)
+# Build site (mkdocs) et sorties publications
 site/
-
-# Publications build output (ne pas versionner)
 publications/out/
-publications/tmp/
 
