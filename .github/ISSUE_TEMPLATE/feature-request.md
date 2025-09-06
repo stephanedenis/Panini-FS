@@ -21,7 +21,7 @@ assignees: []
 - [ ] **CORE/semantic-analyzer** 
 - [ ] **ECOSYSTEM/semantic-core** (Python)
 - [ ] **ECOSYSTEM/publication-engine**
-- [ ] **ECOSYSTEM/colab-controller**
+- [ ] **Colab Controller (sous-module)**
 - [ ] **Documentation**
 - [ ] **CI/CD**
 
