@@ -3,3 +3,29 @@ ECOSYSTEM/autonomous-missions
 ECOSYSTEM/publication-engine
 ECOSYSTEM/semantic-core
 ECOSYSTEM/ultra-reactive
+
+# Autres zones candidates (à migrer vers les submodules correspondants)
+# PublicationEngine
+OPERATIONS/DevOps/PUBLICATION_LEANPUB_EN.md
+OPERATIONS/DevOps/PUBLICATION_MEDIUM_EN.md
+OPERATIONS/DevOps/PUBLICATION_MEDIUM_FR.md
+OPERATIONS/DevOps/scripts/publication_generator.py
+publications
+
+# UltraReactive
+ECOSYSTEM/colab-controller
+OPERATIONS/DevOps/scripts/ultra_reactive_controller.py
+
+# SemanticCore
+ECOSYSTEM/semantic-core
+docs/architecture.md
+docs/en/architecture.md
+
+# AutonomousMissions
+ARCHITECTURE
+OPERATIONS/DevOps/README.md
+
+# ExecutionOrchestrator (scaffolds/docs à relocaliser)
+scaffolds/execution-orchestrator
+docs/specs/execution-orchestrator.md
+docs/en/specs/execution-orchestrator.md
