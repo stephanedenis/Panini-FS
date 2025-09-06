@@ -1,0 +1,121 @@
+owner: stephanedenis
+root_repo:
+  name: PaniniFS
+  url: https://github.com/stephanedenis/PaniniFS
+  role: master
+  description: Dépôt maître — documentation, gouvernance et orchestration.
+
+submodules:
+  - key: autonomous-missions
+    name: PaniniFS-AutonomousMissions
+    path: modules/autonomous-missions
+    url: https://github.com/stephanedenis/PaniniFS-AutonomousMissions
+    role: missions
+    description: Missions autonomes et scénarios d’orchestration.
+    docs_url: https://stephanedenis.github.io/PaniniFS-AutonomousMissions/
+    status: active
+    languages: [python, shell]
+    tags: [missions, orchestration]
+  - key: semantic-core
+    name: PaniniFS-SemanticCore
+    path: modules/semantic-core
+    url: https://github.com/stephanedenis/PaniniFS-SemanticCore
+    role: core
+    description: Noyau sémantique (Dhātu, universaux et API).
+    docs_url: https://stephanedenis.github.io/PaniniFS-SemanticCore/
+    status: active
+    languages: [python]
+    tags: [dhatu, universaux, api]
+  - key: publication-engine
+    name: PaniniFS-PublicationEngine
+    path: modules/publication-engine
+    url: https://github.com/stephanedenis/PaniniFS-PublicationEngine
+    role: publications
+    description: Chaîne de publication (build, diffusion et médias).
+    docs_url: https://stephanedenis.github.io/PaniniFS-PublicationEngine/
+    status: active
+    languages: [python, shell]
+    tags: [publication, build, media]
+  - key: ultra-reactive
+    name: PaniniFS-UltraReactive
+    path: modules/ultra-reactive
+    url: https://github.com/stephanedenis/PaniniFS-UltraReactive
+    role: services
+    description: Services réactifs et endpoints rapides.
+    docs_url: https://stephanedenis.github.io/PaniniFS-UltraReactive/
+    status: active
+    languages: [python]
+    tags: [services, reactive]
+  - key: execution-orchestrator
+    name: PaniniFS-ExecutionOrchestrator
+    path: modules/execution-orchestrator
+    url: https://github.com/stephanedenis/PaniniFS-ExecutionOrchestrator
+    role: orchestrator
+    description: Orchestrateur d’exécution (spécs et intégrations).
+    docs_url: https://stephanedenis.github.io/PaniniFS-ExecutionOrchestrator/
+    status: active
+    languages: [markdown]
+    tags: [specs, orchestrator]
+  - key: datasets-ingestion
+    name: PaniniFS-DatasetsIngestion
+    path: modules/datasets-ingestion
+    url: https://github.com/stephanedenis/PaniniFS-DatasetsIngestion
+    role: ingestion
+    description: Pipelines d’ingestion de données.
+    docs_url: https://stephanedenis.github.io/PaniniFS-DatasetsIngestion/
+    status: active
+    languages: [python]
+    tags: [data, ingestion]
+  - key: attribution-registry
+    name: PaniniFS-AttributionRegistry
+    path: modules/attribution-registry
+    url: https://github.com/stephanedenis/PaniniFS-AttributionRegistry
+    role: attribution
+    description: Registre d’attribution et métadonnées.
+    docs_url: https://stephanedenis.github.io/PaniniFS-AttributionRegistry/
+    status: active
+    languages: [python]
+    tags: [attribution, metadata]
+  - key: ontowave-app
+    name: OntoWave
+    path: modules/ontowave-app
+    url: https://github.com/stephanedenis/OntoWave
+    role: app
+    description: Prototype applicatif OntoWave.
+    docs_url: https://stephanedenis.github.io/OntoWave/
+    status: experimental
+    languages: [typescript, python]
+    tags: [app, prototype]
+
+external:
+  - key: copilotage-shared
+    name: PaniniFS-CopilotageShared
+    path: copilotage/shared
+    url: https://github.com/stephanedenis/PaniniFS-CopilotageShared
+    role: shared
+    description: Outils partagés de copilotage (submodule).
+    docs_url: https://stephanedenis.github.io/PaniniFS-CopilotageShared/
+    status: active
+    languages: [python]
+    tags: [copilotage, shared]
+  - key: research
+    name: PaniniFS-Research
+    path: RESEARCH
+    url: https://github.com/stephanedenis/PaniniFS-Research
+    role: research
+    description: Monorepo de recherche (notes, expériences et archives).
+    docs_url: https://stephanedenis.github.io/PaniniFS-Research/
+    status: active
+    languages: [markdown, python]
+    tags: [research, notes]
+
+relations:
+  # from → to arrows for high-level dependencies/influences
+  - from: semantic-core
+    to: [autonomous-missions, publication-engine, ultra-reactive]
+  - from: execution-orchestrator
+    to: [autonomous-missions]
+  - from: datasets-ingestion
+    to: [semantic-core]
+  - from: research
+    to: [semantic-core, publication-engine]

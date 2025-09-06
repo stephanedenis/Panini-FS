@@ -5,13 +5,19 @@
   "settings": {
     "files.exclude": { "**/.git": true },
     "markdownlint.config": { "MD013": false },
-    "editor.wordWrap": "on"
+    "editor.wordWrap": "on",
+    "markdown.preview.openMarkdownLinks": "inPreview",
+    "markdown.preview.doubleClickToSwitchToEditor": false,
+    "markdown.preview.breaks": true,
+    "markdown.preview.scrollPreviewWithEditor": true
   },
   "extensions": {
     "recommendations": [
       "yzhang.markdown-all-in-one",
       "bierner.markdown-mermaid",
-      "redhat.vscode-yaml"
+      "redhat.vscode-yaml",
+      "DavidAnson.vscode-markdownlint",
+      "streetsidesoftware.code-spell-checker"
     ]
   }
 }

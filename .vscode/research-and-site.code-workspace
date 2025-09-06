@@ -7,7 +7,11 @@
     "files.exclude": { "**/.git": true, "**/site": true },
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "markdownlint.config": { "MD033": false },
-    "python.analysis.typeCheckingMode": "basic"
+    "python.analysis.typeCheckingMode": "basic",
+    "markdown.preview.openMarkdownLinks": "inPreview",
+    "markdown.preview.doubleClickToSwitchToEditor": false,
+    "markdown.preview.breaks": true,
+    "markdown.preview.scrollPreviewWithEditor": true
   },
   "extensions": {
     "recommendations": [
@@ -15,7 +19,8 @@
       "ms-toolsai.jupyter",
       "streetsidesoftware.code-spell-checker",
       "yzhang.markdown-all-in-one",
-      "DavidAnson.vscode-markdownlint"
+      "DavidAnson.vscode-markdownlint",
+      "bierner.markdown-mermaid"
     ]
   }
 }
