@@ -54,5 +54,13 @@
     "LESS": "FRX",
     "GH_PAGER": "cat",
     "GH_NO_UPDATE_NOTIFIER": "1"
-  }
+  },
+  // Recommandations d'extensions pour la visualisation Markdown
+  "extensions.recommended": [
+    "yzhang.markdown-all-in-one",
+    "DavidAnson.vscode-markdownlint",
+    "bierner.markdown-mermaid",
+    "streetsidesoftware.code-spell-checker",
+    "jebbs.plantuml"
+  ]
 }

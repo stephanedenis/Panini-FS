@@ -37,4 +37,5 @@ site/
 # Publications build output (ne pas versionner)
 publications/out/
 publications/tmp/
+issues_packs/
 

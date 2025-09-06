@@ -1,0 +1,5 @@
+# Chemins candidats à suppression après migration vers submodules
+ECOSYSTEM/autonomous-missions
+ECOSYSTEM/publication-engine
+ECOSYSTEM/semantic-core
+ECOSYSTEM/ultra-reactive

@@ -132,6 +132,20 @@ nav:
   - Surveillance: monitoring.md
   - Écosystème:
       - OntoWave (vision): ecosystem/ontowave.md
+      - Repos:
+          - Dépôt maître: ecosystem/repos/root.md
+          - Autonomous Missions: ecosystem/repos/autonomous-missions.md
+          - Semantic Core: ecosystem/repos/semantic-core.md
+          - Publication Engine: ecosystem/repos/publication-engine.md
+          - Ultra Reactive: ecosystem/repos/ultra-reactive.md
+          - Execution Orchestrator: ecosystem/repos/execution-orchestrator.md
+          - Datasets Ingestion: ecosystem/repos/datasets-ingestion.md
+          - Attribution Registry: ecosystem/repos/attribution-registry.md
+          - OntoWave App: ecosystem/repos/ontowave-app.md
+          - Copilotage Shared: ecosystem/repos/copilotage-shared.md
+          - Research: ecosystem/repos/research.md
+  - Catalogue des dépôts: ecosystem/catalogue.md
+  - Panorama & relations: ecosystem/panorama.md
   - Modules docs: modules/index.md
   - Recherche:
       - Vue d'ensemble: research/overview.md
