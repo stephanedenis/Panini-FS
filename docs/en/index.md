@@ -3,7 +3,7 @@
 Modular platform for metalinguistic information processing and storage.
 
 - Vision: [Linguistic Foundations](linguistic-foundations.md), [Dhātu Framework](dhatu-framework.md)
-- Architecture: [System Architecture](architecture.md), [Execution Orchestrator](specs/execution-orchestrator.md)
+- Architecture: see the Ecosystem section and related repositories for details.
 - Documentation: [Process](doc-process.md), [Style](style-guide.md), [References](references.md)
 - Diagrams: [Diagrams (PlantUML)](diagrams.md)
 - Modules: [Modules docs index](../modules/index.md)

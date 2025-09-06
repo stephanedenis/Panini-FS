@@ -6,4 +6,4 @@ PaniniFS aims at a semantic filesystem where meaning comes first.
 - “Docs as code”, bilingual FR/EN, synchronized page by page.
 - Prefer external references for standard concepts (do not reinvent wheels).
 
-See also: [Linguistic Foundations](linguistic-foundations.md), [Dhātu Framework](dhatu-framework.md), [Architecture](architecture.md).
+See also: [Linguistic Foundations](linguistic-foundations.md), [Dhātu Framework](dhatu-framework.md).

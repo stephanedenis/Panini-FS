@@ -6,4 +6,4 @@ PaniniFS vise un système de fichiers sémantique où le sens prime sur la forme
 - Documentation « docs as code », bilingue FR/EN, synchronisée page à page.
 - Références externes privilégiées pour les concepts standards (ne pas réinventer les roues).
 
-Voir aussi: [Fondations linguistiques](linguistic-foundations.md), [Cadre Dhātu](dhatu-framework.md), [Architecture](architecture.md).
+Voir aussi: [Fondations linguistiques](linguistic-foundations.md), [Cadre Dhātu](dhatu-framework.md).

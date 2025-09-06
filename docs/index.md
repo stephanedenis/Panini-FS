@@ -3,7 +3,7 @@
 Plateforme modulaire pour traitement et stockage d’information métalinguistique.
 
 - Vision: [Fondations linguistiques](linguistic-foundations.md), [Cadre Dhātu](dhatu-framework.md)
-- Architecture: [Architecture globale](architecture.md), [Orchestrateur d’exécution](specs/execution-orchestrator.md)
+- Architecture: voir l’aperçu dans la section Écosystème et les dépôts concernés.
 - Documentation: [Processus](doc-process.md), [Style](style-guide.md), [Références](references.md)
 - Schémas: [Diagrams (PlantUML)](diagrams.md)
 - Modules: [Index docs modules](modules/index.md)
