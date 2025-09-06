@@ -7,7 +7,6 @@ Quand possible, ces documents sont agrégés localement (docs/modules/_ext/<modu
 
 ## Modules détectés
 
-
 - [Attribution Registry](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/attribution-registry) — Sources du module attribution-registry.
 - [Autonomous Missions](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/autonomous-missions) — Sources du module autonomous-missions.
 - [Cloud Orchestrator](https://github.com/stephanedenis/PaniniFS/blob/HEAD/modules/cloud-orchestrator/README.md) — README du module cloud-orchestrator.
@@ -18,4 +17,3 @@ Quand possible, ces documents sont agrégés localement (docs/modules/_ext/<modu
 - [Publication Engine](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/publication-engine) — Sources du module publication-engine.
 - [Semantic Core](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/semantic-core) — Sources du module semantic-core.
 - [Ultra Reactive](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/ultra-reactive) — Sources du module ultra-reactive.
-
