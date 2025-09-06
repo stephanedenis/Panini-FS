@@ -27,7 +27,7 @@ fi
 
 # Ajout des fichiers modifiés
 echo "📝 Ajout des fichiers au staging..."
-git add docs_new/
+git add docs/
 git add mkdocs.yml
 git add requirements.txt
 git add CNAME

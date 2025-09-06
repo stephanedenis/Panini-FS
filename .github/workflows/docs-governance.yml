@@ -7,9 +7,9 @@ on:
   pull_request:
     branches: [ master, main ]
     paths:
-      - 'docs_new/**'
-      - 'modules/**/docs/**'
-      - 'mkdocs.yml'
+  - 'docs/**'
+  - 'modules/**/docs/**'
+  - 'mkdocs.yml'
   workflow_dispatch:
 
 jobs:
@@ -29,21 +29,21 @@ jobs:
 
       - name: Install MkDocs deps
         run: |
-          pip install -r docs_new/requirements.txt
+          pip install -r docs/requirements.txt
 
       - name: Validate FR/EN sync
         id: sync
         run: |
           set -euo pipefail
-          changed=$(git --no-pager diff --name-only origin/${{ github.base_ref }}...HEAD | grep '^docs_new/' || true)
+          changed=$(git --no-pager diff --name-only origin/${{ github.base_ref }}...HEAD | grep '^docs/' || true)
           missing=0
           while IFS= read -r f; do
             [ -z "${f}" ] && continue
-            if [[ "$f" == docs_new/en/* ]]; then
-              peer="${f/docs_new\/en\//docs_new/}"
+            if [[ "$f" == docs/en/* ]]; then
+              peer="${f/docs\/en\//docs/}"
             else
-              base=${f#docs_new/}
-              peer="docs_new/en/${base}"
+              base=${f#docs/}
+              peer="docs/en/${base}"
             fi
             # only check for markdown files
             if [[ "$f" == *.md ]]; then
@@ -92,7 +92,7 @@ jobs:
               first=0
               echo "{\"title\": \"$title_esc\", \"body\": \"$body_esc\"}" >> "$tmpjson"
             done < <(grep -nE '^\s*TODO:\s+' "$file" | sed 's/^[0-9]*://')
-          done < <(git ls-files -- 'docs_new/**/*.md')
+          done < <(git ls-files -- 'docs/**/*.md')
           echo ']' >> "$tmpjson"
 
           # Create or update issues labeled docs (robust iteration over JSON rows)

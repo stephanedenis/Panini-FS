@@ -35,14 +35,14 @@ else
 fi
 
 # 2. Vérifier s'il y a des changements
-if git diff --quiet docs_new/data/system_status.json; then
+if git diff --quiet docs/data/system_status.json; then
     log "ℹ️ Aucun changement de statut détecté"
     exit 0
 fi
 
 # 3. Commit automatique si changements
 log "📤 Changements détectés, commit automatique..."
-git add docs_new/data/system_status.json
+git add docs/data/system_status.json
 
 git commit -m "🤖 Auto-update system status $(date '+%Y-%m-%d %H:%M:%S')
 

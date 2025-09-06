@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Agrège les dossiers docs/ des sous-modules (modules/*) dans docs_new/modules/_ext/<module>/.
+Agrège les dossiers docs/ des sous-modules (modules/*) dans docs/modules/_ext/<module>/.
 Ignorés: .git, node_modules, site, build, dist.
 """
 from pathlib import Path
@@ -8,7 +8,7 @@ import shutil
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULES_DIR = ROOT / 'modules'
-TARGET_ROOT = ROOT / 'docs_new' / 'modules' / '_ext'
+TARGET_ROOT = ROOT / 'docs' / 'modules' / '_ext'
 
 EXCLUDES = {'.git', 'node_modules', 'site', 'build', 'dist', '.cache', '.venv'}
 

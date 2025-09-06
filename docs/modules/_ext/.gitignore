@@ -1,0 +1,4 @@
+# Aggregated submodule docs (generated at build time)
+# Keep this directory in git to preserve structure, but ignore contents.
+*
+!.gitignore

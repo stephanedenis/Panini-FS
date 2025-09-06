@@ -4,7 +4,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 MODULES_DIR = ROOT / "modules"
-OUT_FILE = ROOT / "docs_new" / "modules" / "index.md"
+OUT_FILE = ROOT / "docs" / "modules" / "index.md"
 
 HEADER = """# Documentation des modules
 
@@ -28,7 +28,7 @@ def find_modules():
         docs_index = p / "docs" / "index.md"
         docs_dir = p / "docs"
         readme = p / "README.md"
-        # Pour le site MkDocs (docs_new), lier vers GitHub pour éviter les liens 404
+    # Pour le site MkDocs (docs), lier vers GitHub pour éviter les liens 404
         if docs_index.exists() or docs_dir.exists():
             link = f"{base}/tree/HEAD/modules/{name}/docs"
             desc = f"Documentation du module {name} (dossier docs/)"

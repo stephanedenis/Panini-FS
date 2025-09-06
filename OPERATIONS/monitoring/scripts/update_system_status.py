@@ -9,7 +9,7 @@ des agents, domaines, workflows et état général du système.
 Usage:
     python3 update_system_status.py
     
-Génère: docs_new/data/system_status.json
+Génère: docs/data/system_status.json
 """
 
 import json
@@ -21,9 +21,9 @@ from pathlib import Path
 
 class SystemStatusUpdater:
     def __init__(self):
-        self.base_path = Path("/home/stephane/GitHub/PaniniFS-1")
-        self.status_file = self.base_path / "docs_new" / "data" / "system_status.json"
-        self.github_token = os.environ.get('GITHUB_TOKEN')
+    self.base_path = Path("/home/stephane/GitHub/PaniniFS-1")
+    self.status_file = self.base_path / "docs" / "data" / "system_status.json"
+    self.github_token = os.environ.get('GITHUB_TOKEN')
         
     def get_current_status(self):
         """Récupère l'état système actuel"""

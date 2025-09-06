@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Generate research helper artifacts from Dhātu child prompts:
-- docs_new/data/dhatu_child_phenomena_summary.md: table per language
-- docs_new/data/dhatu_child_langs.md: languages with counts and external child sources
+- docs/data/dhatu_child_phenomena_summary.md: table per language
+- docs/data/dhatu_child_langs.md: languages with counts and external child sources
 
 Run from repo root or from this folder.
 """
@@ -12,7 +12,7 @@ from collections import Counter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
-DOCS_DATA = os.path.join(REPO, "docs_new", "data")
+DOCS_DATA = os.path.join(REPO, "docs", "data")
 
 def load_child_prompts(lang_code: str):
     path = os.path.join(HERE, "prompts_child", f"{lang_code}.json")
@@ -106,8 +106,8 @@ def main():
     write_markdown(os.path.join(DOCS_DATA, "dhatu_child_phenomena_summary.md"), ph_md)
     langs_md = generate_child_langs_md(langs, sample)
     write_markdown(os.path.join(DOCS_DATA, "dhatu_child_langs.md"), langs_md)
-    print("Generated: docs_new/data/dhatu_child_phenomena_summary.md")
-    print("Generated: docs_new/data/dhatu_child_langs.md")
+    print("Generated: docs/data/dhatu_child_phenomena_summary.md")
+    print("Generated: docs/data/dhatu_child_langs.md")
 
 if __name__ == "__main__":
     sys.exit(main())

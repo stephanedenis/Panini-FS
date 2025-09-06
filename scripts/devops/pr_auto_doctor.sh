@@ -23,7 +23,7 @@ usage() {
 PR Auto-Doctor
 
 Commands:
-  diagnose                 Affiche l'état des checks et le diff ciblé docs_new/
+  diagnose                 Affiche l'état des checks et le diff ciblé docs/
   fix-docs-sync            Corrige la synchro FR/EN (placeholders, nettoyage EN mal nommés)
   wait-checks              Attend un check donné (ou l'ensemble) et renvoie l'état
   merge                    Fait la fusion du PR si vert (squash par défaut)
@@ -46,17 +46,17 @@ get_pr_info() {
 
 list_changed_docs() {
   local base_ref="$1"; local head_ref="$2"
-  git --no-pager diff --name-only "origin/${base_ref}...origin/${head_ref}" | grep '^docs_new/' || true
+  git --no-pager diff --name-only "origin/${base_ref}...origin/${head_ref}" | grep '^docs/' || true
 }
 
 # Compute FR<->EN peer path
 peer_path() {
   local f="$1"
-  if [[ "$f" == docs_new/en/* ]]; then
-    echo "${f/docs_new\/en\//docs_new/}"
+  if [[ "$f" == docs/en/* ]]; then
+    echo "${f/docs\/en\//docs/}"
   else
-    local base=${f#docs_new/}
-    echo "docs_new/en/${base}"
+    local base=${f#docs/}
+    echo "docs/en/${base}"
   fi
 }
 
@@ -79,10 +79,10 @@ fix_docs_sync() {
 
   # 2) Nettoyer EN mal nommés (FR slugs dans /en/)
   local en_bad=(
-    "docs_new/en/research/compression-semantique.md"
-    "docs_new/en/research/inventaire-dhatu-v0-1.md"
-    "docs_new/en/research/langage-humain-developpement.md"
-    "docs_new/en/research/universaux-semantique.md"
+    "docs/en/research/compression-semantique.md"
+    "docs/en/research/inventaire-dhatu-v0-1.md"
+    "docs/en/research/langage-humain-developpement.md"
+    "docs/en/research/universaux-semantique.md"
   )
   for f in "${en_bad[@]}"; do
     if [[ -f "$f" ]]; then actions+=("delete:$f"); fi
@@ -95,7 +95,7 @@ fix_docs_sync() {
       create)
         if confirm "Créer placeholder: $path ?"; then
           mkdir -p "$(dirname "$path")"
-          printf '# Placeholder\n\nPeer for `%s`.\n' "${path/docs_new\/en\//docs_new/}" > "$path"
+          printf '# Placeholder\n\nPeer for `%s`.\n' "${path/docs\/en\//docs/}" > "$path"
           git add "$path"
         fi
         ;;

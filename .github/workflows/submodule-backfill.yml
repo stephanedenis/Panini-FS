@@ -1,0 +1,43 @@
+name: Submodule Backfill
+
+on:
+  workflow_dispatch:
+    inputs:
+      state:
+        description: Issue state to scan
+        type: choice
+        options: [open, all, closed]
+        default: all
+      since:
+        description: ISO date (optional), e.g., 2025-01-01
+        required: false
+      max:
+        description: Max issues to process
+        default: '500'
+      dry_run:
+        description: Dry run (no changes)
+        type: boolean
+        default: true
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Run backfill
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ARGS=(--repo "${{ github.repository }}" --state "${{ inputs.state }}" --max "${{ inputs.max }}")
+          if [[ -n "${{ inputs.since }}" ]]; then ARGS+=(--since "${{ inputs.since }}"); fi
+          if [[ "${{ inputs.dry_run }}" == 'true' ]]; then ARGS+=(--dry-run); fi
+          echo "Running: python3 scripts/triage_submodules.py ${ARGS[@]}"
+          python3 scripts/triage_submodules.py "${ARGS[@]}"

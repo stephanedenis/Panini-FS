@@ -43,6 +43,13 @@ jobs:
         run: |
           npx playwright test e2e/tests/research.spec.js --reporter=dot
 
+      - name: Run modules aggregation tests
+        working-directory: e2e
+        env:
+          BASE_URL: https://paninifs.org
+        run: |
+          npx playwright test e2e/tests/modules.spec.js --reporter=dot
+
       - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4

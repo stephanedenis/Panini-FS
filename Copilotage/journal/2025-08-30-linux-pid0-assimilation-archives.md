@@ -12,8 +12,8 @@ Mise en place du mode "docs as code" bilingue, réactivation du déploiement du 
 ## Actions clés
 - Ajout workflow déploiement MkDocs (i18n, Kroki SVG liens): `.github/workflows/deploy-docs.yml`.
 - Ajout workflow gouvernance doc (sync FR/EN, TODO→issues): `.github/workflows/docs-governance.yml`.
-- Pages schémas PlantUML FR/EN (liens SVG): `docs_new/diagrams.md`, `docs_new/en/diagrams.md`.
-- Index docs modules + script génération: `docs_new/modules/index.md`, `scripts/generate_modules_docs_index.py`.
+- Pages schémas PlantUML FR/EN (liens SVG): `docs/diagrams.md`, `docs/en/diagrams.md` (anciennement sous `docs_new/`).
+- Index docs modules + script génération: `docs/modules/index.md`, `scripts/generate_modules_docs_index.py` (répertoire renommé depuis `docs_new/`).
 - Création d’un commit de référence à l’issue (#20); push SSH bloqué (réseau), proposition: basculer remotes en HTTPS.
 
 ## Liens

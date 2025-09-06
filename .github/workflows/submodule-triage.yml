@@ -1,0 +1,71 @@
+name: Submodule Triage
+
+on:
+  issues:
+    types: [opened, edited, labeled]
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Ensure jq is available
+        run: |
+          if ! command -v jq >/dev/null 2>&1; then
+            sudo apt-get update -y
+            sudo apt-get install -y jq
+          fi
+      - name: Analyze issue
+        id: analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 scripts/analyze_submodule_issue.py --repo "${{ github.repository }}" --issue "${{ github.event.issue.number }}" > analysis.json
+          cat analysis.json
+          PRIMARY=$(jq -r '.primary_submodule // empty' analysis.json)
+          IMPACT=$(jq -r '.impacted_submodules[]? // empty' analysis.json | paste -sd, -)
+          CONF=$(jq -r '.confidence // 0' analysis.json)
+          echo "primary=$PRIMARY" >> $GITHUB_OUTPUT
+          echo "impacted=$IMPACT" >> $GITHUB_OUTPUT
+          echo "confidence=$CONF" >> $GITHUB_OUTPUT
+      - name: Read analysis
+        id: read_json
+        run: |
+          echo "json<<EOF" >> $GITHUB_OUTPUT
+          cat analysis.json >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      - name: Apply labels and comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const data = JSON.parse(process.env.ANALYSIS_JSON || `${{ steps.read_json.outputs.json }}`);
+            const labels = new Set();
+            if (data.primary_label) labels.add(data.primary_label);
+            if (Array.isArray(data.impacted_labels)) data.impacted_labels.forEach(l => labels.add(l));
+            labels.add('target:submodule');
+            labels.add('type:submodule-change');
+            if (labels.size) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.issue.number,
+                labels: Array.from(labels),
+              });
+            }
+            const msg = `Submodule triage → primary: ${data.primary_submodule ?? 'n/a'}, impacted: ${(data.impacted_submodules||[]).join(', ') || 'none'}, confidence: ${data.confidence}`;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              body: msg,
+            });
+        env:
+          ANALYSIS_JSON: ${{ steps.read_json.outputs.json }}

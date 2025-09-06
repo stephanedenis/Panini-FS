@@ -43,7 +43,7 @@
 
 - `Copilotage/COPILOTAGE_WORKFLOW.md`
 - `Copilotage/AGENT_CONVENTION.md`
-- Journaux du 2025-08-30 (voir liens dans docs_new)
+- Journaux du 2025-08-30 (anciennes références docs_new désormais sous docs/)
 
 ## Checklist Copilotage
 

@@ -145,15 +145,12 @@ Toute personne qui croit que l'information doit être librement accessible et qu
 *Transition de 138 fichiers racine → Architecture d'entreprise moderne*
 
 ### 🎯 **Gains**
-- **Navigation intuitive** par domaines spécialisés
-- **Séparation claire** des responsabilités
-- **Maintenabilité** et scalabilité améliorées  
-- **Collaboration** facilitée pour nouveaux contributeurs
 
 ### 🔄 **Migration**
 Backup complet disponible, tous les assets préservés et relocalisés intelligemment.
 
----
+
+Note submodules: les répertoires déclarés dans `.gitmodules` (modules/*, copilotage/shared, RESEARCH, etc.) sont édités indépendamment dans leurs dépôts respectifs. Voir `CONTRIBUTING.md` → section "Submodules — principe d’édition indépendante" et le template d’issue « Submodule change request ».
 
 *© 2025 - Recherche ouverte sous Creative Commons*  
 *"Quand des vacances sans code révèlent un rêve de 35 ans"*

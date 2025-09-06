@@ -17,6 +17,7 @@ Vérifications
 - [ ] Journal de session ajouté dans `Copilotage/journal/`
 - [ ] Labels `prov:host=*`, `prov:pid=*`, `agent:*`, `owner:*` et `model:*` présents
 - [ ] Merge par un agent différent (cross-check)
+- [ ] Si des submodules sont concernés, lier la/les PR(s) du submodule et confirmer la mise à jour du pointeur (commit submodule)
 
 Clôture
 - Closes #<num> (remplacer si pertinent)

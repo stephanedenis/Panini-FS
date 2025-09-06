@@ -38,5 +38,5 @@ Cette checklist décrit des étapes sans effet destructif par défaut.
 ## Post-migration
 - [ ] Créer issues pour `attribution-registry` et `datasets-ingestion` (scopes, contrats, MVP).
 - [ ] Mettre à jour `Copilotage/knowledge/MODULES_OVERVIEW_AND_PARENT_PROJECT.md`.
- - [ ] Ajouter squelettes de docs par module dans leurs repos respectifs (ou agrégation dans `docs_new`).
+ - [ ] Ajouter squelettes de docs par module dans leurs repos respectifs (ou agrégation dans `docs/modules/_ext`).
  - [ ] Activer les checks de style (ruff/black) et type (mypy) sur orchestrateur.

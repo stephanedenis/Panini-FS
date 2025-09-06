@@ -7,7 +7,7 @@ from xml.sax.saxutils import escape
 
 ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 RESEARCH_DIR = os.path.join(ROOT, 'RESEARCH')
-OUTPUT_DIR = os.path.join(ROOT, 'docs_new', 'research')
+OUTPUT_DIR = os.path.join(ROOT, 'docs', 'research')
 OUTPUT_PATH = os.path.join(OUTPUT_DIR, 'feed.xml')
 SITE_URL = os.environ.get('SITE_URL', 'https://paninifs.org')
 

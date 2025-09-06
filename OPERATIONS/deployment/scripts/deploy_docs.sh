@@ -6,7 +6,7 @@
 set -e
 
 ENVIRONMENT=${1:-test}
-DOCS_DIR="docs_new"
+DOCS_DIR="docs"
 BUILD_DIR="site"
 DOMAIN_PROD="paninifs.org"
 DOMAIN_TEST="docs.paninifs.org"

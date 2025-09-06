@@ -7,9 +7,10 @@ on:
       - master
     paths:
       - mkdocs.yml
-      - docs_new/**
+  - docs/**
       - RESEARCH/**
       - RESEARCH
+      - modules/**/docs/**
       - .gitmodules
       - scripts/generate_research_rss.py
       - .github/workflows/deploy-pages-mkdocs.yml
@@ -71,9 +72,9 @@ jobs:
           PIP_DISABLE_PIP_VERSION_CHECK: '1'
         run: |
           python -m pip install --upgrade pip
-          if [ -f docs_new/requirements.txt ]; then pip install -r docs_new/requirements.txt; else pip install mkdocs mkdocs-material; fi
+          if [ -f docs/requirements.txt ]; then pip install -r docs/requirements.txt; else pip install mkdocs mkdocs-material; fi
 
-      - name: Aggregate submodule docs into docs_new/modules/_ext
+      - name: Aggregate submodule docs into docs/modules/_ext
         run: |
           python scripts/aggregate_submodule_docs.py
 

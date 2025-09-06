@@ -22,12 +22,12 @@ python3 OPERATIONS/monitoring/scripts/update_system_status.py
 
 # 2. Vérification fichiers MkDocs
 echo "📋 Vérification configuration MkDocs..."
-if [[ ! -f "docs_new/dashboard.md" ]]; then
+if [[ ! -f "docs/dashboard.md" ]]; then
     echo "❌ Dashboard MkDocs manquant"
     exit 1
 fi
 
-if [[ ! -f "docs_new/data/system_status.json" ]]; then
+if [[ ! -f "docs/data/system_status.json" ]]; then
     echo "❌ Fichier status JSON manquant"
     exit 1
 fi
@@ -50,7 +50,7 @@ fi
 
 # 4. Commit et push
 echo "📤 Commit des changements..."
-git add docs_new/
+git add docs/
 git add mkdocs.yml
 git add OPERATIONS/monitoring/
 
@@ -60,7 +60,7 @@ if git diff --cached --quiet; then
 else
     git commit -m "🚀 Dynamic monitoring system integrated with MkDocs
 
-- Added dynamic dashboard at docs_new/dashboard.md with JavaScript status loading
+- Added dynamic dashboard at docs/dashboard.md with JavaScript status loading
 - Created comprehensive system_status.json with real-time data structure
 - Updated mkdocs.yml navigation to include dashboard
 - Added automated status update script

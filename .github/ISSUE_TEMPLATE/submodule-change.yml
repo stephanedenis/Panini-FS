@@ -1,0 +1,58 @@
+name: "Submodule change request"
+description: "Proposer une modification dans un sous-module (édité indépendamment)."
+title: "[submodule] <nom> — <résumé>"
+labels: ["target:submodule", "type:submodule-change"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Important: Les submodules sont des dépôts indépendants. Toute modification de contenu doit être faite via une PR dans le dépôt du submodule. Cette issue sert au suivi transversal et à la mise à jour du pointeur ici.
+  - type: input
+    id: submodule_path
+    attributes:
+      label: Submodule path (as in .gitmodules)
+      placeholder: ex. modules/semantic-core
+    validations:
+      required: true
+  - type: input
+    id: submodule_repo
+    attributes:
+      label: Submodule repository URL
+      placeholder: ex. https://github.com/stephanedenis/PaniniFS-SemanticCore
+    validations:
+      required: true
+  - type: textarea
+    id: intent
+    attributes:
+      label: Objectif / changement souhaité
+      description: Décrire le changement à effectuer dans le submodule.
+    validations:
+      required: true
+  - type: textarea
+    id: plan
+    attributes:
+      label: Plan de propagation
+      description: PR dans le submodule → révision/pointeur → PR d’agrégation dans ce repo.
+      placeholder: |
+        1) Ouvrir issue + PR dans le submodule
+        2) Faire valider et merger
+        3) Mettre à jour le pointeur ici (git submodule update --remote ou commit du SHA)
+        4) Ouvrir la PR d’agrégation
+    validations:
+      required: true
+  - type: input
+    id: mirrored_issue
+    attributes:
+      label: Lien vers l’issue PR du submodule
+      placeholder: ex. https://github.com/<owner>/<repo>/issues/<id> ou /pull/<id>
+    validations:
+      required: false
+  - type: checkboxes
+    id: labels
+    attributes:
+      label: Étiquettes recommandées
+      options:
+        - label: target:submodule
+        - label: submodule:<nom>
+        - label: type:submodule-change
+        - label: agent:<id>

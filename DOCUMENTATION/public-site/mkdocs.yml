@@ -130,5 +130,5 @@ extra:
 copyright: >
   Copyright &copy; 2025 Stéphane Denis
 
-# Docs directory
-docs_dir: docs_new
+# Docs directory (renamed from legacy docs_new -> docs)
+docs_dir: docs

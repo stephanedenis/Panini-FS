@@ -25,7 +25,7 @@ TTL: 3600
 ### Déclencheurs
 - Push sur `master/main`
 - Modification des fichiers :
-  - `docs_new/**`
+  - `docs/**`
   - `mkdocs.yml`
   - `.github/workflows/deploy-docs.yml`
 
@@ -35,7 +35,7 @@ name: Deploy Documentation to paninifs.org
 on:
   push:
     branches: [ master, main ]
-    paths: [ 'docs_new/**', 'mkdocs.yml' ]
+  paths: [ 'docs/**', 'mkdocs.yml' ]
 ```
 
 ## 🛠️ Scripts Disponibles
@@ -74,7 +74,7 @@ on:
 
 ## 📊 Workflow de Publication
 
-1. **Modification locale** : Éditer `docs_new/`
+1. **Modification locale** : Éditer `docs/`
 2. **Test** : `./deploy_docs.sh test`
 3. **Publication** : `./publish_docs.sh "Description des changements"`
 4. **Vérification** : https://paninifs.org (2-5 minutes)

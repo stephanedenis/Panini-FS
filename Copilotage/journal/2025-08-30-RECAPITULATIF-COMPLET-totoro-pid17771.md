@@ -52,7 +52,7 @@
 1. `deploy_dynamic_monitoring.sh`
 2. `TOTORO_EXTINCTION_FINALE.md` (2 occurrences)
 3. `prepare_total_externalization.sh`
-4. `docs_new/monitoring-guide.md`
+4. `docs/monitoring-guide.md` (renommé depuis docs_new)
 5. `OPERATIONS/DevOps/scripts/totoro_liberation_toolkit.sh`
 6. `OPERATIONS/DevOps/scripts/simple_monitor.py` 
 7. `ECOSYSTEM/colab-notebooks/PaniniFS-Master-Orchestrator.ipynb`

@@ -85,7 +85,7 @@ Tâches:
 Objectif: Améliorer lisibilité recherche.
 
 Tâches:
-- [ ] Tableau synthèse: langues × prompts × primitives moyennes (docs_new).
+- [ ] Tableau synthèse: langues × prompts × primitives moyennes (docs/).
 - [ ] Ancrages intra-texte [ref:#] avec glossaire/citations.
 - [ ] Strict build ok.
 

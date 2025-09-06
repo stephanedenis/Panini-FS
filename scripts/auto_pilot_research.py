@@ -15,7 +15,7 @@ from typing import Dict, Any, List
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DHATU_DIR = os.path.join(ROOT, "experiments", "dhatu")
-DOCS_DIR = os.path.join(ROOT, "docs_new")
+DOCS_DIR = os.path.join(ROOT, "docs")
 DATA_DIR = os.path.join(DOCS_DIR, "data")
 LOG_DIR = os.path.join(ROOT, "logs")
 

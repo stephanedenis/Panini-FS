@@ -167,5 +167,5 @@ copyright: >
   <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>
   (sauf mention contraire). Code sous licence MIT.
 
-# Docs directory
-docs_dir: docs_new
+# Docs directory (renamed from docs_new → docs)
+docs_dir: docs

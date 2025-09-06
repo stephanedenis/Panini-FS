@@ -37,7 +37,7 @@ But: étendre sans nouvelles primitives (structurel uniquement).
 
 ## Jalon M5 — Documentation (métriques + citations)
 But: améliorer lisibilité et traçabilité publique.
-- Tableau de synthèse: langues × prompts × primitives moyennes (docs_new), liens vers encodages-or.
+- Tableau de synthèse: langues × prompts × primitives moyennes (docs/), liens vers encodages-or.
 - Ancrages intra-texte [ref:#] + glossaire/citations.
 - Build strict sans avertissements.
 - Suivi: “docs: tableau métriques + ancrages de citations …”.
