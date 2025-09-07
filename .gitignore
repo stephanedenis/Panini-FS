@@ -23,6 +23,22 @@ Thumbs.db
 *.log
 logs/
 
+# Temporary files
+*.tmp
+*.pid
+*.bak
+
+# JSON reports and temporary data
+*_report.json
+*_log.json
+*_status.json
+domain_monitoring_report.json
+last_domain_status.json
+nocturnal_mission_log.json
+vacation_productive_work.json
+workflow_repair_report.json
+autonomous_test_log.json
+
 # Archive (keep in repo for reference)
 # Copilotage/archive/
 
