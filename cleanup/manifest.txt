@@ -90,3 +90,13 @@ TOTORO_EXTINCTION_FINALE.md
 TROUSSEAU_SECURITE.md
 VACATION_MODE_GUIDE.md
 VISION_CONCEPTUELLE_PANINI.md
+
+# Phase 4 — Racine (post-externalisation, doublons et artefacts vides)
+# Copilotage: ancien dossier local (doublon du sous-module copilotage/shared)
+Copilotage
+# COPILOTAGE_SHARED: doublon local non-submodule
+COPILOTAGE_SHARED
+# Cargo.toml vide (artefact Rust obsolète à la racine)
+Cargo.toml
+# Notebook d'audit (à relocaliser vers RESEARCH ou docs/research si besoin)
+Panini_Ecosystem_Coherence_Audit.ipynb

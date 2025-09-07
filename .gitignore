@@ -39,3 +39,15 @@ publications/out/
 publications/tmp/
 issues_packs/
 
+# Backups et archives locales (ne pas versionner)
+# Conserver cleanup/manifest.txt mais ignorer les dossiers de backup et archives générées
+cleanup/backup_*/
+cleanup/local_untracked_backup_*/
+cleanup/**/*.tgz
+
+# Artéfacts de tests/CI locaux
+artifacts/
+
+# Fichiers PID/lock éphémères
+*.pid
+
