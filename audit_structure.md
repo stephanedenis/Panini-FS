@@ -30,9 +30,8 @@ Réalisé par: Analyse systématique post-réorganisation
 - `assets/` - Assets web (CSS, images, etc.) ✓
 
 ### 🎯 **Modules et écosystème**
-- `modules/` - 8 submodules actifs ✓
+- `modules/` - 9 submodules actifs (8 production + 1 research) ✓
 - `copilotage/` - Configuration développement partagée ✓
-- `RESEARCH/` - Submodule recherche ✓
 - `data/` - Configuration écosystème ✓
 
 ### 📚 **Documentation et guides**
@@ -107,7 +106,7 @@ Réalisé par: Analyse systématique post-réorganisation
 - Métadonnées : `LICENSE`, `README.md`, `README.en.md`, `CONTRIBUTING.md`
 - Build/Deploy : `mkdocs.yml`, `CNAME`, `.nojekyll`, `assets/`
 - Dev Environment : `.devcontainer/`, `.vscode/`, `.panini-agent.toml`, `.cargo/`
-- Écosystème : `modules/`, `copilotage/`, `RESEARCH/`, `data/`
+- Écosystème : `modules/` (9 submodules: 8 production + research), `copilotage/`, `data/`
 - Documentation : `docs/`, `governance/`
 - Automatisation : `scripts/` (72 scripts organisés), `e2e/`
 - Maintenance : `cleanup/`, `config/`
