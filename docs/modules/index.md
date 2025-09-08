@@ -9,8 +9,6 @@ Quand possible, ces documents sont agrégés localement (docs/modules/_ext/<modu
 
 - [Attribution Registry](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/attribution-registry) — Sources du module attribution-registry.
 - [Autonomous Missions](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/autonomous-missions) — Sources du module autonomous-missions.
-- [Cloud Orchestrator](https://github.com/stephanedenis/PaniniFS/blob/HEAD/modules/cloud-orchestrator/README.md) — README du module cloud-orchestrator.
-- [Colab Controller](https://github.com/stephanedenis/PaniniFS/blob/HEAD/modules/colab-controller/README.md) — README du module colab-controller.
 - [Datasets Ingestion](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/datasets-ingestion) — Sources du module datasets-ingestion.
 - [Execution Orchestrator](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/execution-orchestrator) — Sources du module execution-orchestrator.
 - [Ontowave App](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/ontowave-app) — Sources du module ontowave-app.
