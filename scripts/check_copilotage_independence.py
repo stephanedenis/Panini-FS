@@ -24,6 +24,7 @@ PROD_GLOBS = [
 
 EXCLUDE_DIRS = {
     '.git', '.github', '.venv', 'venv', 'node_modules', 'governance/copilotage', 'docs', 'e2e', 'tests',
+    'scripts',  # Exclude scripts directory to avoid self-reference
 }
 
 IMPORT_PATTERNS = [
