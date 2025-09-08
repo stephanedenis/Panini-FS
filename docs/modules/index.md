@@ -13,5 +13,6 @@ Quand possible, ces documents sont agrégés localement (docs/modules/_ext/<modu
 - [Execution Orchestrator](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/execution-orchestrator) — Sources du module execution-orchestrator.
 - [Ontowave App](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/ontowave-app) — Sources du module ontowave-app.
 - [Publication Engine](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/publication-engine) — Sources du module publication-engine.
+- [Research](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/research) — Sources du module research.
 - [Semantic Core](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/semantic-core) — Sources du module semantic-core.
 - [Ultra Reactive](https://github.com/stephanedenis/PaniniFS/tree/HEAD/modules/ultra-reactive) — Sources du module ultra-reactive.
