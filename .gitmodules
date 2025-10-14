@@ -40,3 +40,8 @@
 	path = modules/research
 	url = git@github.com:stephanedenis/PaniniFS-Research.git
 	branch = main
+
+[submodule "modules/gest"]
+path = modules/gest
+url = https://github.com/stephanedenis/Panini-Gest.git
+branch = main
