@@ -175,6 +175,31 @@ impl PaniniRepo {
     ) -> Result<crate::git::sync::PushResult> {
         crate::git::sync::push_with_status(&self.repo, remote_name, branch)
     }
+    
+    /// Get repository status
+    pub fn status(&self) -> Result<crate::git::status::RepoStatus> {
+        crate::git::status::status(&self.repo)
+    }
+    
+    /// Check if repository is clean
+    pub fn is_clean(&self) -> Result<bool> {
+        crate::git::status::is_clean(&self.repo)
+    }
+    
+    /// Get commits ahead/behind remote
+    pub fn divergence(&self, local_branch: &str, remote_branch: &str) -> Result<(usize, usize)> {
+        crate::git::status::divergence(&self.repo, local_branch, remote_branch)
+    }
+    
+    /// Get diff statistics
+    pub fn diff_stats(&self) -> Result<crate::git::status::DiffStats> {
+        crate::git::status::diff_stats(&self.repo)
+    }
+    
+    /// Get diff between commits
+    pub fn diff_commits(&self, old: &str, new: &str) -> Result<crate::git::status::DiffStats> {
+        crate::git::status::diff_commits(&self.repo, old, new)
+    }
 }
 
 #[cfg(test)]

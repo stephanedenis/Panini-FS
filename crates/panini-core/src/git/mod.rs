@@ -5,6 +5,7 @@ pub mod commit;
 pub mod init;
 pub mod open;
 pub mod repo;
+pub mod status;
 pub mod submodule;
 pub mod sync;
 
