@@ -101,6 +101,21 @@ impl PaniniRepo {
     pub fn list_submodules(&self) -> Result<Vec<crate::git::submodule::SubmoduleInfo>> {
         crate::git::submodule::list_submodules(&self.repo)
     }
+    
+    /// Clone a repository
+    pub fn clone(url: &str, path: &Path, options: crate::git::clone::CloneOptions) -> Result<Self> {
+        let repo = crate::git::clone::clone_repo(url, path, options)?;
+        let path = path.canonicalize().unwrap_or_else(|_| path.to_path_buf());
+        let config = load_config(&path)?;
+        let schema = load_schema(&path)?;
+        
+        Ok(Self {
+            repo,
+            path,
+            config,
+            schema,
+        })
+    }
 }
 
 #[cfg(test)]

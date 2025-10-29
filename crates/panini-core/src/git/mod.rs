@@ -1,5 +1,6 @@
 //! Git operations (T2.1: 2 weeks, 12 tasks)
 
+pub mod clone;
 pub mod commit;
 pub mod init;
 pub mod open;
