@@ -25,8 +25,8 @@ categories = ["command-line-utilities", "database-implementations", "data-struct
 # Git operations
 git2 = { version = "0.18", default-features = false, features = ["https", "ssh", "vendored-openssl"] }
 
-# Storage & indexing
-rocksdb = { version = "0.22", default-features = false, features = ["snappy"] }
+# Storage & indexing  
+rocksdb = "0.24"
 tantivy = { version = "0.21" }
 
 # Serialization
