@@ -6,6 +6,7 @@ pub mod dhatu;
 pub mod graph;
 pub mod relation;
 pub mod relations;
+pub mod taxonomy;
 
 pub use concept::{Concept, ConceptBuilder, ConceptType};
 pub use relation::{Relation, RelationType, Evidence, EvidenceType};
