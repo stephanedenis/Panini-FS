@@ -227,6 +227,41 @@ impl PaniniRepo {
     ) -> Result<Vec<PathBuf>> {
         crate::git::conflict::auto_resolve_conflicts(&self.repo, strategy)
     }
+    
+    /// Get commit history
+    pub fn history(&self, max_count: Option<usize>) -> Result<Vec<crate::git::history::CommitInfo>> {
+        crate::git::history::history(&self.repo, max_count)
+    }
+    
+    /// Get commit by ID
+    pub fn get_commit(&self, oid: &str) -> Result<crate::git::history::CommitInfo> {
+        crate::git::history::get_commit(&self.repo, oid)
+    }
+    
+    /// Get file history
+    pub fn file_history(&self, path: &str, max_count: Option<usize>) -> Result<Vec<crate::git::history::CommitInfo>> {
+        crate::git::history::file_history(&self.repo, path, max_count)
+    }
+    
+    /// Get commits between refs
+    pub fn commits_between(&self, from: &str, to: &str) -> Result<Vec<crate::git::history::CommitInfo>> {
+        crate::git::history::commits_between(&self.repo, from, to)
+    }
+    
+    /// Get branches containing commit
+    pub fn branches_containing(&self, oid: &str) -> Result<Vec<String>> {
+        crate::git::history::branches_containing(&self.repo, oid)
+    }
+    
+    /// Get merge base
+    pub fn merge_base(&self, one: &str, two: &str) -> Result<String> {
+        crate::git::history::merge_base(&self.repo, one, two)
+    }
+    
+    /// Get graph statistics
+    pub fn graph_stats(&self) -> Result<crate::git::history::GraphStats> {
+        crate::git::history::graph_stats(&self.repo)
+    }
 }
 
 #[cfg(test)]

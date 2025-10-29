@@ -3,6 +3,7 @@
 pub mod clone;
 pub mod commit;
 pub mod conflict;
+pub mod history;
 pub mod init;
 pub mod open;
 pub mod repo;
