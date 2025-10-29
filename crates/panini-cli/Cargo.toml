@@ -1,0 +1,43 @@
+# Panini CLI
+# Command-line interface for Panini-FS
+
+[package]
+name = "panini-cli"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "CLI tool for Panini-FS knowledge graph system"
+
+[[bin]]
+name = "panini"
+path = "src/main.rs"
+
+[dependencies]
+# Core library
+panini-core = { path = "../panini-core" }
+
+# CLI framework
+clap = { workspace = true }
+colored = { workspace = true }
+indicatif = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+# Async runtime
+tokio = { workspace = true }
+
+# Logging
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+
+# Utilities
+chrono = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }
+pretty_assertions = { workspace = true }

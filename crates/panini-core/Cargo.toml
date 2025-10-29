@@ -1,0 +1,85 @@
+# Panini Core Library
+# Git-native distributed knowledge graph system
+
+[package]
+name = "panini-core"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+documentation.workspace = true
+keywords.workspace = true
+categories.workspace = true
+description = "Core library for Panini-FS: Git-native distributed knowledge graph"
+
+[lib]
+name = "panini_core"
+path = "src/lib.rs"
+
+[dependencies]
+# Git operations
+git2 = { workspace = true }
+
+# Storage & indexing
+rocksdb = { workspace = true }
+tantivy = { workspace = true }
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+serde_yaml = { workspace = true }
+
+# Markdown & parsing
+pulldown-cmark = { workspace = true }
+
+# Graph algorithms
+petgraph = { workspace = true }
+
+# Async runtime
+tokio = { workspace = true }
+
+# Error handling
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+
+# Crypto & hashing
+sha2 = { workspace = true }
+blake3 = { workspace = true }
+
+# Utilities
+chrono = { workspace = true }
+uuid = { workspace = true }
+walkdir = { workspace = true }
+glob = { workspace = true }
+regex = { workspace = true }
+once_cell = { workspace = true }
+lazy_static = { workspace = true }
+
+# Logging
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+
+# Language detection
+whatlang = { workspace = true }
+
+# Configuration
+config = { workspace = true }
+toml = { workspace = true }
+
+[dev-dependencies]
+criterion = { workspace = true }
+tempfile = { workspace = true }
+pretty_assertions = { workspace = true }
+proptest = { workspace = true }
+
+# Benchmarks will be added in Phase 2.0.3
+# [[bench]]
+# name = "query_performance"
+# harness = false
+#
+# [[bench]]
+# name = "git_operations"
+# harness = false

@@ -1,0 +1,41 @@
+# Panini Server
+# REST API server for Panini-FS (optional)
+
+[package]
+name = "panini-server"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "REST API server for Panini-FS knowledge graph system"
+
+[[bin]]
+name = "panini-server"
+path = "src/main.rs"
+
+[dependencies]
+# Core library
+panini-core = { path = "../panini-core" }
+
+# Web framework
+axum = { workspace = true }
+tower = { workspace = true }
+tower-http = { workspace = true }
+tokio = { workspace = true }
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Error handling
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+# Logging
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }

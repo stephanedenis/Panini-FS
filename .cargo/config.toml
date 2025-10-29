@@ -1,0 +1,9 @@
+[build]
+# Use all available CPU cores for builds
+jobs = 8
+
+[alias]
+# Convenient aliases for common tasks
+xtask = "run --package xtask --"
+ci = "run --package xtask -- ci"
+dev = "run --package xtask -- dev"
