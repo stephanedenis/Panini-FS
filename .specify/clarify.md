@@ -47,7 +47,7 @@ This document identifies ambiguous areas in the specification that need clarific
 
 **Recommendation**: **Option B** - Our use case is read-heavy (retrieve > store)
 
-**Decision Needed**: ☐ Confirm Option B or choose alternative
+**Decision Needed**: ☑ **CONFIRMED** - Option B (Optimized for Read-Heavy)
 
 ---
 
@@ -82,7 +82,7 @@ PANINI_STORAGE_PATH=/data           # Production
 PANINI_STORAGE_PATH=./data          # Development (default)
 ```
 
-**Decision Needed**: ☐ Confirm Option B
+**Decision Needed**: ☑ **CONFIRMED** - Option B (Environment Variable)
 
 ---
 
@@ -118,7 +118,7 @@ PANINI_MAX_CONTENT_SIZE=100MB      # Default
 PANINI_MAX_CONTENT_SIZE=1GB        # For video-heavy use
 ```
 
-**Decision Needed**: ☐ Confirm Option C
+**Decision Needed**: ☑ **CONFIRMED** - Option C (Configurable, 100MB default)
 
 ---
 
@@ -164,7 +164,7 @@ Content-Type: multipart/form-data
 Body: content=<bytes>&dhatu_hint=TEXT
 ```
 
-**Decision Needed**: ☐ Confirm Option A for store
+**Decision Needed**: ☑ **CONFIRMED** - Option A (Raw Binary for store)
 
 ---
 
@@ -193,7 +193,7 @@ Body: content=<bytes>&dhatu_hint=TEXT
 
 **Recommendation**: **Option A** - URL path versioning
 
-**Decision Needed**: ☐ Confirm Option A
+**Decision Needed**: ☑ **CONFIRMED** - Option A (URL Path Versioning)
 
 ---
 
@@ -238,7 +238,7 @@ Body: content=<bytes>&dhatu_hint=TEXT
 
 **Recommendation**: **Option B** - RFC 7807 for consistency
 
-**Decision Needed**: ☐ Confirm Option B
+**Decision Needed**: ☑ **CONFIRMED** - Option B (RFC 7807 Problem Details)
 
 ---
 
@@ -283,7 +283,7 @@ default = []
 full-extractors = ["ffmpeg-next", "libmagic"]  # v2.0
 ```
 
-**Decision Needed**: ☐ Confirm Option A for v1.0
+**Decision Needed**: ☑ **CONFIRMED** - Option A (Pure Rust for v1.0)
 
 ---
 
@@ -324,7 +324,7 @@ full-extractors = ["ffmpeg-next", "libmagic"]  # v2.0
 
 **Recommendation**: **Option B** - Partial metadata with error reporting
 
-**Decision Needed**: ☐ Confirm Option B
+**Decision Needed**: ☑ **CONFIRMED** - Option B (Partial Metadata with errors)
 
 ---
 
@@ -373,7 +373,7 @@ pub fn detect_dhatu(content: &[u8], hint: Option<&str>) -> Dhatu {
 }
 ```
 
-**Decision Needed**: ☐ Confirm Option A
+**Decision Needed**: ☑ **CONFIRMED** - Option A (Magic Bytes → Extension → Analysis)
 
 ---
 
@@ -419,7 +419,7 @@ PANINI_LOG_FORMAT=text             # text/json
 - `WARN`: Recoverable issues
 - `ERROR`: Failures requiring attention
 
-**Decision Needed**: ☐ Confirm Option C
+**Decision Needed**: ☑ **CONFIRMED** - Option C (Hybrid tracing, text/json)
 
 ---
 
@@ -467,7 +467,7 @@ panini_retrieve_duration_seconds
 panini_extract_duration_seconds{dhatu="TEXT|IMAGE|..."}
 ```
 
-**Decision Needed**: ☐ Confirm Option C
+**Decision Needed**: ☑ **CONFIRMED** - Option C (Prometheus /metrics endpoint)
 
 ---
 
@@ -505,7 +505,7 @@ PANINI_CACHE_SIZE_MB=0             # Disable caching
 
 **Implementation**: Use `lru` crate with TTL
 
-**Decision Needed**: ☐ Confirm Option B
+**Decision Needed**: ☑ **CONFIRMED** - Option B (LRU In-Memory Cache, 256MB)
 
 ---
 
@@ -556,7 +556,7 @@ pub fn verify_hash(content: &[u8], expected: &str) -> Result<(), PaniniError> {
 }
 ```
 
-**Decision Needed**: ☐ Confirm Option B
+**Decision Needed**: ☑ **CONFIRMED** - Option B (Regex + Checksum Verification)
 
 ---
 
@@ -606,7 +606,7 @@ pub fn sanitize_archive_path(path: &str) -> Result<PathBuf, PaniniError> {
 }
 ```
 
-**Decision Needed**: ☐ Confirm Option B
+**Decision Needed**: ☑ **CONFIRMED** - Option B (Full Canonicalization)
 
 ---
 
@@ -660,7 +660,7 @@ async fn main() {
 }
 ```
 
-**Decision Needed**: ☐ Confirm Option B
+**Decision Needed**: ☑ **CONFIRMED** - Option B (Graceful with 30s timeout)
 
 ---
 
@@ -711,55 +711,55 @@ GET /health/live   → 200 (always if server running)
 GET /health/ready  → 200 if RocksDB accessible, 503 otherwise
 ```
 
-**Decision Needed**: ☐ Confirm Option B
+**Decision Needed**: ☑ **CONFIRMED** - Option B (Separate /health/live and /health/ready)
 
 ---
 
 ## ✅ Decision Summary
 
-### Decisions to Confirm
+### ✅ Decisions CONFIRMED
 
 1. **Storage**
-   - ☐ RocksDB: Optimized for read-heavy (256MB cache, bloom filters)
-   - ☐ Storage path: Environment variable `PANINI_STORAGE_PATH`
-   - ☐ Max content size: Configurable with 100MB default
+   - ☑ RocksDB: Optimized for read-heavy (256MB cache, bloom filters)
+   - ☑ Storage path: Environment variable `PANINI_STORAGE_PATH`
+   - ☑ Max content size: Configurable with 100MB default
 
 2. **API**
-   - ☐ Upload: Raw binary for store, multipart for extract
-   - ☐ Versioning: URL path (`/api/v1/`)
-   - ☐ Errors: RFC 7807 Problem Details format
+   - ☑ Upload: Raw binary for store, multipart for extract
+   - ☑ Versioning: URL path (`/api/v1/`)
+   - ☑ Errors: RFC 7807 Problem Details format
 
 3. **Extractors**
-   - ☐ Dependencies: Pure Rust libraries (v1.0)
-   - ☐ Failures: Partial metadata with error reporting
-   - ☐ Detection: Magic bytes → Extension → Content analysis
+   - ☑ Dependencies: Pure Rust libraries (v1.0)
+   - ☑ Failures: Partial metadata with error reporting
+   - ☑ Detection: Magic bytes → Extension → Content analysis
 
 4. **Performance**
-   - ☐ Logging: tracing with text/json format option
-   - ☐ Metrics: Prometheus endpoint at `/metrics`
-   - ☐ Caching: LRU in-memory cache (256MB default)
+   - ☑ Logging: tracing with text/json format option
+   - ☑ Metrics: Prometheus endpoint at `/metrics`
+   - ☑ Caching: LRU in-memory cache (256MB default)
 
 5. **Security**
-   - ☐ Hash validation: Format check on read, full verify on write
-   - ☐ Path sanitization: Full canonicalization for archives
+   - ☑ Hash validation: Format check on read, full verify on write
+   - ☑ Path sanitization: Full canonicalization for archives
 
 6. **Operations**
-   - ☐ Shutdown: Graceful with 30s timeout
-   - ☐ Health checks: Separate `/health/live` and `/health/ready`
+   - ☑ Shutdown: Graceful with 30s timeout
+   - ☑ Health checks: Separate `/health/live` and `/health/ready`
 
 ---
 
 ## 🎯 Next Steps
 
-Once all decisions are confirmed:
+✅ **ALL 19 DECISIONS CONFIRMED**
 
-1. ✅ All checkboxes marked
-2. → Proceed to **Phase 4: `/speckit.plan`**
-3. Generate detailed implementation plan with:
-   - Complete file structure
-   - All dependencies (Cargo.toml, package.json)
-   - Implementation order
-   - Task breakdown
+Ready to proceed to **Phase 4: `/speckit.plan`**
+
+The plan will generate:
+- Complete file structure (backend/ + client/)
+- All dependencies (Cargo.toml, package.json)
+- Implementation order (8-week roadmap)
+- Task breakdown with priorities
 
 ---
 
