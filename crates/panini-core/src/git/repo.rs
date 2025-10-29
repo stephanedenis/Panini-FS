@@ -116,6 +116,31 @@ impl PaniniRepo {
             schema,
         })
     }
+    
+    /// Fetch from remote
+    pub fn fetch(&self, remote_name: &str, refspecs: &[&str]) -> Result<()> {
+        crate::git::sync::fetch(&self.repo, remote_name, refspecs)
+    }
+    
+    /// Fetch all remotes
+    pub fn fetch_all(&self) -> Result<Vec<String>> {
+        crate::git::sync::fetch_all(&self.repo)
+    }
+    
+    /// Pull (fetch + merge)
+    pub fn pull(&self, remote_name: &str, branch: &str) -> Result<()> {
+        crate::git::sync::pull(&self.repo, remote_name, branch)
+    }
+    
+    /// Pull with conflict strategy
+    pub fn pull_with_strategy(
+        &self,
+        remote_name: &str,
+        branch: &str,
+        strategy: crate::git::sync::ConflictStrategy,
+    ) -> Result<crate::git::sync::PullResult> {
+        crate::git::sync::pull_with_strategy(&self.repo, remote_name, branch, strategy)
+    }
 }
 
 #[cfg(test)]
