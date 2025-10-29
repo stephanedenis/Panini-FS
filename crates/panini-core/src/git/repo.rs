@@ -81,6 +81,26 @@ impl PaniniRepo {
     pub fn stage_all(&self) -> Result<()> {
         crate::git::commit::stage_all(&self.repo)
     }
+    
+    /// Add a submodule
+    pub fn add_submodule(&self, url: &str, path: &Path) -> Result<()> {
+        crate::git::submodule::add_submodule(&self.repo, url, path)
+    }
+    
+    /// Remove a submodule
+    pub fn remove_submodule(&self, path: &Path) -> Result<()> {
+        crate::git::submodule::remove_submodule(&self.repo, path)
+    }
+    
+    /// Update all submodules
+    pub fn update_submodules(&self) -> Result<Vec<String>> {
+        crate::git::submodule::update_submodules(&self.repo)
+    }
+    
+    /// List all submodules
+    pub fn list_submodules(&self) -> Result<Vec<crate::git::submodule::SubmoduleInfo>> {
+        crate::git::submodule::list_submodules(&self.repo)
+    }
 }
 
 #[cfg(test)]
