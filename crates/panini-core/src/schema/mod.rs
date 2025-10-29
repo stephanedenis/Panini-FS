@@ -1,8 +1,9 @@
-//! Schema module - Concept, Relation, validation, CRUD, and relation management
+//! Schema module - Concept, Relation, validation, CRUD, relations, and graph operations
 
 pub mod concept;
 pub mod crud;
 pub mod dhatu;
+pub mod graph;
 pub mod relation;
 pub mod relations;
 
