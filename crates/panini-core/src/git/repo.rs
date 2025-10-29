@@ -200,6 +200,33 @@ impl PaniniRepo {
     pub fn diff_commits(&self, old: &str, new: &str) -> Result<crate::git::status::DiffStats> {
         crate::git::status::diff_commits(&self.repo, old, new)
     }
+    
+    /// Get all conflicts
+    pub fn get_conflicts(&self) -> Result<Vec<crate::git::conflict::Conflict>> {
+        crate::git::conflict::get_conflicts(&self.repo)
+    }
+    
+    /// Check if file has conflict
+    pub fn has_conflict(&self, path: &Path) -> Result<bool> {
+        crate::git::conflict::has_conflict(&self.repo, path)
+    }
+    
+    /// Resolve conflict
+    pub fn resolve_conflict(
+        &self,
+        path: &Path,
+        resolution: crate::git::conflict::ConflictResolution,
+    ) -> Result<()> {
+        crate::git::conflict::resolve_conflict(&self.repo, path, resolution)
+    }
+    
+    /// Auto-resolve all conflicts
+    pub fn auto_resolve_conflicts(
+        &self,
+        strategy: crate::git::conflict::ConflictResolution,
+    ) -> Result<Vec<PathBuf>> {
+        crate::git::conflict::auto_resolve_conflicts(&self.repo, strategy)
+    }
 }
 
 #[cfg(test)]
