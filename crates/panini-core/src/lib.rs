@@ -48,10 +48,13 @@ pub mod schema;
 pub mod storage;
 pub mod sync;
 
-// Re-exports for convenience
+// Re-export main types
 pub use error::{Error, Result};
-pub use schema::{Concept, ConceptBuilder, ConceptType, Dhatu, Relation, RelationType};
-pub use git::PaniniRepo;
+pub use git::open::{PaniniConfig, SchemaVersion};
+pub use git::repo::PaniniRepo;
+pub use schema::concept::{Concept, ConceptBuilder};
+pub use schema::dhatu::Dhatu;
+pub use schema::relation::{Relation, RelationType};
 
 /// Library version
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
