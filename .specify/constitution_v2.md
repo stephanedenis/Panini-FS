@@ -656,30 +656,75 @@ curl -sSL https://get.panini.dev | sh
 
 ---
 
-## 13. Open Questions
+## 13. Resolved Design Decisions
 
-⏳ **To be resolved during respec**:
+✅ **APPROVED 2025-10-29** — The following decisions finalize the v2.0 architecture:
 
-1. **Relation schema**: Fixed types vs. user-defined?
-2. **Content storage**: Git LFS vs. external (S3/IPFS)?
-3. **Conflict resolution**: How much automation?
-4. **Fulltext search**: Tantivy limitations with non-English?
-5. **Mobile strategy**: Native apps or PWA?
+### Decision 1: Relation Schema
+**Choice**: **A - Fixed Types**
+
+Fixed relation types with strict validation:
+- Core types: `is_a`, `part_of`, `causes`, `contradicts`, `supports`, `derives_from`, `used_by`, `related_to`
+- Schema validation on concept save
+- User-extensible types deferred to v1.5
+- **Rationale**: Simpler implementation, better queries, predictable behavior
+
+### Decision 2: Content Storage Strategy
+**Choice**: **B - S3-Compatible Storage**
+
+Hybrid storage model:
+- **Lightweight content** (Markdown, YAML, small images): Git repository
+- **Heavy content** (videos, large images, archives): S3-compatible storage
+- **Refs**: Content-addressed hashes (SHA-256) in YAML frontmatter
+- **Backends**: MinIO (self-hosted), AWS S3, Cloudflare R2, Backblaze B2
+- **Rationale**: Flexible, scalable, avoids Git LFS bandwidth limits, user choice
+
+**Example frontmatter**:
+```yaml
+content_refs:
+  - hash: sha256:abc123...
+    type: IMAGE
+    size: 2.4MB
+    storage: s3://mybucket/content/abc123.png
+```
+
+### Decision 3: Conflict Resolution Automation
+**Choice**: **A - Maximum Automation**
+
+Target: 90%+ automatic resolution:
+- **90% automatic**: Disjoint edits, timestamp wins, no semantic conflicts
+- **8% semi-automatic**: Custom YAML merge driver (relation deduplication)
+- **2% manual**: Semantic contradictions, user review UI
+- **Rationale**: Minimize friction, leverage Git algorithms, trust users
+
+### Decision 4: Fulltext Search Language Support
+**Choice**: **B - Multi-Language from v1.0**
+
+Tantivy with 20+ language analyzers:
+- Auto-detection (whatlang crate)
+- Unicode normalization (NFC)
+- Languages: English, French, Spanish, German, Chinese, Japanese, Arabic, Russian, etc.
+- **Rationale**: Global use case, Tantivy supports it natively, no technical blocker
+
+### Deferred Questions (v1.5+)
+- **Mobile strategy**: Native apps vs PWA (v2.0)
+- **Real-time sync**: WebSocket vs polling (v1.5)
+- **Graph visualization**: Force-directed vs hierarchical layout (v1.5)
 
 ---
 
 ## 14. Approval
 
 **Required Sign-Off**:
-- [ ] Project stakeholder (Stéphane)
+- [x] Project stakeholder (Stéphane) — **APPROVED 2025-10-29**
 - [ ] Technical lead (TBD)
-- [ ] Community review (GitHub Discussions)
+- [ ] Community review (GitHub Discussions, if applicable)
 
 **Approval Timeline**:
 - Draft: 2025-10-29
 - Review: 1 week
-- Approval: TBD
-- Implementation start: After approval + 1 week respec
+- **Approval**: 2025-10-29 ✅ **PIVOT APPROVED**
+- Implementation start: Week 1 (specification v2.0)
 
 ---
 
