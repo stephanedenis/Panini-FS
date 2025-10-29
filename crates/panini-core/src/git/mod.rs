@@ -1,8 +1,9 @@
-//! Git operations module
+//! Git operations (T2.1: 2 weeks, 12 tasks)
 
-mod init;
-mod open;
-mod repo;
+pub mod commit;
+pub mod init;
+pub mod open;
+pub mod repo;
 
 pub use init::init_repo;
 pub use open::open_repo;

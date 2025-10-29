@@ -66,6 +66,21 @@ impl PaniniRepo {
     pub fn schema(&self) -> &SchemaVersion {
         &self.schema
     }
+    
+    /// Commit a single file
+    pub fn commit_file(&self, file_path: &Path, message: &str) -> Result<git2::Oid> {
+        crate::git::commit::commit_file(&self.repo, file_path, message)
+    }
+    
+    /// Commit multiple files
+    pub fn commit_batch(&self, file_paths: &[&Path], message: &str) -> Result<git2::Oid> {
+        crate::git::commit::commit_batch(&self.repo, file_paths, message)
+    }
+    
+    /// Stage all changes
+    pub fn stage_all(&self) -> Result<()> {
+        crate::git::commit::stage_all(&self.repo)
+    }
 }
 
 #[cfg(test)]
