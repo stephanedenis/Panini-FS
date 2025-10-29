@@ -1,7 +1,7 @@
-//! Git fetch and pull operations
+//! Git fetch, pull, and push operations
 
 use crate::error::{Error, Result};
-use git2::{AnnotatedCommit, FetchOptions, Repository};
+use git2::{AnnotatedCommit, FetchOptions, PushOptions, Repository};
 
 /// Fetch from remote
 pub fn fetch(
@@ -274,5 +274,191 @@ mod tests {
         ];
         
         assert_eq!(results.len(), 6);
+    }
+}
+
+/// Push to remote
+pub fn push(
+    repo: &Repository,
+    remote_name: &str,
+    refspecs: &[&str],
+) -> Result<()> {
+    let mut remote = repo.find_remote(remote_name)?;
+    
+    let mut push_opts = PushOptions::new();
+    
+    // Push
+    remote.push(refspecs, Some(&mut push_opts))?;
+    
+    Ok(())
+}
+
+/// Push current branch to remote
+pub fn push_current_branch(repo: &Repository, remote_name: &str) -> Result<()> {
+    // Get current branch
+    let head = repo.head()?;
+    
+    let branch_name = head.shorthand().ok_or_else(|| {
+        Error::Git(git2::Error::from_str("Cannot get branch name"))
+    })?;
+    
+    // Push with refspec
+    let refspec = format!("refs/heads/{}:refs/heads/{}", branch_name, branch_name);
+    push(repo, remote_name, &[&refspec])
+}
+
+/// Push all branches
+pub fn push_all_branches(repo: &Repository, remote_name: &str) -> Result<Vec<String>> {
+    let mut pushed = Vec::new();
+    
+    // Get all local branches
+    for branch in repo.branches(Some(git2::BranchType::Local))? {
+        let (branch, _) = branch?;
+        
+        if let Some(name) = branch.name()? {
+            let refspec = format!("refs/heads/{}:refs/heads/{}", name, name);
+            
+            match push(repo, remote_name, &[&refspec]) {
+                Ok(_) => pushed.push(name.to_string()),
+                Err(_) => continue, // Skip failed pushes
+            }
+        }
+    }
+    
+    Ok(pushed)
+}
+
+/// Push with tags
+pub fn push_with_tags(repo: &Repository, remote_name: &str) -> Result<()> {
+    // Push current branch
+    push_current_branch(repo, remote_name)?;
+    
+    // Push all tags
+    let mut remote = repo.find_remote(remote_name)?;
+    let mut push_opts = PushOptions::new();
+    
+    remote.push(&["refs/tags/*:refs/tags/*"], Some(&mut push_opts))?;
+    
+    Ok(())
+}
+
+/// Force push (dangerous!)
+pub fn force_push(
+    repo: &Repository,
+    remote_name: &str,
+    branch: &str,
+) -> Result<()> {
+    let refspec = format!("+refs/heads/{}:refs/heads/{}", branch, branch);
+    push(repo, remote_name, &[&refspec])
+}
+
+/// Push result
+#[derive(Debug, Clone, PartialEq)]
+pub enum PushResult {
+    /// Successfully pushed
+    Success,
+    /// Nothing to push
+    UpToDate,
+    /// Rejected (non-fast-forward)
+    Rejected,
+}
+
+/// Push with status check
+pub fn push_with_status(
+    repo: &Repository,
+    remote_name: &str,
+    branch: &str,
+) -> Result<PushResult> {
+    // Get current commit
+    let head = repo.head()?;
+    let local_commit = head.peel_to_commit()?;
+    
+    // Try to get remote commit
+    let remote_ref = format!("refs/remotes/{}/{}", remote_name, branch);
+    let remote_commit_result = repo.find_reference(&remote_ref)
+        .and_then(|r| r.peel_to_commit());
+    
+    match remote_commit_result {
+        Ok(remote_commit) => {
+            if local_commit.id() == remote_commit.id() {
+                return Ok(PushResult::UpToDate);
+            }
+            
+            // Check if local is ahead
+            let is_descendant = repo.graph_descendant_of(
+                local_commit.id(),
+                remote_commit.id()
+            )?;
+            
+            if !is_descendant {
+                return Ok(PushResult::Rejected);
+            }
+        }
+        Err(_) => {
+            // Remote ref doesn't exist, first push
+        }
+    }
+    
+    // Perform push
+    let refspec = format!("refs/heads/{}:refs/heads/{}", branch, branch);
+    push(repo, remote_name, &[&refspec])?;
+    
+    Ok(PushResult::Success)
+}
+
+#[cfg(test)]
+mod push_tests {
+    use super::*;
+    use crate::git::init::init_repo;
+    use tempfile::TempDir;
+    
+    #[test]
+    fn test_push_no_remote() {
+        let tmp = TempDir::new().unwrap();
+        let repo = init_repo(tmp.path()).unwrap();
+        
+        let result = push(&repo, "origin", &["refs/heads/main:refs/heads/main"]);
+        assert!(result.is_err());
+    }
+    
+    #[test]
+    fn test_push_current_branch_no_remote() {
+        let tmp = TempDir::new().unwrap();
+        let repo = init_repo(tmp.path()).unwrap();
+        
+        let result = push_current_branch(&repo, "origin");
+        assert!(result.is_err());
+    }
+    
+    #[test]
+    fn test_push_all_branches_no_remote() {
+        let tmp = TempDir::new().unwrap();
+        let repo = init_repo(tmp.path()).unwrap();
+        
+        let result = push_all_branches(&repo, "origin");
+        
+        // Should return empty vec (no remotes)
+        assert!(result.is_ok());
+        assert!(result.unwrap().is_empty());
+    }
+    
+    #[test]
+    fn test_push_result_variants() {
+        let results = vec![
+            PushResult::Success,
+            PushResult::UpToDate,
+            PushResult::Rejected,
+        ];
+        
+        assert_eq!(results.len(), 3);
+    }
+    
+    #[test]
+    fn test_force_push_no_remote() {
+        let tmp = TempDir::new().unwrap();
+        let repo = init_repo(tmp.path()).unwrap();
+        
+        let result = force_push(&repo, "origin", "main");
+        assert!(result.is_err());
     }
 }

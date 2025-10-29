@@ -141,6 +141,40 @@ impl PaniniRepo {
     ) -> Result<crate::git::sync::PullResult> {
         crate::git::sync::pull_with_strategy(&self.repo, remote_name, branch, strategy)
     }
+    
+    /// Push to remote
+    pub fn push(&self, remote_name: &str, refspecs: &[&str]) -> Result<()> {
+        crate::git::sync::push(&self.repo, remote_name, refspecs)
+    }
+    
+    /// Push current branch
+    pub fn push_current_branch(&self, remote_name: &str) -> Result<()> {
+        crate::git::sync::push_current_branch(&self.repo, remote_name)
+    }
+    
+    /// Push all branches
+    pub fn push_all_branches(&self, remote_name: &str) -> Result<Vec<String>> {
+        crate::git::sync::push_all_branches(&self.repo, remote_name)
+    }
+    
+    /// Push with tags
+    pub fn push_with_tags(&self, remote_name: &str) -> Result<()> {
+        crate::git::sync::push_with_tags(&self.repo, remote_name)
+    }
+    
+    /// Force push
+    pub fn force_push(&self, remote_name: &str, branch: &str) -> Result<()> {
+        crate::git::sync::force_push(&self.repo, remote_name, branch)
+    }
+    
+    /// Push with status check
+    pub fn push_with_status(
+        &self,
+        remote_name: &str,
+        branch: &str,
+    ) -> Result<crate::git::sync::PushResult> {
+        crate::git::sync::push_with_status(&self.repo, remote_name, branch)
+    }
 }
 
 #[cfg(test)]
