@@ -87,7 +87,7 @@ impl LocalStorage {
     pub fn new<P: AsRef<Path>>(base_path: P) -> Result<Self> {
         let base_path = base_path.as_ref().to_path_buf();
         std::fs::create_dir_all(&base_path)
-            .map_err(|e| Error::StorageError(format!("Failed to create storage dir: {}", e)))?;
+            .map_err(|e| Error::generic(format!("Failed to create storage dir: {}", e)))?;
         
         Ok(Self { base_path })
     }
@@ -100,11 +100,11 @@ impl StorageBackend for LocalStorage {
         
         if let Some(parent) = path.parent() {
             std::fs::create_dir_all(parent)
-                .map_err(|e| Error::StorageError(format!("Failed to create dir: {}", e)))?;
+                .map_err(|e| Error::generic(format!("Failed to create dir: {}", e)))?;
         }
         
         std::fs::write(&path, &data)
-            .map_err(|e| Error::StorageError(format!("Failed to write file: {}", e)))?;
+            .map_err(|e| Error::generic(format!("Failed to write file: {}", e)))?;
         
         let hash = blake3::hash(&data).to_hex().to_string();
         
@@ -120,7 +120,7 @@ impl StorageBackend for LocalStorage {
         let path = self.base_path.join(key);
         
         let data = std::fs::read(&path)
-            .map_err(|e| Error::StorageError(format!("Failed to read file: {}", e)))?;
+            .map_err(|e| Error::generic(format!("Failed to read file: {}", e)))?;
         
         Ok(Bytes::from(data))
     }
@@ -129,7 +129,7 @@ impl StorageBackend for LocalStorage {
         let path = self.base_path.join(key);
         
         std::fs::remove_file(&path)
-            .map_err(|e| Error::StorageError(format!("Failed to delete file: {}", e)))?;
+            .map_err(|e| Error::generic(format!("Failed to delete file: {}", e)))?;
         
         Ok(())
     }
@@ -146,7 +146,7 @@ impl StorageBackend for LocalStorage {
         
         if prefix_path.is_dir() {
             for entry in walkdir::WalkDir::new(&prefix_path) {
-                let entry = entry.map_err(|e| Error::StorageError(e.to_string()))?;
+                let entry = entry.map_err(|e| Error::generic(e.to_string()))?;
                 
                 if entry.file_type().is_file() {
                     if let Ok(relative) = entry.path().strip_prefix(&self.base_path) {
@@ -164,7 +164,7 @@ impl StorageBackend for LocalStorage {
         let mut total_size = 0u64;
         
         for entry in walkdir::WalkDir::new(&self.base_path) {
-            let entry = entry.map_err(|e| Error::StorageError(e.to_string()))?;
+            let entry = entry.map_err(|e| Error::generic(e.to_string()))?;
             
             if entry.file_type().is_file() {
                 total_objects += 1;

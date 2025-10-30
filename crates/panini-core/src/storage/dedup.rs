@@ -30,23 +30,26 @@ impl<B: StorageBackend> DedupManager<B> {
         // Check if already exists
         {
             let index = self.index.read()
-                .map_err(|_| Error::StorageError("Failed to acquire read lock".to_string()))?;
+                .map_err(|_| Error::generic("Failed to acquire read lock".to_string()))?;
             
             if let Some(info) = index.get(&hash) {
+                // Clone values before dropping lock
+                let key = info.key.clone();
+                let size = info.size;
                 // Already exists, increment ref count
                 drop(index);
                 
                 let mut index = self.index.write()
-                    .map_err(|_| Error::StorageError("Failed to acquire write lock".to_string()))?;
+                    .map_err(|_| Error::generic("Failed to acquire write lock".to_string()))?;
                 
                 index.increment_refs(&hash);
                 
                 return Ok(DedupResult {
                     hash: hash.clone(),
-                    key: info.key.clone(),
-                    size: info.size,
+                    key,
+                    size,
                     deduplicated: true,
-                    saved_bytes: info.size,
+                    saved_bytes: size,
                 });
             }
         }
@@ -58,7 +61,7 @@ impl<B: StorageBackend> DedupManager<B> {
         // Add to index
         {
             let mut index = self.index.write()
-                .map_err(|_| Error::StorageError("Failed to acquire write lock".to_string()))?;
+                .map_err(|_| Error::generic("Failed to acquire write lock".to_string()))?;
             
             index.add(hash.clone(), ContentInfo {
                 key: result.key.clone(),
@@ -80,10 +83,10 @@ impl<B: StorageBackend> DedupManager<B> {
     pub async fn download_by_hash(&self, hash: &str) -> Result<Bytes> {
         let key = {
             let index = self.index.read()
-                .map_err(|_| Error::StorageError("Failed to acquire read lock".to_string()))?;
+                .map_err(|_| Error::generic("Failed to acquire read lock".to_string()))?;
             
             let info = index.get(hash)
-                .ok_or_else(|| Error::StorageError(format!("Hash {} not found", hash)))?;
+                .ok_or_else(|| Error::generic(format!("Hash {} not found", hash)))?;
             
             info.key.clone()
         };
@@ -95,7 +98,7 @@ impl<B: StorageBackend> DedupManager<B> {
     pub async fn delete_by_hash(&self, hash: &str) -> Result<bool> {
         let should_delete = {
             let mut index = self.index.write()
-                .map_err(|_| Error::StorageError("Failed to acquire write lock".to_string()))?;
+                .map_err(|_| Error::generic("Failed to acquire write lock".to_string()))?;
             
             index.decrement_refs(hash)
         };
@@ -112,7 +115,7 @@ impl<B: StorageBackend> DedupManager<B> {
     /// Get deduplication statistics
     pub fn dedup_stats(&self) -> Result<DedupStats> {
         let index = self.index.read()
-            .map_err(|_| Error::StorageError("Failed to acquire read lock".to_string()))?;
+            .map_err(|_| Error::generic("Failed to acquire read lock".to_string()))?;
         
         Ok(index.stats())
     }
@@ -121,7 +124,7 @@ impl<B: StorageBackend> DedupManager<B> {
     pub async fn garbage_collect(&self) -> Result<GcResult> {
         let to_delete = {
             let index = self.index.read()
-                .map_err(|_| Error::StorageError("Failed to acquire read lock".to_string()))?;
+                .map_err(|_| Error::generic("Failed to acquire read lock".to_string()))?;
             
             index.get_unreferenced()
         };
@@ -144,7 +147,7 @@ impl<B: StorageBackend> DedupManager<B> {
         // Remove from index
         {
             let mut index = self.index.write()
-                .map_err(|_| Error::StorageError("Failed to acquire write lock".to_string()))?;
+                .map_err(|_| Error::generic("Failed to acquire write lock".to_string()))?;
             
             index.remove_unreferenced();
         }
@@ -209,7 +212,7 @@ impl DedupIndex {
         let total_refs: usize = self.content.values().map(|i| i.refs).sum();
         
         let unique_bytes = total_size;
-        let logical_bytes = self.content.values()
+        let logical_bytes: u64 = self.content.values()
             .map(|i| i.size * i.refs as u64)
             .sum();
         

@@ -34,9 +34,7 @@ serde_yaml = { workspace = true }
 
 # Markdown & parsing
 pulldown-cmark = { workspace = true }
-
-# Graph algorithms
-petgraph = { workspace = true }
+petgraph.workspace = true
 
 # Async runtime
 tokio = { workspace = true }
@@ -68,6 +66,9 @@ whatlang = { workspace = true }
 # Configuration
 config = { workspace = true }
 toml = { workspace = true }
+bytes = "1.10.1"
+byteorder = "1.5.0"
+async-trait = "0.1.89"
 
 [dev-dependencies]
 criterion = { workspace = true }
