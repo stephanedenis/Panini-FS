@@ -295,7 +295,7 @@ mod tests {
         let relation = Relation {
             rel_type: RelationType::IsA,
             target: "target1".to_string(),
-            confidence: Some(0.9),
+            confidence: 0.9,
         };
         
         index.put_relation("source1", &relation).unwrap();
@@ -313,13 +313,13 @@ mod tests {
         let relation1 = Relation {
             rel_type: RelationType::IsA,
             target: "target1".to_string(),
-            confidence: Some(0.9),
+            confidence: 0.9,
         };
         
         let relation2 = Relation {
             rel_type: RelationType::PartOf,
             target: "target2".to_string(),
-            confidence: Some(0.8),
+            confidence: 0.8,
         };
         
         index.put_relation("source1", &relation1).unwrap();
@@ -357,7 +357,7 @@ mod tests {
         let relation = Relation {
             rel_type: RelationType::IsA,
             target: "target".to_string(),
-            confidence: None,
+            confidence: 0.0,
         };
         index.put_relation("test0", &relation).unwrap();
         index.put_relation("test1", &relation).unwrap();

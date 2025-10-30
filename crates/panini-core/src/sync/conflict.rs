@@ -294,7 +294,7 @@ mod tests {
             relations: vec![Relation {
                 rel_type: RelationType::IsA,
                 target: "target1".to_string(),
-                confidence: Some(0.8),
+                confidence: 0.8,
             }],
             content_refs: vec![],
             metadata: serde_json::Value::Null,
@@ -306,12 +306,12 @@ mod tests {
             Relation {
                 rel_type: RelationType::IsA,
                 target: "target1".to_string(),
-                confidence: Some(0.9), // Higher confidence
+                confidence: 0.9, // Higher confidence
             },
             Relation {
                 rel_type: RelationType::PartOf,
                 target: "target2".to_string(),
-                confidence: Some(0.7),
+                confidence: 0.7,
             },
         ];
         
