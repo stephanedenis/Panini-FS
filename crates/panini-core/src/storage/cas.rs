@@ -2,7 +2,7 @@
 
 use crate::error::{Error, Result};
 use crate::storage::atom::{Atom, AtomMetadata, AtomType};
-use crate::storage::backend::StorageBackend;
+use crate::storage::backends::StorageBackend;
 use bytes::Bytes;
 use petgraph::graph::{DiGraph, NodeIndex};
 use serde::{Deserialize, Serialize};
@@ -82,7 +82,8 @@ impl<B: StorageBackend> ContentAddressedStorage<B> {
             .await?;
         
         // Add to index
-        let metadata = AtomMetadata::from(&atom);
+        let mut metadata = AtomMetadata::from(&atom);
+        metadata.ref_count = 1;
         self.atom_index
             .write()
             .unwrap()
