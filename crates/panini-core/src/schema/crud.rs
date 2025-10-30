@@ -97,7 +97,7 @@ pub fn delete_concept(repo: &PaniniRepo, id: &str) -> Result<PathBuf> {
     
     // Commit
     let message = format!("feat(concept): Delete {}", concept.title);
-    repo.commit_file(&file_path, &message)?;
+    repo.commit(&message)?;
     
     Ok(file_path)
 }
@@ -178,7 +178,7 @@ pub fn rename_concept(repo: &PaniniRepo, old_id: &str, new_id: &str) -> Result<P
     
     // Commit
     let message = format!("refactor(concept): Rename {} to {}", old_id, new_id);
-    repo.commit_batch(&[&old_path, &new_path], &message)?;
+    repo.commit(&message)?;
     
     Ok(new_path)
 }

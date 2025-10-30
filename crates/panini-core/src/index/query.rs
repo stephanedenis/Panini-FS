@@ -19,6 +19,7 @@ pub struct QueryEngine {
     rocks: Arc<RocksIndex>,
     tantivy: Arc<RwLock<TantivyIndex>>,
     cache: Arc<RwLock<QueryCache>>,
+    index_path: std::path::PathBuf,
 }
 
 impl QueryEngine {
@@ -27,7 +28,7 @@ impl QueryEngine {
         let rocks_path = index_path.join("rocks");
         let tantivy_path = index_path.join("tantivy");
         
-        let rocks = Arc::new(RocksIndex::open(rocks_path)?);
+        let rocks = Arc::new(RocksIndex::open(&rocks_path)?);
         let tantivy = Arc::new(RwLock::new(TantivyIndex::open(tantivy_path)?));
         let cache = Arc::new(RwLock::new(QueryCache::new(1000)));
         
@@ -36,25 +37,39 @@ impl QueryEngine {
             rocks,
             tantivy,
             cache,
+            index_path: index_path.to_path_buf(),
         })
     }
     
     /// Full rebuild of both indexes
     pub fn rebuild(&self) -> Result<()> {
-        let rocks_path = self.rocks_path()?;
-        let builder = IndexBuilder::new(self.repo.clone(), &rocks_path)?;
+        // PROBLEM: We can't open two RocksDB instances on the same path
+        // Solution: Read concepts from repo, build both indexes in parallel
         
-        let stats = builder.build()?;
+        // Get all concepts from repo
+        let concept_ids = crate::schema::crud::list_concepts(&self.repo)?;
+        let mut concepts = Vec::new();
+        for id in &concept_ids {
+            if let Ok(concept) = crate::schema::crud::read_concept(&self.repo, &id) {
+                concepts.push(concept);
+            }
+        }
         
-        // Rebuild Tantivy
+        // Build RocksDB index
+        for concept in &concepts {
+            self.rocks.put_concept(concept)?;
+            for relation in &concept.relations {
+                self.rocks.put_relation(&concept.id, relation)?;
+            }
+        }
+        self.rocks.flush()?;
+        
+        // Build Tantivy index
         let mut tantivy = self.tantivy.write()
             .map_err(|_| Error::Index("Failed to acquire write lock".to_string()))?;
         
-        let concept_ids = self.rocks.list_concept_ids()?;
-        for id in concept_ids {
-            if let Some(concept) = self.rocks.get_concept(&id)? {
-                tantivy.add_concept(&concept)?;
-            }
+        for concept in &concepts {
+            tantivy.add_concept(concept)?;
         }
         
         tantivy.commit()?;

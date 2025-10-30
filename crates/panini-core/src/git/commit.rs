@@ -70,7 +70,7 @@ pub fn stage_all(repo: &Repository) -> Result<()> {
 }
 
 /// Create commit with current index
-fn create_commit(repo: &Repository, message: &str) -> Result<git2::Oid> {
+pub fn create_commit(repo: &Repository, message: &str) -> Result<git2::Oid> {
     let mut index = repo.index()?;
     let tree_id = index.write_tree()?;
     let tree = repo.find_tree(tree_id)?;

@@ -111,6 +111,12 @@ impl TantivyIndex {
         self.writer
             .commit()
             .map_err(|e| Error::Index(format!("Failed to commit: {}", e)))?;
+        
+        // Force reload for immediate visibility (important for tests)
+        self.reader
+            .reload()
+            .map_err(|e| Error::Index(format!("Failed to reload reader: {}", e)))?;
+        
         Ok(())
     }
     

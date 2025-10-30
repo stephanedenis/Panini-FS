@@ -320,7 +320,8 @@ mod tests {
         update_relation_confidence(&repo, "source", RelationType::IsA, "target", 0.9).unwrap();
         
         let relations = get_relations(&repo, "source").unwrap();
-        assert_eq!(relations[0].confidence, 0.9);
+        // Use epsilon for float comparison to avoid precision issues
+        assert!((relations[0].confidence - 0.9).abs() < 0.0001);
     }
     
     #[test]
@@ -353,6 +354,7 @@ mod tests {
         let stats = get_relation_stats(&repo, "source").unwrap();
         
         assert_eq!(stats.total, 2);
-        assert_eq!(stats.avg_confidence, 0.7);
+        // Use epsilon for float comparison to avoid precision issues
+        assert!((stats.avg_confidence - 0.7).abs() < 0.0001);
     }
 }

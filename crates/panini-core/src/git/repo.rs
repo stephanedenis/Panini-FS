@@ -84,6 +84,11 @@ impl PaniniRepo {
         crate::git::commit::stage_all(&self.repo)
     }
     
+    /// Commit staged changes (use after stage_all() or manual staging)
+    pub fn commit(&self, message: &str) -> Result<git2::Oid> {
+        crate::git::commit::create_commit(&self.repo, message)
+    }
+    
     /// Add a submodule
     pub fn add_submodule(&self, url: &str, path: &Path) -> Result<()> {
         crate::git::submodule::add_submodule(&self.repo, url, path)
