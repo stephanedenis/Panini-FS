@@ -27,7 +27,7 @@ impl RocksIndex {
         let cf_names = vec![CF_CONCEPTS, CF_RELATIONS, CF_METADATA];
         
         let db = DB::open_cf(&opts, path, &cf_names)
-            .map_err(|e| Error::IndexError(format!("Failed to open RocksDB: {}", e)))?;
+            .map_err(|e| Error::Index(format!("Failed to open RocksDB: {}", e)))?;
         
         Ok(Self { db })
     }
@@ -35,13 +35,13 @@ impl RocksIndex {
     /// Store concept in index
     pub fn put_concept(&self, concept: &Concept) -> Result<()> {
         let cf = self.db.cf_handle(CF_CONCEPTS)
-            .ok_or_else(|| Error::IndexError("CF_CONCEPTS not found".to_string()))?;
+            .ok_or_else(|| Error::Index("CF_CONCEPTS not found".to_string()))?;
         
         let value = serde_json::to_vec(concept)
-            .map_err(|e| Error::SerializationError(e.to_string()))?;
+            .map_err(|e| Error::Index(e.to_string()))?;
         
         self.db.put_cf(&cf, concept.id.as_bytes(), value)
-            .map_err(|e| Error::IndexError(format!("Failed to put concept: {}", e)))?;
+            .map_err(|e| Error::Index(format!("Failed to put concept: {}", e)))?;
         
         Ok(())
     }
@@ -49,15 +49,15 @@ impl RocksIndex {
     /// Get concept from index
     pub fn get_concept(&self, id: &str) -> Result<Option<Concept>> {
         let cf = self.db.cf_handle(CF_CONCEPTS)
-            .ok_or_else(|| Error::IndexError("CF_CONCEPTS not found".to_string()))?;
+            .ok_or_else(|| Error::Index("CF_CONCEPTS not found".to_string()))?;
         
         let value = self.db.get_cf(&cf, id.as_bytes())
-            .map_err(|e| Error::IndexError(format!("Failed to get concept: {}", e)))?;
+            .map_err(|e| Error::Index(format!("Failed to get concept: {}", e)))?;
         
         match value {
-            Some(bytes) => {
+            Some(ref bytes) => {
                 let concept = serde_json::from_slice(&bytes)
-                    .map_err(|e| Error::SerializationError(e.to_string()))?;
+                    .map_err(|e| Error::Index(e.to_string()))?;
                 Ok(Some(concept))
             }
             None => Ok(None),
@@ -67,10 +67,10 @@ impl RocksIndex {
     /// Delete concept from index
     pub fn delete_concept(&self, id: &str) -> Result<()> {
         let cf = self.db.cf_handle(CF_CONCEPTS)
-            .ok_or_else(|| Error::IndexError("CF_CONCEPTS not found".to_string()))?;
+            .ok_or_else(|| Error::Index("CF_CONCEPTS not found".to_string()))?;
         
         self.db.delete_cf(&cf, id.as_bytes())
-            .map_err(|e| Error::IndexError(format!("Failed to delete concept: {}", e)))?;
+            .map_err(|e| Error::Index(format!("Failed to delete concept: {}", e)))?;
         
         Ok(())
     }
@@ -78,15 +78,15 @@ impl RocksIndex {
     /// List all concept IDs
     pub fn list_concept_ids(&self) -> Result<Vec<String>> {
         let cf = self.db.cf_handle(CF_CONCEPTS)
-            .ok_or_else(|| Error::IndexError("CF_CONCEPTS not found".to_string()))?;
+            .ok_or_else(|| Error::Index("CF_CONCEPTS not found".to_string()))?;
         
         let iter = self.db.iterator_cf(&cf, IteratorMode::Start);
         
         let mut ids = Vec::new();
         for item in iter {
-            let (key, _) = item.map_err(|e| Error::IndexError(e.to_string()))?;
+            let (key, _) = item.map_err(|e| Error::Index(e.to_string()))?;
             let id = String::from_utf8(key.to_vec())
-                .map_err(|e| Error::IndexError(e.to_string()))?;
+                .map_err(|e| Error::Index(e.to_string()))?;
             ids.push(id);
         }
         
@@ -96,15 +96,15 @@ impl RocksIndex {
     /// Store relation in index (keyed by source_id:type:target_id)
     pub fn put_relation(&self, source_id: &str, relation: &Relation) -> Result<()> {
         let cf = self.db.cf_handle(CF_RELATIONS)
-            .ok_or_else(|| Error::IndexError("CF_RELATIONS not found".to_string()))?;
+            .ok_or_else(|| Error::Index("CF_RELATIONS not found".to_string()))?;
         
         let key = format!("{}:{}:{}", source_id, relation.rel_type as u8, relation.target);
         
         let value = serde_json::to_vec(relation)
-            .map_err(|e| Error::SerializationError(e.to_string()))?;
+            .map_err(|e| Error::Index(e.to_string()))?;
         
         self.db.put_cf(&cf, key.as_bytes(), value)
-            .map_err(|e| Error::IndexError(format!("Failed to put relation: {}", e)))?;
+            .map_err(|e| Error::Index(format!("Failed to put relation: {}", e)))?;
         
         Ok(())
     }
@@ -112,17 +112,17 @@ impl RocksIndex {
     /// Get all relations from a source concept
     pub fn get_relations(&self, source_id: &str) -> Result<Vec<Relation>> {
         let cf = self.db.cf_handle(CF_RELATIONS)
-            .ok_or_else(|| Error::IndexError("CF_RELATIONS not found".to_string()))?;
+            .ok_or_else(|| Error::Index("CF_RELATIONS not found".to_string()))?;
         
         let prefix = format!("{}:", source_id);
         let iter = self.db.iterator_cf(&cf, IteratorMode::From(prefix.as_bytes(), rocksdb::Direction::Forward));
         
         let mut relations = Vec::new();
         for item in iter {
-            let (key, value) = item.map_err(|e| Error::IndexError(e.to_string()))?;
+            let (key, value) = item.map_err(|e| Error::Index(e.to_string()))?;
             
             let key_str = String::from_utf8(key.to_vec())
-                .map_err(|e| Error::IndexError(e.to_string()))?;
+                .map_err(|e| Error::Index(e.to_string()))?;
             
             // Stop if we've moved past this source_id
             if !key_str.starts_with(&prefix) {
@@ -130,7 +130,7 @@ impl RocksIndex {
             }
             
             let relation: Relation = serde_json::from_slice(&value)
-                .map_err(|e| Error::SerializationError(e.to_string()))?;
+                .map_err(|e| Error::Index(e.to_string()))?;
             
             relations.push(relation);
         }
@@ -141,14 +141,14 @@ impl RocksIndex {
     /// Delete all relations from a source concept
     pub fn delete_relations(&self, source_id: &str) -> Result<()> {
         let cf = self.db.cf_handle(CF_RELATIONS)
-            .ok_or_else(|| Error::IndexError("CF_RELATIONS not found".to_string()))?;
+            .ok_or_else(|| Error::Index("CF_RELATIONS not found".to_string()))?;
         
         let relations = self.get_relations(source_id)?;
         
         for relation in relations {
             let key = format!("{}:{}:{}", source_id, relation.rel_type as u8, relation.target);
             self.db.delete_cf(&cf, key.as_bytes())
-                .map_err(|e| Error::IndexError(format!("Failed to delete relation: {}", e)))?;
+                .map_err(|e| Error::Index(format!("Failed to delete relation: {}", e)))?;
         }
         
         Ok(())
@@ -157,10 +157,10 @@ impl RocksIndex {
     /// Store metadata
     pub fn put_metadata(&self, key: &str, value: &[u8]) -> Result<()> {
         let cf = self.db.cf_handle(CF_METADATA)
-            .ok_or_else(|| Error::IndexError("CF_METADATA not found".to_string()))?;
+            .ok_or_else(|| Error::Index("CF_METADATA not found".to_string()))?;
         
         self.db.put_cf(&cf, key.as_bytes(), value)
-            .map_err(|e| Error::IndexError(format!("Failed to put metadata: {}", e)))?;
+            .map_err(|e| Error::Index(format!("Failed to put metadata: {}", e)))?;
         
         Ok(())
     }
@@ -168,10 +168,10 @@ impl RocksIndex {
     /// Get metadata
     pub fn get_metadata(&self, key: &str) -> Result<Option<Vec<u8>>> {
         let cf = self.db.cf_handle(CF_METADATA)
-            .ok_or_else(|| Error::IndexError("CF_METADATA not found".to_string()))?;
+            .ok_or_else(|| Error::Index("CF_METADATA not found".to_string()))?;
         
         self.db.get_cf(&cf, key.as_bytes())
-            .map_err(|e| Error::IndexError(format!("Failed to get metadata: {}", e)))
+            .map_err(|e| Error::Index(format!("Failed to get metadata: {}", e)))
     }
     
     /// Get index statistics
@@ -179,7 +179,7 @@ impl RocksIndex {
         let concept_count = self.list_concept_ids()?.len();
         
         let cf = self.db.cf_handle(CF_RELATIONS)
-            .ok_or_else(|| Error::IndexError("CF_RELATIONS not found".to_string()))?;
+            .ok_or_else(|| Error::Index("CF_RELATIONS not found".to_string()))?;
         
         let iter = self.db.iterator_cf(&cf, IteratorMode::Start);
         let relation_count = iter.count();
@@ -193,7 +193,7 @@ impl RocksIndex {
     /// Flush database to disk
     pub fn flush(&self) -> Result<()> {
         self.db.flush()
-            .map_err(|e| Error::IndexError(format!("Failed to flush: {}", e)))
+            .map_err(|e| Error::Index(format!("Failed to flush: {}", e)))
     }
     
     /// Compact database

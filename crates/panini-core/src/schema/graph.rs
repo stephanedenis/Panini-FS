@@ -10,6 +10,7 @@ use petgraph::Direction;
 use std::collections::HashMap;
 
 /// Knowledge graph
+#[derive(Clone)]
 pub struct KnowledgeGraph {
     graph: DiGraph<String, RelationType>,
     node_map: HashMap<String, NodeIndex>,

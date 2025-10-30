@@ -1,4 +1,5 @@
 //! Repository opening and validation
+use std::sync::Arc;
 
 use crate::error::{Error, Result};
 use git2::Repository;

@@ -1553,6 +1553,7 @@ dependencies = [
  "indicatif",
  "panini-core",
  "pretty_assertions",
+ "serde_json",
  "tempfile",
  "thiserror",
  "tokio",

@@ -1,10 +1,11 @@
 //! Concept model, validation, and YAML frontmatter parsing
 
 use serde::{Deserialize, Serialize};
+use std::path::PathBuf;
 use chrono::{DateTime, Utc};
 use crate::error::{Error, Result};
 use crate::schema::{Relation, Dhatu};
-use pulldown_cmark::{Parser, Event, Tag, TagEnd};
+use pulldown_cmark::{Parser, Event, Tag};
 
 /// Concept type
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -152,7 +153,7 @@ fn extract_frontmatter(content: &str) -> Result<(String, String)> {
     let trimmed = content.trim_start();
     
     if !trimmed.starts_with("---") {
-        return Err(Error::MissingFrontmatter);
+        return Err(Error::MissingFrontmatter(PathBuf::from(".")));
     }
     
     let after_first = &trimmed[3..];
@@ -221,7 +222,7 @@ pub fn validate_concept(concept: &Concept) -> Result<()> {
 pub fn serialize_concept_markdown(concept: &Concept) -> Result<String> {
     // Serialize frontmatter
     let frontmatter = serde_yaml::to_string(concept)
-        .map_err(|e| Error::YamlParse(e.to_string()))?;
+        .map_err(|e| Error::YamlParse(e))?;
     
     // Combine with body
     Ok(format!("---\n{}---\n\n{}", frontmatter, concept.markdown_body))
@@ -236,10 +237,10 @@ pub fn extract_title_from_markdown(markdown: &str) -> Option<String> {
     
     for event in parser {
         match event {
-            Event::Start(Tag::Heading { level: pulldown_cmark::HeadingLevel::H1, .. }) => {
+            Event::Start(Tag::Heading(pulldown_cmark::HeadingLevel::H1, _, _)) => {
                 in_heading = true;
             }
-            Event::End(TagEnd::Heading(_)) => {
+            Event::End(Tag::Heading(_, _, _)) => {
                 if in_heading {
                     return Some(title.trim().to_string());
                 }

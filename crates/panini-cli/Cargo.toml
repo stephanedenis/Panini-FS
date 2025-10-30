@@ -37,6 +37,7 @@ tracing-subscriber = { workspace = true }
 
 # Utilities
 chrono = { workspace = true }
+serde_json.workspace = true
 
 [dev-dependencies]
 tempfile = { workspace = true }

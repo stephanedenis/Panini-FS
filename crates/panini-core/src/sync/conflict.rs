@@ -66,7 +66,7 @@ impl ConflictResolver {
         
         // Write merged version
         let merged_md = merged.to_markdown()?;
-        std::fs::write(self.repo.get_path().join(path), merged_md)
+        std::fs::write(self.repo.path().join(path), merged_md)
             .map_err(|e| Error::IoError(e.to_string()))?;
         
         // Mark as resolved
@@ -141,7 +141,7 @@ impl ConflictResolver {
         // This is a simplified implementation
         // In production, use git2-rs to read from Git objects
         
-        let repo_git = git2::Repository::open(self.repo.get_path())
+        let repo_git = git2::Repository::open(self.repo.path())
             .map_err(|e| Error::GitError(e.to_string()))?;
         
         let reference = repo_git.find_reference(ref_name)

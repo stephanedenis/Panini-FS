@@ -1,4 +1,5 @@
 //! Git fetch, pull, and push operations
+use std::path::PathBuf;
 
 use crate::error::{Error, Result};
 use git2::{AnnotatedCommit, FetchOptions, PushOptions, Repository};
@@ -104,7 +105,7 @@ fn normal_merge(repo: &Repository, fetch_commit: &AnnotatedCommit) -> Result<()>
     // Check for conflicts
     if repo.index()?.has_conflicts() {
         return Err(Error::MergeConflict(
-            "Merge resulted in conflicts. Please resolve manually.".to_string()
+            PathBuf::from(".")
         ));
     }
     
@@ -126,7 +127,7 @@ fn normal_merge(repo: &Repository, fetch_commit: &AnnotatedCommit) -> Result<()>
         &sig,
         &message,
         &tree,
-        &[&head_commit, &fetch_commit.into_commit()],
+        &[&head_commit, &repo.find_commit(fetch_commit.id())?],
     )?;
     
     // Cleanup merge state

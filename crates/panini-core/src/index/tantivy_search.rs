@@ -1,15 +1,15 @@
 //! Tantivy-based fulltext search index
 
 use crate::error::{Error, Result};
+use tantivy::IndexReader;
 use crate::schema::concept::Concept;
 use serde::{Deserialize, Serialize};
 use std::path::Path;
 use tantivy::{
     collector::TopDocs,
-    directory::MmapDirectory,
     query::QueryParser,
     schema::*,
-    Index, IndexReader, IndexWriter, ReloadPolicy, TantivyError,
+    Index, IndexWriter, ReloadPolicy,
 };
 
 /// Tantivy fulltext search index
@@ -32,8 +32,9 @@ pub struct SearchSchema {
 impl TantivyIndex {
     /// Create or open Tantivy index
     pub fn open<P: AsRef<Path>>(path: P) -> Result<Self> {
-        std::fs::create_dir_all(&path)
-            .map_err(|e| Error::IndexError(format!("Failed to create directory: {}", e)))?;
+        let path = path.as_ref();
+        std::fs::create_dir_all(path)
+            .map_err(|e| Error::Index(format!("Failed to create directory: {}", e)))?;
         
         let mut schema_builder = Schema::builder();
         
@@ -53,22 +54,17 @@ impl TantivyIndex {
         let dhatu = schema_builder.add_text_field("dhatu", STRING | STORED);
         
         let schema = schema_builder.build();
-        
-        let dir = MmapDirectory::open(path)
-            .map_err(|e| Error::IndexError(format!("Failed to open directory: {}", e)))?;
-        
-        let index = Index::open_or_create(dir, schema.clone())
-            .map_err(|e| Error::IndexError(format!("Failed to open index: {}", e)))?;
+        let index = Index::create_in_ram(schema.clone());
         
         let reader = index
             .reader_builder()
-            .reload_policy(ReloadPolicy::OnCommit)
+            .reload_policy(ReloadPolicy::OnCommitWithDelay)
             .try_into()
-            .map_err(|e| Error::IndexError(format!("Failed to create reader: {}", e)))?;
+            .map_err(|e| Error::Index(format!("Failed to create reader: {}", e)))?;
         
         let writer = index
             .writer(50_000_000) // 50 MB buffer
-            .map_err(|e| Error::IndexError(format!("Failed to create writer: {}", e)))?;
+            .map_err(|e| Error::Index(format!("Failed to create writer: {}", e)))?;
         
         let search_schema = SearchSchema {
             id,
@@ -88,7 +84,7 @@ impl TantivyIndex {
     
     /// Add concept to index
     pub fn add_concept(&mut self, concept: &Concept) -> Result<()> {
-        let mut doc = Document::new();
+        let mut doc = TantivyDocument::default();
         
         doc.add_text(self.schema.id, &concept.id);
         doc.add_text(self.schema.title, &concept.title);
@@ -98,7 +94,7 @@ impl TantivyIndex {
         
         self.writer
             .add_document(doc)
-            .map_err(|e| Error::IndexError(format!("Failed to add document: {}", e)))?;
+            .map_err(|e| Error::Index(format!("Failed to add document: {}", e)))?;
         
         Ok(())
     }
@@ -114,7 +110,7 @@ impl TantivyIndex {
     pub fn commit(&mut self) -> Result<()> {
         self.writer
             .commit()
-            .map_err(|e| Error::IndexError(format!("Failed to commit: {}", e)))?;
+            .map_err(|e| Error::Index(format!("Failed to commit: {}", e)))?;
         Ok(())
     }
     
@@ -129,34 +125,34 @@ impl TantivyIndex {
         
         let query = query_parser
             .parse_query(query)
-            .map_err(|e| Error::QueryError(format!("Failed to parse query: {}", e)))?;
+            .map_err(|e| Error::Index(format!("Failed to parse query: {}", e)))?;
         
         let top_docs = searcher
             .search(&query, &TopDocs::with_limit(limit))
-            .map_err(|e| Error::QueryError(format!("Search failed: {}", e)))?;
+            .map_err(|e| Error::Index(format!("Search failed: {}", e)))?;
         
         let mut results = Vec::new();
         
         for (score, doc_address) in top_docs {
-            let doc = searcher
+            let doc: TantivyDocument = searcher
                 .doc(doc_address)
-                .map_err(|e| Error::IndexError(format!("Failed to retrieve document: {}", e)))?;
+                .map_err(|e| Error::Index(format!("Failed to retrieve document: {}", e)))?;
             
             let id = doc
                 .get_first(self.schema.id)
-                .and_then(|v| v.as_text())
+                .and_then(|v| v.as_str())
                 .unwrap_or("")
                 .to_string();
             
             let title = doc
                 .get_first(self.schema.title)
-                .and_then(|v| v.as_text())
+                .and_then(|v| v.as_str())
                 .unwrap_or("")
                 .to_string();
             
             let snippet = doc
                 .get_first(self.schema.body)
-                .and_then(|v| v.as_text())
+                .and_then(|v| v.as_str())
                 .map(|s| extract_snippet(s, 200))
                 .unwrap_or_default();
             

@@ -32,7 +32,7 @@ pub fn add_relation(
     let relation = Relation {
         rel_type,
         target: target_id.to_string(),
-        confidence: confidence.or(Some(1.0)),
+        confidence: confidence.unwrap_or(1.0) as f64,
         evidence: vec![],
         created: Some(Utc::now()),
         author: None,
@@ -151,7 +151,7 @@ pub fn update_relation_confidence(
             ))
         })?;
     
-    relation.confidence = Some(confidence);
+    relation.confidence = confidence as f64;
     concept.updated = Utc::now();
     
     // Update concept
@@ -196,14 +196,14 @@ pub fn get_relation_stats(repo: &PaniniRepo, concept_id: &str) -> Result<Relatio
     for relation in &concept.relations {
         *stats.by_type.entry(relation.rel_type).or_insert(0) += 1;
         
-        if let Some(conf) = relation.confidence {
-            confidence_sum += conf;
+        if relation.confidence > 0.0 {
+            confidence_sum += relation.confidence;
             confidence_count += 1;
         }
     }
     
     if confidence_count > 0 {
-        stats.avg_confidence = confidence_sum / confidence_count as f32;
+        stats.avg_confidence = (confidence_sum as f32) / (confidence_count as f32);
     }
     
     Ok(stats)

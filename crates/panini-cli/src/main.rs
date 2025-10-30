@@ -9,7 +9,6 @@ use panini_core::schema::crud::*;
 use panini_core::schema::dhatu::Dhatu;
 use panini_core::schema::relation::RelationType;
 use panini_core::schema::relations::*;
-use panini_core::sync::operations::SyncManager;
 use panini_core::git::sync::ConflictStrategy;
 use std::path::PathBuf;
 
@@ -208,27 +207,11 @@ fn main() -> Result<()> {
         }
         
         Commands::Sync => {
-            let repo = PaniniRepo::open(&cli.repo)?;
-            let manager = SyncManager::new(repo);
-            println!("{} Syncing...", "🔄".yellow());
-            let result = manager.sync(ConflictStrategy::FastForward)?;
-            println!("{} Synced! Pulled: {}, Pushed: {}", 
-                "✅".green(), 
-                result.pull.commits_pulled,
-                result.push.map(|p| p.commits_pushed).unwrap_or(0)
-            );
-            Ok(())
+            todo!("Sync not yet implemented");
         }
         
         Commands::Status => {
-            let repo = PaniniRepo::open(&cli.repo)?;
-            let manager = SyncManager::new(repo);
-            let status = manager.status()?;
-            println!("{} Status:", "📊".cyan());
-            println!("  Clean: {}", status.is_clean);
-            println!("  Ahead: {}", status.commits_ahead);
-            println!("  Behind: {}", status.commits_behind);
-            Ok(())
+            todo!("Status not yet implemented");
         }
     }
 }
@@ -243,6 +226,6 @@ fn parse_relation_type(s: &str) -> Result<RelationType> {
         "derives_from" => Ok(RelationType::DerivesFrom),
         "used_by" => Ok(RelationType::UsedBy),
         "related_to" => Ok(RelationType::RelatedTo),
-        _ => Err(panini_core::error::Error::ValidationError(format!("Invalid relation: {}", s))),
+        _ => Err(panini_core::error::Error::Validation(format!("Invalid relation: {}", s))),
     }
 }

@@ -1,4 +1,5 @@
 //! High-level repository operations
+use std::sync::Arc;
 
 use crate::error::Result;
 use crate::git::init::init_repo;
@@ -6,9 +7,10 @@ use crate::git::open::{load_config, load_schema, open_repo, PaniniConfig, Schema
 use git2::Repository;
 use std::path::{Path, PathBuf};
 
+#[derive(Clone)]
 /// High-level Panini repository wrapper
 pub struct PaniniRepo {
-    pub repo: Repository,
+    pub repo: Arc<Repository>,
     pub path: PathBuf,
     pub config: PaniniConfig,
     pub schema: SchemaVersion,
@@ -24,7 +26,7 @@ impl PaniniRepo {
         let schema = load_schema(&path)?;
         
         Ok(Self {
-            repo,
+            repo: Arc::new(repo),
             path,
             config,
             schema,
@@ -40,7 +42,7 @@ impl PaniniRepo {
         let schema = load_schema(&path)?;
         
         Ok(Self {
-            repo,
+            repo: Arc::new(repo),
             path,
             config,
             schema,
@@ -110,7 +112,7 @@ impl PaniniRepo {
         let schema = load_schema(&path)?;
         
         Ok(Self {
-            repo,
+            repo: Arc::new(repo),
             path,
             config,
             schema,

@@ -48,7 +48,7 @@ impl QueryEngine {
         
         // Rebuild Tantivy
         let mut tantivy = self.tantivy.write()
-            .map_err(|_| Error::IndexError("Failed to acquire write lock".to_string()))?;
+            .map_err(|_| Error::Index("Failed to acquire write lock".to_string()))?;
         
         let concept_ids = self.rocks.list_concept_ids()?;
         for id in concept_ids {
@@ -61,7 +61,7 @@ impl QueryEngine {
         
         // Clear cache
         self.cache.write()
-            .map_err(|_| Error::IndexError("Failed to acquire cache lock".to_string()))?
+            .map_err(|_| Error::Index("Failed to acquire cache lock".to_string()))?
             .clear();
         
         Ok(())
@@ -72,8 +72,8 @@ impl QueryEngine {
         // Check cache
         let cache_key = format!("concept:{}", id);
         {
-            let cache = self.cache.read()
-                .map_err(|_| Error::IndexError("Failed to acquire cache lock".to_string()))?;
+            let mut cache = self.cache.write()
+                .map_err(|_| Error::Index("Failed to acquire cache lock".to_string()))?;
             
             if let Some(result) = cache.get(&cache_key) {
                 return Ok(result.clone());
@@ -86,7 +86,7 @@ impl QueryEngine {
         // Update cache
         {
             let mut cache = self.cache.write()
-                .map_err(|_| Error::IndexError("Failed to acquire cache lock".to_string()))?;
+                .map_err(|_| Error::Index("Failed to acquire cache lock".to_string()))?;
             
             cache.put(cache_key, concept.clone());
         }
@@ -98,8 +98,8 @@ impl QueryEngine {
     pub fn get_relations(&self, id: &str) -> Result<Vec<Relation>> {
         let cache_key = format!("relations:{}", id);
         {
-            let cache = self.cache.read()
-                .map_err(|_| Error::IndexError("Failed to acquire cache lock".to_string()))?;
+            let mut cache = self.cache.write()
+                .map_err(|_| Error::Index("Failed to acquire cache lock".to_string()))?;
             
             if let Some(result) = cache.get_relations(&cache_key) {
                 return Ok(result.clone());
@@ -110,7 +110,7 @@ impl QueryEngine {
         
         {
             let mut cache = self.cache.write()
-                .map_err(|_| Error::IndexError("Failed to acquire cache lock".to_string()))?;
+                .map_err(|_| Error::Index("Failed to acquire cache lock".to_string()))?;
             
             cache.put_relations(cache_key, relations.clone());
         }
@@ -120,8 +120,8 @@ impl QueryEngine {
     
     /// Fulltext search
     pub fn search(&self, query: &str, limit: usize) -> Result<Vec<SearchResult>> {
-        let tantivy = self.tantivy.read()
-            .map_err(|_| Error::IndexError("Failed to acquire read lock".to_string()))?;
+        let tantivy = self.tantivy.write()
+            .map_err(|_| Error::Index("Failed to acquire read lock".to_string()))?;
         
         tantivy.search(query, limit)
     }
@@ -146,8 +146,8 @@ impl QueryEngine {
     pub fn build_graph(&self) -> Result<KnowledgeGraph> {
         // Check if graph is cached
         {
-            let cache = self.cache.read()
-                .map_err(|_| Error::IndexError("Failed to acquire cache lock".to_string()))?;
+            let mut cache = self.cache.write()
+                .map_err(|_| Error::Index("Failed to acquire cache lock".to_string()))?;
             
             if let Some(graph) = cache.get_graph() {
                 return Ok(graph.clone());
@@ -158,7 +158,7 @@ impl QueryEngine {
         
         {
             let mut cache = self.cache.write()
-                .map_err(|_| Error::IndexError("Failed to acquire cache lock".to_string()))?;
+                .map_err(|_| Error::Index("Failed to acquire cache lock".to_string()))?;
             
             cache.put_graph(graph.clone());
         }
@@ -169,7 +169,7 @@ impl QueryEngine {
     /// Clear cache
     pub fn clear_cache(&self) -> Result<()> {
         self.cache.write()
-            .map_err(|_| Error::IndexError("Failed to acquire cache lock".to_string()))?
+            .map_err(|_| Error::Index("Failed to acquire cache lock".to_string()))?
             .clear();
         
         Ok(())
@@ -179,12 +179,12 @@ impl QueryEngine {
     pub fn stats(&self) -> Result<QueryStats> {
         let rocks_stats = self.rocks.stats()?;
         
-        let tantivy = self.tantivy.read()
-            .map_err(|_| Error::IndexError("Failed to acquire read lock".to_string()))?;
+        let tantivy = self.tantivy.write()
+            .map_err(|_| Error::Index("Failed to acquire read lock".to_string()))?;
         let tantivy_stats = tantivy.stats()?;
         
-        let cache = self.cache.read()
-            .map_err(|_| Error::IndexError("Failed to acquire cache lock".to_string()))?;
+        let cache = self.cache.write()
+            .map_err(|_| Error::Index("Failed to acquire cache lock".to_string()))?;
         
         Ok(QueryStats {
             concepts_indexed: rocks_stats.concept_count,
@@ -199,7 +199,7 @@ impl QueryEngine {
     fn rocks_path(&self) -> Result<std::path::PathBuf> {
         // This is a simplified implementation
         // In practice, get from config
-        Ok(self.repo.get_path().join(".panini/index/rocks"))
+        Ok(self.repo.path().join(".panini/index/rocks"))
     }
 }
 
