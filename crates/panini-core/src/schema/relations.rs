@@ -320,7 +320,7 @@ mod tests {
         update_relation_confidence(&repo, "source", RelationType::IsA, "target", 0.9).unwrap();
         
         let relations = get_relations(&repo, "source").unwrap();
-        assert_eq!(relations[0].confidence, Some(0.9));
+        assert_eq!(relations[0].confidence, 0.9);
     }
     
     #[test]

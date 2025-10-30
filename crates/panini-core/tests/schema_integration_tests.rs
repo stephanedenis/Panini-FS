@@ -38,7 +38,7 @@ fn test_full_concept_lifecycle() {
     
     // Create
     let concept = create_test_concept(&repo, "rust", "Rust Programming");
-    assert!(repo.get_path().join("knowledge/rust.md").exists());
+    assert!(repo.path.join("knowledge/rust.md").exists());
     
     // Read
     let read = read_concept(&repo, "rust").unwrap();
@@ -55,7 +55,7 @@ fn test_full_concept_lifecycle() {
     
     // Delete
     delete_concept(&repo, "rust").unwrap();
-    assert!(!repo.get_path().join("knowledge/rust.md").exists());
+    assert!(!repo.path.join("knowledge/rust.md").exists());
 }
 
 #[test]
@@ -75,7 +75,7 @@ fn test_crud_with_relations() {
     assert_eq!(concept.relations.len(), 1);
     assert_eq!(concept.relations[0].rel_type, RelationType::IsA);
     assert_eq!(concept.relations[0].target, "programming");
-    assert_eq!(concept.relations[0].confidence, Some(0.9));
+    assert_eq!(concept.relations[0].confidence, 0.9);
     
     // Remove relation
     remove_relation(&repo, "rust", RelationType::IsA, "programming").unwrap();

@@ -204,7 +204,7 @@ mod tests {
         
         let result = open_repo(tmp.path());
         assert!(result.is_err());
-        assert!(result.unwrap_err().to_string().contains("not initialized"));
+        assert!(result.is_err() && result.err().map(|e| e.to_string().to_string().contains("not initialized")).unwrap_or(false));
     }
     
     #[test]
