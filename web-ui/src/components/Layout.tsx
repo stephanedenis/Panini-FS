@@ -24,6 +24,7 @@ export function Layout({ children }: LayoutProps) {
     { path: '/concepts', icon: FileText, label: 'Concepts' },
     { path: '/timeline', icon: Clock, label: 'Timeline' },
     { path: '/snapshots', icon: Camera, label: 'Snapshots' },
+    { path: '/dhatu', icon: Heart, label: 'Dhātu' },
   ];
 
   return (
