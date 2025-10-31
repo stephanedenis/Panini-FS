@@ -62,8 +62,6 @@ pub fn mount(config: MountConfig) -> Result<()> {
     let options = vec![
         fuser::MountOption::RO, // Read-only
         fuser::MountOption::FSName("panini-fs".to_string()),
-        fuser::MountOption::AutoUnmount,
-        fuser::MountOption::AllowOther,
     ];
     
     fuser::mount2(fs, &config.mount_point, &options)?;
