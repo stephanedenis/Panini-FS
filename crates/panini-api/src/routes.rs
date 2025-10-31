@@ -6,7 +6,7 @@ use axum::{
 };
 use tower_http::cors::CorsLayer;
 
-use crate::{handlers, state::AppState};
+use crate::{dedup_handlers, handlers, state::AppState};
 
 /// Create the main API router with all endpoints
 pub fn create_router(state: AppState) -> Router {
@@ -35,7 +35,14 @@ pub fn create_router(state: AppState) -> Router {
         .route("/time-travel", get(handlers::time_travel))
         
         // Stats endpoint
-        .route("/stats", get(handlers::get_stats));
+        .route("/stats", get(handlers::get_stats))
+        
+        // Deduplication endpoints (Phase 7)
+        .route("/dedup/stats", get(dedup_handlers::get_dedup_stats))
+        .route("/atoms/search", get(dedup_handlers::search_atoms))
+        .route("/atoms/:hash", get(dedup_handlers::get_atom_details))
+        .route("/files/analyze", post(dedup_handlers::analyze_file))
+        .route("/files/:hash/atoms", get(dedup_handlers::get_file_atoms));
 
     // Main router with /api prefix
     Router::new()
