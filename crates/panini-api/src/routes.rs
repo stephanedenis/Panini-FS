@@ -6,7 +6,7 @@ use axum::{
 };
 use tower_http::cors::CorsLayer;
 
-use crate::{dedup_handlers, handlers, state::AppState};
+use crate::{dedup_handlers, dhatu_handlers, handlers, state::AppState};
 
 /// Create the main API router with all endpoints
 pub fn create_router(state: AppState) -> Router {
@@ -42,7 +42,15 @@ pub fn create_router(state: AppState) -> Router {
         .route("/atoms/search", get(dedup_handlers::search_atoms))
         .route("/atoms/:hash", get(dedup_handlers::get_atom_details))
         .route("/files/analyze", post(dedup_handlers::analyze_file))
-        .route("/files/:hash/atoms", get(dedup_handlers::get_file_atoms));
+        .route("/files/:hash/atoms", get(dedup_handlers::get_file_atoms))
+        
+        // Dhātu emotional classification endpoints (Phase 9)
+        .route("/dhatu/emotions", get(dhatu_handlers::get_emotions))
+        .route("/dhatu/roots/:emotion", get(dhatu_handlers::get_roots))
+        .route("/dhatu/classify", post(dhatu_handlers::classify_content))
+        .route("/dhatu/search", get(dhatu_handlers::search_profiles))
+        .route("/dhatu/stats", get(dhatu_handlers::get_stats))
+        .route("/dhatu/resonance", post(dhatu_handlers::calculate_resonance));
 
     // Main router with /api prefix
     Router::new()

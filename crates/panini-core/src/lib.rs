@@ -61,3 +61,4 @@ mod tests {
         assert_eq!(VERSION, "2.0.0");
     }
 }
+pub mod dhatu;

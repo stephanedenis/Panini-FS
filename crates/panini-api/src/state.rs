@@ -1,5 +1,6 @@
 //! Application state shared across handlers
 
+use crate::dhatu_handlers::DhatuState;
 use panini_core::storage::{
     backends::localfs::LocalFsBackend,
     cas::ContentAddressedStorage,
@@ -15,6 +16,9 @@ pub struct AppState {
     
     /// Content-addressed storage
     pub cas: Arc<ContentAddressedStorage<LocalFsBackend>>,
+    
+    /// Dhātu emotional classification system
+    pub dhatu: Arc<DhatuState>,
 }
 
 impl AppState {
@@ -26,6 +30,7 @@ impl AppState {
         Self {
             temporal_index,
             cas,
+            dhatu: DhatuState::new(),
         }
     }
 }
