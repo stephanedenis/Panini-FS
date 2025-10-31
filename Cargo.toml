@@ -6,7 +6,7 @@ members = [
     "crates/panini-core",
     "crates/panini-cli",
     "crates/panini-api",
-    "crates/panini-analyzer",
+    "crates/panini-analyzer", "crates/panini-fuse",
     # "crates/panini-server",  # TODO: Fix axum 0.7 API + Send trait for Repository
 ]
 resolver = "2"

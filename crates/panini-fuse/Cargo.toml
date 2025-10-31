@@ -1,0 +1,42 @@
+[package]
+name = "panini-fuse"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+description = "FUSE filesystem interface for Panini-FS temporal storage"
+
+[[bin]]
+name = "panini-mount"
+path = "src/main.rs"
+
+[dependencies]
+panini-core = { path = "../panini-core" }
+
+# FUSE filesystem
+fuser = "0.14"
+libc = "0.2"
+
+# Async runtime
+tokio = { workspace = true }
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Time handling
+chrono = { workspace = true }
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Error handling
+anyhow = { workspace = true }
+thiserror = "1.0"
+
+# CLI
+clap = { workspace = true }
+
+[dev-dependencies]
+tempfile = "3.8"
