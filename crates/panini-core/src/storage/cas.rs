@@ -135,7 +135,7 @@ impl<B: StorageBackend> ContentAddressedStorage<B> {
     }
 
     /// Get storage statistics
-    pub fn get_stats(&self) -> StorageStats {
+    pub async fn get_stats(&self) -> StorageStats {
         let index = self.atom_index.read().unwrap();
         
         let total_atoms = index.len() as u64;
@@ -269,7 +269,40 @@ impl<B: StorageBackend> ContentAddressedStorage<B> {
             Ok(Vec::new())
         }
     }
-}
+    /// Decompose binary data into atoms and store them
+    /// Returns list of atom hashes in order
+    pub async fn decompose_and_store(
+        &self,
+        data: &[u8],
+        format: &crate::storage::decomposer::FileFormat,
+    ) -> Result<Vec<String>> {
+        // For now, use simple chunking strategy
+        // TODO: Implement proper format-aware decomposition
+        let mut hashes = Vec::new();
+        const CHUNK_SIZE: usize = 64 * 1024; // 64KB chunks
+        
+        if data.len() <= CHUNK_SIZE {
+            // Small file, store as single atom
+            let atom = self.add_atom(data, AtomType::Raw).await?;
+            hashes.push(atom.hash);
+        } else {
+            // Large file, chunk it
+            for (i, chunk) in data.chunks(CHUNK_SIZE).enumerate() {
+                let atom_type = if i == 0 {
+                    AtomType::Container // First chunk
+                } else {
+                    AtomType::Raw
+                };
+                let atom = self.add_atom(chunk, atom_type).await?;
+                hashes.push(atom.hash);
+            }
+        }
+        
+        Ok(hashes)
+    }
+
+
+    }
 
 /// Storage statistics
 #[derive(Debug, Clone, Serialize, Deserialize)]
