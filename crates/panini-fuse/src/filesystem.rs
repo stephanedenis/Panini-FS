@@ -20,10 +20,16 @@ pub struct PaniniFS {
 
 impl PaniniFS {
     pub fn new(config: MountConfig) -> Result<Self> {
-        let inodes = InodeTable::new();
+        let mut inodes = InodeTable::new();
         
         // Initialize storage bridge
         let storage = StorageBridge::new(config.storage_path.clone())?;
+        
+        // Populate filesystem tree from storage
+        if let Err(e) = crate::tree_builder::populate_tree(&mut inodes, &storage) {
+            tracing::warn!("Failed to populate tree from storage: {}", e);
+            // Continue with empty tree
+        }
         
         Ok(Self {
             config,

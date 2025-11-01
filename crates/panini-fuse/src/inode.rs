@@ -213,6 +213,29 @@ impl InodeTable {
         path_parts.reverse();
         format!("/{}", path_parts.join("/"))
     }
+    
+    /// Create a new directory inode and return its number
+    pub fn create_directory(&mut self, name: String, parent: InodeNum) -> InodeNum {
+        let ino = self.allocate_inode();
+        let inode = Inode::new_dir(ino, name, Some(parent));
+        self.insert(inode);
+        ino
+    }
+    
+    /// Create a new file inode and return its number
+    pub fn create_file(
+        &mut self,
+        name: String,
+        parent: InodeNum,
+        content_hash: Option<String>,
+        size: usize,
+    ) -> InodeNum {
+        let ino = self.allocate_inode();
+        let hash = content_hash.unwrap_or_else(|| String::new());
+        let inode = Inode::new_file(ino, name, Some(parent), size as u64, hash);
+        self.insert(inode);
+        ino
+    }
 }
 
 impl Default for InodeTable {
