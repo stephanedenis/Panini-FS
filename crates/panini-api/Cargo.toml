@@ -15,6 +15,7 @@ tower-http = { workspace = true }
 
 # Async runtime
 tokio = { workspace = true }
+bytes = "1.5"
 
 # Serialization
 serde = { workspace = true }

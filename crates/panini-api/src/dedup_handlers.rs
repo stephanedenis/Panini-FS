@@ -5,6 +5,8 @@ use axum::{
     http::StatusCode,
     Json,
 };
+use bytes::Bytes;
+use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
@@ -97,46 +99,58 @@ pub struct AtomInfo {
 /// GET /api/dedup/stats
 /// Retourne les statistiques globales de déduplication
 pub async fn get_dedup_stats(
-    State(_state): State<AppState>,
+    State(state): State<AppState>,
 ) -> Result<Json<DedupStats>, StatusCode> {
-    // TODO: Calculer depuis le CAS réel
-    // Pour l'instant, retourne des données de test basées sur validation
+    // Récupérer les vraies statistiques du CAS
+    let storage_stats = state.cas.get_stats().await;
+    let all_atoms = state.cas.list_atoms();
+    
+    // Calculer les statistiques de déduplication
+    let total_refs: usize = all_atoms.iter().map(|a| a.ref_count as usize).sum();
+    let unique_atoms = all_atoms.len();
+    let total_size: u64 = all_atoms.iter().map(|a| a.size).sum();
+    
+    let dedup_ratio = if total_refs > 0 {
+        1.0 - (unique_atoms as f64 / total_refs as f64)
+    } else {
+        0.0
+    };
+    
+    let avg_reuse = if unique_atoms > 0 {
+        total_refs as f64 / unique_atoms as f64
+    } else {
+        0.0
+    };
+    
+    let storage_saved = if dedup_ratio > 0.0 {
+        (total_size as f64 * dedup_ratio) as u64
+    } else {
+        0
+    };
+    
+    // Identifier les top atomes par usage
+    let mut sorted_atoms = all_atoms.clone();
+    sorted_atoms.sort_by(|a, b| b.ref_count.cmp(&a.ref_count));
+    let top_atoms: Vec<TopAtom> = sorted_atoms
+        .iter()
+        .take(10)
+        .filter(|a| a.ref_count > 1)
+        .map(|a| TopAtom {
+            hash: a.hash.clone(),
+            usage_count: a.ref_count as usize,
+            size: a.size,
+        })
+        .collect();
     
     let stats = DedupStats {
-        total_files: 400360,
-        total_size: 9624887296, // 8.96 GB
-        total_atoms: 491240,
-        unique_atoms: 126177,
-        dedup_ratio: 0.743,
-        storage_saved: 7149823488, // 6.66 GB
-        avg_reuse: 3.96,
-        top_atoms: vec![
-            TopAtom {
-                hash: "63e1de009344e8347f154d1e3d71e2e7a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6".to_string(),
-                usage_count: 380,
-                size: 65536,
-            },
-            TopAtom {
-                hash: "59a726f169f1c8d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d7".to_string(),
-                usage_count: 180,
-                size: 65536,
-            },
-            TopAtom {
-                hash: "085bbcee4e02f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0".to_string(),
-                usage_count: 150,
-                size: 65536,
-            },
-            TopAtom {
-                hash: "27c72988bdc2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8".to_string(),
-                usage_count: 150,
-                size: 65536,
-            },
-            TopAtom {
-                hash: "7bc47ea09473f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5".to_string(),
-                usage_count: 150,
-                size: 65536,
-            },
-        ],
+        total_files: total_refs,
+        total_size: total_size * total_refs as u64 / unique_atoms.max(1) as u64,
+        total_atoms: storage_stats.total_atoms as usize,
+        unique_atoms,
+        dedup_ratio,
+        storage_saved,
+        avg_reuse,
+        top_atoms,
     };
 
     Ok(Json(stats))
@@ -146,7 +160,7 @@ pub async fn get_dedup_stats(
 /// Recherche des atomes par hash
 pub async fn search_atoms(
     Query(params): Query<SearchQuery>,
-    State(_state): State<AppState>,
+    State(state): State<AppState>,
 ) -> Result<Json<AtomSearchResult>, StatusCode> {
     let query = params.q.to_lowercase();
     
@@ -157,28 +171,23 @@ pub async fn search_atoms(
         }));
     }
 
-    // TODO: Recherche réelle dans le CAS
-    // Pour l'instant, retourne des résultats de test
-    let test_atoms = vec![
-        AtomSummary {
-            hash: "63e1de009344e8347f154d1e3d71e2e7a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6".to_string(),
-            size: 65536,
-            atom_type: "Container".to_string(),
-            created_at: chrono::Utc::now().to_rfc3339(),
-            usage_count: 380,
-        },
-        AtomSummary {
-            hash: "59a726f169f1c8d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d7".to_string(),
-            size: 65536,
-            atom_type: "Container".to_string(),
-            created_at: chrono::Utc::now().to_rfc3339(),
-            usage_count: 180,
-        },
-    ];
-
-    let filtered: Vec<_> = test_atoms
-        .into_iter()
+    // Recherche réelle dans le CAS
+    let all_atoms = state.cas.list_atoms();
+    
+    let filtered: Vec<AtomSummary> = all_atoms
+        .iter()
         .filter(|atom| atom.hash.to_lowercase().contains(&query))
+        .map(|atom| {
+            let dt = chrono::DateTime::from_timestamp(atom.created_at as i64, 0)
+                .unwrap_or_else(|| chrono::Utc::now());
+            AtomSummary {
+                hash: atom.hash.clone(),
+                size: atom.size,
+                atom_type: format!("{:?}", atom.atom_type),
+                created_at: dt.to_rfc3339(),
+                usage_count: atom.ref_count as usize,
+            }
+        })
         .collect();
 
     let total = filtered.len();
@@ -193,35 +202,39 @@ pub async fn search_atoms(
 /// Récupère les détails d'un atome spécifique
 pub async fn get_atom_details(
     Path(hash): Path<String>,
-    State(_state): State<AppState>,
+    State(state): State<AppState>,
 ) -> Result<Json<AtomDetails>, StatusCode> {
-    // TODO: Récupérer depuis le CAS réel
-    
-    // Simuler recherche
+    // Validation
     if hash.len() < 10 {
         return Err(StatusCode::BAD_REQUEST);
     }
 
-    let details = AtomDetails {
-        hash: hash.clone(),
-        size: 65536,
-        atom_type: "Container".to_string(),
-        created_at: chrono::Utc::now().to_rfc3339(),
-        usage_count: 380,
-        files: vec![
-            "/path/to/file1.html".to_string(),
-            "/path/to/file2.html".to_string(),
-            "/path/to/file3.html".to_string(),
-        ],
-    };
-
-    Ok(Json(details))
+    // Récupérer depuis le CAS réel
+    match state.cas.get_atom_metadata(&hash) {
+        Ok(metadata) => {
+            let dt = chrono::DateTime::from_timestamp(metadata.created_at as i64, 0)
+                .unwrap_or_else(|| chrono::Utc::now());
+            let details = AtomDetails {
+                hash: metadata.hash.clone(),
+                size: metadata.size,
+                atom_type: format!("{:?}", metadata.atom_type),
+                created_at: dt.to_rfc3339(),
+                usage_count: metadata.ref_count as usize,
+                files: vec![
+                    // TODO: Track atom->file relationships in index
+                    format!("Referenced {} times", metadata.ref_count),
+                ],
+            };
+            Ok(Json(details))
+        }
+        Err(_) => Err(StatusCode::NOT_FOUND),
+    }
 }
 
 /// POST /api/files/analyze
 /// Upload et analyse un fichier
 pub async fn analyze_file(
-    State(_state): State<AppState>,
+    State(state): State<AppState>,
     mut multipart: Multipart,
 ) -> Result<Json<AnalysisResult>, StatusCode> {
     let start = std::time::Instant::now();
@@ -257,68 +270,64 @@ pub async fn analyze_file(
 
     let file_size = file_data.len() as u64;
     
-    // Découper en chunks de 64KB
-    let chunk_size = 64 * 1024;
-    let chunks: Vec<_> = file_data.chunks(chunk_size).collect();
-    let atoms_created = chunks.len();
-    
-    // Pour la démo, simuler quelques atomes réutilisés
-    let atoms_reused = (atoms_created as f64 * 0.3) as usize;
-    let storage_saved = (file_size as f64 * 0.3) as u64;
-    let dedup_ratio = atoms_reused as f64 / atoms_created as f64;
-    
     // Hash du fichier complet
     let mut hasher = Sha256::new();
     hasher.update(&file_data);
     let file_hash = format!("{:x}", hasher.finalize());
+    
+    // Store in CAS as a container atom
+    match state.cas.add_atom(&file_data, panini_core::storage::atom::AtomType::Container).await {
+        Ok(atom) => {
+            // Check if it was deduplicated
+            match state.cas.get_atom_metadata(&atom.hash) {
+                Ok(metadata) => {
+                    let atoms_created = 1;
+                    let atoms_reused = if metadata.ref_count > 1 { 1 } else { 0 };
+                    let dedup_ratio = atoms_reused as f64 / atoms_created as f64;
+                    let storage_saved = if metadata.ref_count > 1 { metadata.size } else { 0 };
+                    
+                    let processing_time = start.elapsed().as_millis();
 
-    let processing_time = start.elapsed().as_millis();
-
-    Ok(Json(AnalysisResult {
-        filename,
-        size: file_size,
-        atoms_created,
-        atoms_reused,
-        dedup_ratio,
-        storage_saved,
-        hash: file_hash,
-        processing_time_ms: processing_time,
-    }))
+                    Ok(Json(AnalysisResult {
+                        filename,
+                        size: file_size,
+                        atoms_created,
+                        atoms_reused,
+                        dedup_ratio,
+                        storage_saved,
+                        hash: atom.hash,
+                        processing_time_ms: processing_time,
+                    }))
+                }
+                Err(_) => Err(StatusCode::INTERNAL_SERVER_ERROR),
+            }
+        }
+        Err(_) => Err(StatusCode::INTERNAL_SERVER_ERROR),
+    }
 }
 
 /// GET /api/files/<hash>/atoms
 /// Récupère la liste des atomes d'un fichier
 pub async fn get_file_atoms(
     Path(hash): Path<String>,
-    State(_state): State<AppState>,
+    State(state): State<AppState>,
 ) -> Result<Json<FileAtomsResponse>, StatusCode> {
-    // TODO: Récupérer depuis le CAS réel
-    
     if hash.len() < 10 {
         return Err(StatusCode::BAD_REQUEST);
     }
 
-    // Simuler quelques atomes
-    let atoms = vec![
-        AtomInfo {
-            hash: "63e1de009344e834...".to_string(),
-            size: 65536,
-            is_new: false,
-            reuse_count: 380,
-        },
-        AtomInfo {
-            hash: "59a726f169f1c8d2...".to_string(),
-            size: 65536,
-            is_new: false,
-            reuse_count: 180,
-        },
-        AtomInfo {
-            hash: "a1b2c3d4e5f6a7b8...".to_string(),
-            size: 32768,
-            is_new: true,
-            reuse_count: 1,
-        },
-    ];
-
-    Ok(Json(FileAtomsResponse { atoms }))
+    // For now, return the atom itself as a single-atom "file"
+    // TODO: Implement proper file->atoms mapping when decomposer is integrated
+    match state.cas.get_atom_metadata(&hash) {
+        Ok(metadata) => {
+            let atom = AtomInfo {
+                hash: metadata.hash.clone(),
+                size: metadata.size,
+                is_new: metadata.ref_count == 1,
+                reuse_count: metadata.ref_count as usize,
+            };
+            Ok(Json(FileAtomsResponse { atoms: vec![atom] }))
+        }
+        Err(_) => Err(StatusCode::NOT_FOUND),
+    }
 }
