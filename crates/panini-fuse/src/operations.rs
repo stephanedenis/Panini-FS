@@ -2,6 +2,7 @@
 
 use fuser::{FileAttr, FileType, ReplyAttr, ReplyData, ReplyDirectory, ReplyEntry};
 use libc::{ENOENT, ENOTDIR};
+use std::ffi::OsStr;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use crate::filesystem::PaniniFS;
@@ -52,12 +53,13 @@ impl PaniniFS {
     }
     
     /// Handle lookup - resolve name in directory
-    pub(crate) fn handle_lookup(&self, parent: u64, name: &str, reply: ReplyEntry) {
+    pub(crate) fn handle_lookup(&self, parent: u64, name: &OsStr, reply: ReplyEntry) {
+        let name_str = name.to_string_lossy();
         if let Some(parent_inode) = self.inodes.get(parent) {
             // Search for child with matching name
             for child_ino in &parent_inode.children {
                 if let Some(child) = self.inodes.get(*child_ino) {
-                    if child.name == name {
+                    if child.name == name_str.as_ref() {
                         let attr = self.inode_to_attr(child);
                         reply.entry(&Duration::from_secs(1), &attr, 0);
                         return;
@@ -130,24 +132,29 @@ impl PaniniFS {
             }
             
             if let Some(hash) = &inode.content_hash {
-                // TODO: Read from CAS storage
-                // For now, return mock data
-                let data = format!("Content of file {} (hash: {})", inode.name, hash);
-                let bytes = data.as_bytes();
-                
-                let start = offset as usize;
-                let end = (start + size as usize).min(bytes.len());
-                
-                if start >= bytes.len() {
-                    reply.data(&[]);
-                } else {
-                    reply.data(&bytes[start..end]);
+                // Read from real CAS storage via bridge
+                match self.storage.read_atom(hash) {
+                    Ok(content) => {
+                        let bytes = content.as_ref();
+                        let start = offset as usize;
+                        let end = (start + size as usize).min(bytes.len());
+                        
+                        if start >= bytes.len() {
+                            reply.data(&[]);
+                        } else {
+                            reply.data(&bytes[start..end]);
+                        }
+                    }
+                    Err(e) => {
+                        tracing::error!("Failed to read atom {}: {}", hash, e);
+                        reply.error(libc::EIO);
+                    }
                 }
             } else {
-                reply.error(ENOENT);
+                reply.error(libc::ENOENT);
             }
         } else {
-            reply.error(ENOENT);
+            reply.error(libc::ENOENT);
         }
     }
     

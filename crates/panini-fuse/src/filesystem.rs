@@ -7,32 +7,33 @@ use fuser::{
 use std::time::Duration;
 
 use crate::inode::{InodeTable, ROOT_INODE};
+use crate::operations::*;
+use crate::storage_bridge::StorageBridge;
 use crate::MountConfig;
 
 /// Panini-FS FUSE filesystem
 pub struct PaniniFS {
     pub(crate) config: MountConfig,
     pub(crate) inodes: InodeTable,
+    pub(crate) storage: StorageBridge,
 }
 
 impl PaniniFS {
     pub fn new(config: MountConfig) -> Result<Self> {
         let inodes = InodeTable::new();
         
+        // Initialize storage bridge
+        let storage = StorageBridge::new(config.storage_path.clone())?;
+        
         Ok(Self {
             config,
             inodes,
+            storage,
         })
     }
 }
 
 impl Filesystem for PaniniFS {
-    fn lookup(&mut self, _req: &Request, parent: u64, name: &std::ffi::OsStr, reply: ReplyEntry) {
-        let name = name.to_str().unwrap_or("");
-        tracing::debug!("lookup: parent={}, name={}", parent, name);
-        self.handle_lookup(parent, name, reply);
-    }
-    
     fn getattr(&mut self, _req: &Request, ino: u64, reply: ReplyAttr) {
         tracing::debug!("getattr: ino={}", ino);
         self.handle_getattr(ino, reply);
@@ -68,5 +69,10 @@ impl Filesystem for PaniniFS {
     fn readlink(&mut self, _req: &Request, ino: u64, reply: ReplyData) {
         tracing::debug!("readlink: ino={}", ino);
         self.handle_readlink(ino, reply);
+    }
+    
+    fn lookup(&mut self, _req: &Request, parent: u64, name: &std::ffi::OsStr, reply: ReplyEntry) {
+        tracing::debug!("lookup: parent={}, name={:?}", parent, name);
+        self.handle_lookup(parent, name, reply);
     }
 }

@@ -11,6 +11,7 @@ pub mod filesystem;
 pub mod inode;
 pub mod operations;
 pub mod time_travel;
+pub mod storage_bridge;
 
 pub use filesystem::PaniniFS;
 pub use inode::{Inode, InodeType};

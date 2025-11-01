@@ -19,6 +19,8 @@ libc = "0.2"
 
 # Async runtime
 tokio = { workspace = true }
+bytes = "1.5"
+anyhow = { workspace = true }
 
 # Serialization
 serde = { workspace = true }
@@ -32,7 +34,6 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
 # Error handling
-anyhow = { workspace = true }
 thiserror = "1.0"
 
 # CLI

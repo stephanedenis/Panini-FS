@@ -1897,6 +1897,7 @@ name = "panini-fuse"
 version = "2.0.0"
 dependencies = [
  "anyhow",
+ "bytes",
  "chrono",
  "clap",
  "fuser",
