@@ -25,6 +25,7 @@ Le submodule `copilotage/` est présent dans ce dépôt et contient les directiv
 - **Journal de bord :** ce dépôt tient son propre journal dans `docs/journal-de-bord/YYYY-MM-DD.md`. Consulter `copilotage/regles/REGLES_JOURNAL_v1.md` pour les règles complètes.
 - **Règles d'autonomie et de copilotage :** `copilotage/regles/REGLES_COPILOTAGE_v0.0.2.md`
 - **Avant tout commit :** créer/mettre à jour `docs/journal-de-bord/$(date +%Y-%m-%d).md` puis stager le fichier.
+- **Anti-ASCII :** Interdiction absolue de l'ASCII art. Utiliser diagram-as-code (Mermaid, Kroki) ou SVG externalisé (fichier `.svg` séparé, référencé via `![description](path.svg)`). Pas de SVG inline/embeddé.
 
 ## Règles spécifiques à ce module
 
