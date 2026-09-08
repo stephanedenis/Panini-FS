@@ -3,7 +3,7 @@
 use crate::error::{Error, Result};
 use crate::schema::{Dhatu, Relation};
 use chrono::{DateTime, Utc};
-use pulldown_cmark::{Event, Parser, Tag};
+use pulldown_cmark::{Event, Parser, Tag, TagEnd};
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
@@ -251,10 +251,10 @@ pub fn extract_title_from_markdown(markdown: &str) -> Option<String> {
 
     for event in parser {
         match event {
-            Event::Start(Tag::Heading(pulldown_cmark::HeadingLevel::H1, _, _)) => {
+            Event::Start(Tag::Heading { level: pulldown_cmark::HeadingLevel::H1, .. }) => {
                 in_heading = true;
             }
-            Event::End(Tag::Heading(_, _, _)) => {
+            Event::End(TagEnd::Heading(pulldown_cmark::HeadingLevel::H1)) => {
                 if in_heading {
                     return Some(title.trim().to_string());
                 }
